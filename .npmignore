@@ -1,0 +1,14 @@
+.idea
+.babelrc
+.editorconfig
+.eslintrc
+.gitattributes
+.gitignore
+.npmignore
+.travis.xml
+docs
+test
+tools
+node_modules
+ncp-debug.log
+npm-debug.log
