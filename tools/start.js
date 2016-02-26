@@ -6,6 +6,7 @@ import task from './lib/task';
 import build from './build';
 import serve from './serve';
 import webpackConfig from './webpack.config';
+import proxyMiddleware from 'http-proxy-middleware';
 
 global.WATCH = true;
 const bundler = webpack(webpackConfig);
@@ -38,6 +39,7 @@ export default async () => {
 
         // bundler should be the same as above
         webpackHotMiddleware(bundler),
+        proxyMiddleware('/api', {target: 'http://localhost:8080/'}),
       ],
     },
 

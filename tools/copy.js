@@ -14,6 +14,7 @@ async function copy() {
   await Promise.all([
     ncp('package.json', 'build/package.json'),
     ncp('src/index.html', 'build/index.html'),
+    ncp('src/images', 'build/images'),
     ncp('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'build/fonts'),
   ]);
 

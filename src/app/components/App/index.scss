@@ -6,3 +6,12 @@ $navbar-default-bg: #af1e3a;
 
 @import "normalize";
 @import "bootstrap";
+
+html, body {
+  min-height: 100%;
+}
+body {
+  color: #666;
+  font-family: 'Lucida Grande', Verdana, sans-serif;
+  background: url('/images/zenika-background.png') no-repeat center center;
+}
