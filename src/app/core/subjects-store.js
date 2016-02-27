@@ -1,6 +1,6 @@
 import { URL as ApiUrl} from '../config/api';
 
-export class SubjectStore {
+export class SubjectsStore {
 
   getSubjects() {
     return fetch(`${ApiUrl}subjects/inprogress`)
@@ -34,5 +34,5 @@ export class SubjectStore {
 
 }
 
-export default new SubjectStore();
+export default new SubjectsStore();
 

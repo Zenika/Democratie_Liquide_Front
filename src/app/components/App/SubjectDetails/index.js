@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import store from '../../../core/subjects-store';
+import subjectsStore from '../../../core/subjects-store';
+import votesStore from '../../../core/votes-store';
 import ReactMarkdown from 'react-markdown';
 
 import {
-  Panel  
+  Panel,
+  Alert
 } from 'react-bootstrap';
 import ProposalDetails from './ProposalDetails';
 import Spinner from '../../Spinner';
@@ -14,6 +16,7 @@ export default class SubjectDetails extends Component {
     super(props);
     this.state = {
       isDataResolved: false,
+      isAlertVisible: false,
       subject: {},
     };
 
@@ -22,7 +25,7 @@ export default class SubjectDetails extends Component {
   componentDidMount() {
     const { id } = this.props.params;
 
-    store.getSubject(id)
+    subjectsStore.getSubject(id)
     .then(subject => {
       this.setState({
         isDataResolved: true,
@@ -32,19 +35,49 @@ export default class SubjectDetails extends Component {
   }
 
   render() {
-    const { subject, isDataResolved } = this.state;
+    const { subject, isDataResolved, isAlertVisible } = this.state;
 
     if (!isDataResolved) {
       return <Spinner />;
     }
 
-    const createProposition = (proposition, i) => <ProposalDetails key={ i } proposal={ proposition } />;
+    const displayAlert = () => {
+      if (isAlertVisible) {
+        return (
+          <Alert bsStyle="success" onDismiss={() => this.handleAlertDismiss()} dismissAfter={2000}>
+            <h4>You vote!</h4>
+            <p>Thank you very much.</p>
+          </Alert>
+        )
+      }
+    };
+    const createProposition = (proposition, i) => (
+      <ProposalDetails key={ i } proposal={ proposition } onVote={ proposal => this.voteFor(proposal) }/>
+    );
     return (
       <Panel>
+        { displayAlert() }
         <h2>{subject.title}</h2>
         <ReactMarkdown source={ subject.description } />
         {subject.propositions.map(createProposition)}
       </Panel>
     );
+  }
+
+  voteFor(proposition) {
+    const {id} = this.props.params;
+    const propositionId = proposition.id;
+    votesStore.voteFor(id, propositionId)
+    .then(() => {
+      this.setState({
+        isAlertVisible : true
+      });  
+    });
+  }
+
+  handleAlertDismiss() {
+    this.setState({
+      isAlertVisible : false
+    });
   }
 }

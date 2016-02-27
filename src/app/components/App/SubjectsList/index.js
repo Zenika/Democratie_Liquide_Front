@@ -16,10 +16,6 @@ export default class SubjectsList extends Component {
       <ListGroupItem key={subject.uuid} 
         href="#" onClick={ e => this.selectSubject(e, subject) }  header={subject.title}>
         <ReactMarkdown source={ subject.description } />
-
-        <span className="pull-right">
-          <Button bsStyle="primary" className="btn-xs">Vote</Button>
-        </span>
       </ListGroupItem>
     );
 
