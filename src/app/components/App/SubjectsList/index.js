@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 
 import {
-  ListGroup,
-  ListGroupItem,
-  Button
+  Grid,
+  Row,
+  Well
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
+
+import './index.scss';
 
 export default class SubjectsList extends Component {
 
@@ -13,16 +15,18 @@ export default class SubjectsList extends Component {
     const { subjects } = this.props;
 
     const createSubjectEntry = subject => (
-      <ListGroupItem key={subject.uuid} 
-        href="#" onClick={ e => this.selectSubject(e, subject) }  header={subject.title}>
-        <ReactMarkdown source={ subject.description } />
-      </ListGroupItem>
+      <Row key={subject.uuid} >
+        <Well onClick={ e => this.selectSubject(e, subject) } className="subject-item">
+          <h3>{subject.title}</h3>
+          <ReactMarkdown source={ subject.description } />
+        </Well>  
+      </Row>
     );
 
     return (
-      <ListGroup>
+      <div>
         {subjects.map(createSubjectEntry)}
-      </ListGroup>
+      </div>
     );
   }
 

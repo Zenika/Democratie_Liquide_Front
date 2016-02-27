@@ -4,7 +4,7 @@ import votesStore from '../../../core/votes-store';
 import ReactMarkdown from 'react-markdown';
 
 import {
-  Panel,
+  Well,
   Alert
 } from 'react-bootstrap';
 import ProposalDetails from './ProposalDetails';
@@ -44,7 +44,7 @@ export default class SubjectDetails extends Component {
     const displayAlert = () => {
       if (isAlertVisible) {
         return (
-          <Alert bsStyle="success" onDismiss={() => this.handleAlertDismiss()} dismissAfter={2000}>
+          <Alert bsStyle="success" onDismiss={() => this.handleAlertDismiss()} dismissAfter={5000} className="fixed">
             <h4>You vote!</h4>
             <p>Thank you very much.</p>
           </Alert>
@@ -55,12 +55,12 @@ export default class SubjectDetails extends Component {
       <ProposalDetails key={ i } proposal={ proposition } onVote={ proposal => this.voteFor(proposal) }/>
     );
     return (
-      <Panel>
+      <Well>
         { displayAlert() }
         <h2>{subject.title}</h2>
         <ReactMarkdown source={ subject.description } />
         {subject.propositions.map(createProposition)}
-      </Panel>
+      </Well>
     );
   }
 

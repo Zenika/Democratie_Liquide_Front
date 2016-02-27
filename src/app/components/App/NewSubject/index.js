@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Panel,
+  Well,
   Input,
   ButtonInput,
   ButtonToolbar,
@@ -29,7 +29,7 @@ export default class NewSubject extends Component {
     );
 
     return (
-      <Panel>
+      <Well>
         <form onSubmit={e => this.saveSubject(e)} >
           <fieldset>
             <legend>New Subject</legend>
@@ -48,7 +48,7 @@ export default class NewSubject extends Component {
             </ButtonToolbar>
           </fieldset>
         </form>
-      </Panel>
+      </Well>
     );
   }
 

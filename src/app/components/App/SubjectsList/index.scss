@@ -1,0 +1,10 @@
+@import "bourbon";
+@import '../../variables';
+
+.subject-item {
+  cursor: pointer;
+
+  &.well:hover {
+    background-color: darken($main_color, 10%); 
+  }
+}
