@@ -1,33 +1,50 @@
 import React, { Component, PropTypes } from 'react';
 import store from '../../../core/subjects-store';
+import ReactMarkdown from 'react-markdown';
 
-// import {
-  
-// } from 'react-bootstrap';
+import {
+  Panel  
+} from 'react-bootstrap';
+import ProposalDetails from './ProposalDetails';
+import Spinner from '../../Spinner';
 
 export default class SubjectDetails extends Component {
 
   constructor(props) {
     super(props);
-    const { id } = props ? props.params : this.props.params
-    this.state = { subject: store.getSubject(id) };
+    this.state = {
+      isDataResolved: false,
+      subject: {},
+    };
+
+  }
+
+  componentDidMount() {
+    const { id } = this.props.params;
+
+    store.getSubject(id)
+    .then(subject => {
+      this.setState({
+        isDataResolved: true,
+        subject: subject
+      });
+    });
   }
 
   render() {
-    const { subject } = this.state;
+    const { subject, isDataResolved } = this.state;
 
-    const createProposition = (proposition, i) => <li key={ i }>{proposition.title} {proposition.description}</li>;
+    if (!isDataResolved) {
+      return <Spinner />;
+    }
 
+    const createProposition = (proposition, i) => <ProposalDetails key={ i } proposal={ proposition } />;
     return (
-      <div>
+      <Panel>
         <h2>{subject.title}</h2>
-        <p>
-          {subject.description}
-        </p>
-        <ul>
-          {subject.propositions.map(createProposition)}
-        </ul>
-      </div>
+        <ReactMarkdown source={ subject.description } />
+        {subject.propositions.map(createProposition)}
+      </Panel>
     );
   }
 }

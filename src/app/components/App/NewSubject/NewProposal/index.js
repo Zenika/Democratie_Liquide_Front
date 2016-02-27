@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { 
+import {
+  Panel, 
   Input,
   ButtonInput,
   ButtonToolbar,
@@ -18,12 +19,14 @@ export default class NewProposal extends Component {
   render() {
     const { rank } = this.props;
     return (
-      <fieldset>
-        <legend>Proposal { rank + 1 }</legend>
-        <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
-        <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
-            label="Description" placeholder="Write a proposal description... (Markdown supported)"/>
-      </fieldset>
+      <Panel>
+        <fieldset>
+          <legend>Proposal { rank + 1 }</legend>
+          <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
+          <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
+              label="Description" placeholder="Write a proposal description... (Markdown supported)"/>
+        </fieldset>
+      </Panel>
     );
   }
 

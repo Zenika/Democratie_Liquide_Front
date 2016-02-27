@@ -1,0 +1,53 @@
+@import "bourbon";
+@import "math";
+
+@import "../variables";
+
+spin-rotate,
+spin-rotate>div {
+  margin: auto;
+  position:relative;
+  box-sizing:border-box;
+}
+spin-rotate {
+  $animation-duration: 1s;
+
+  display:block;
+  font-size:0;
+  color:#fff;
+  width:32px;
+  height:32px;
+  @include animation(rotate 6s infinite linear);
+
+  &>div{
+    display:inline-block;
+    float:none;
+    background-color: currentColor;
+    border:0 solid currentColor;
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:8px;
+    height:8px;
+    margin-top:-4px;
+    margin-left:-4px;
+    border-radius:100%;
+    @include animation(fade $animation-duration infinite linear, color-pulse $animation-duration infinite linear);
+
+    $nb-point: 20;
+    $angle: 360deg / $nb-point;
+    @for $i from 1 through $nb-point {
+      &:nth-child(#{$i}) {
+        top: sin($i*$angle) * 100% +50%;
+        left: cos($i*$angle) * 100% +50%;
+        @include animation-delay(-$animation-duration / $nb-point * $i);
+      }
+    }
+  }
+  
+  @include keyframes(color-pulse) {
+    0%   {background: $main_color; box-shadow: #AAA 1px 1px 2px;}
+    50%  {background: $secondary-color;}
+    100% {background: $main_color;}
+  }
+}

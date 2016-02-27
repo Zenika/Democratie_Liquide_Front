@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Panel,
   Input,
   ButtonInput,
   ButtonToolbar,
@@ -59,24 +60,26 @@ export default class NewSubject extends Component {
     );
 
     return (
-      <form onSubmit={e => this.saveSubject(e)}>
-        <fieldset>
-          <legend>New Subject</legend>
-          <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
-          <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
-            label="Description" placeholder="Enter Description... (Markdown supported)"/>
+      <Panel>
+        <form onSubmit={e => this.saveSubject(e)} >
+          <fieldset>
+            <legend>New Subject</legend>
+            <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
+            <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
+              label="Description" placeholder="Enter Description... (Markdown supported)"/>
 
-          { propositions.map(createProposal) }
-          <Button onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Add proposal</Button>
+            { propositions.map(createProposal) }
+            <Button onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Add proposal</Button>
 
-          <ButtonToolbar>
-            <LinkContainer to={ {pathname: '/'} }>
-              <Button ><Glyphicon glyph="remove" /> Cancel</Button>
-            </LinkContainer>
-            <ButtonInput type="submit" bsStyle="success" value="Save" />
-          </ButtonToolbar>
-        </fieldset>
-      </form>
+            <ButtonToolbar>
+              <LinkContainer to={ {pathname: '/'} }>
+                <Button ><Glyphicon glyph="remove" /> Cancel</Button>
+              </LinkContainer>
+              <ButtonInput type="submit" bsStyle="success" value="Save" />
+            </ButtonToolbar>
+          </fieldset>
+        </form>
+      </Panel>
     );
   }
 }

@@ -2,6 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import merge from 'lodash.merge';
 
+import bourbon from 'node-bourbon';
+
 const DEBUG = !process.argv.includes('release');
 const VERBOSE = process.argv.includes('verbose');
 const WATCH = global.WATCH === undefined ? false : global.WATCH;
@@ -30,8 +32,10 @@ const JS_LOADERS = [
 ];
 
 const SASS_INCLUDES_PATHS = [
+  ...bourbon.includePaths,
   'node_modules/bootstrap-sass/assets/stylesheets',
-  'node_modules/normalize.css'
+  'node_modules/normalize.css',
+  'node_modules/mathsass/dist'
 ];
 
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';

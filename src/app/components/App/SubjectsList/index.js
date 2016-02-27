@@ -5,6 +5,7 @@ import {
   ListGroupItem,
   Button
 } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 
 export default class SubjectsList extends Component {
 
@@ -12,8 +13,10 @@ export default class SubjectsList extends Component {
     const { subjects } = this.props;
 
     const createSubjectEntry = subject => (
-      <ListGroupItem key={subject.uuid} href="#" header={subject.title}>
-        {subject.description} 
+      <ListGroupItem key={subject.uuid} 
+        href="#" onClick={ e => this.selectSubject(e, subject) }  header={subject.title}>
+        <ReactMarkdown source={ subject.description } />
+
         <span className="pull-right">
           <Button bsStyle="primary" className="btn-xs">Vote</Button>
         </span>
@@ -26,8 +29,14 @@ export default class SubjectsList extends Component {
       </ListGroup>
     );
   }
+
+  selectSubject(e, subject) {
+    e.preventDefault();
+    this.props.onSelect(subject);
+  }
 }
 
 SubjectsList.propTypes = {
-  subjects: PropTypes.array.isRequired
+  subjects: PropTypes.array.isRequired,
+  onSelect: PropTypes.func
 };
