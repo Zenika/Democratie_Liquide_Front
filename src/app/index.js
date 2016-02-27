@@ -1,4 +1,4 @@
-/**
+<small>Liquidifions la démocratie</small>/**
  * App entry point
  */
 
@@ -25,7 +25,7 @@ import App from './components/App';
 import Home from './components/App/Home';
 import NewSubject from './components/App/NewSubject';
 import SubjectDetails from './components/App/SubjectDetails';
-import About from './components/About';
+import About from './components/App/About';
 
 // ID of the DOM element to mount app on
 const DOM_APP_EL_ID = 'app';

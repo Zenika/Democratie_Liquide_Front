@@ -19,7 +19,7 @@ export default class App extends Component {
         <ZNavbar />
         <Grid>
           <Row >
-            <PageHeader>ZDemocracy <small>Liquidifions la démocratie</small></PageHeader>
+            <PageHeader>ZDemocracy</PageHeader>
             {this.props.children}
           </Row>
         </Grid>

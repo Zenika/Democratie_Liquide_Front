@@ -13,6 +13,7 @@ async function copyTask() {
   
   await Promise.all([
     copy('package.json', 'build/package.json'),
+    copy('src/manifest.json', 'build/manifest.json'),
     copy('src/index.html', 'build/index.html'),
     copy('src/images', 'build/images'),
     copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'build/fonts'),
