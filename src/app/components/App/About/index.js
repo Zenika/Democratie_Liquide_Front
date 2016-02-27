@@ -10,7 +10,7 @@ export default class About extends Component {
         <h2>Liquidifions la démocratie</h2>
         <Panel>
           <Glyphicon glyph="heart" style={heartStyle} />
-            ZDemocracy is builded by the awesome <b>Zenika Rennes</b> team
+            &nbsp;<b>ZDemocracy</b> is builded by the awesome <b>Zenika Rennes</b> team&nbsp;
           <Glyphicon glyph="heart" style={heartStyle} />
         </Panel>
       </section>
