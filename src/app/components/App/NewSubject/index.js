@@ -19,38 +19,7 @@ export default class NewSubject extends Component {
     this.state = {title: '', description: '', propositions: [{}, {}]};
 
   }
-
-  handleChange(e, fieldName) {
-    e.preventDefault();
-    this.setState({[fieldName]: e.target.value});
-  }
-
-  addProposal(e) {
-    e.preventDefault();
-    this.setState({
-      propositions: [...this.state.propositions, {}]
-    });
-  }
-
-  setProposal(i, proposal) {
-    const { propositions }= this.state;
-    propositions[i] = proposal;
-    this.setState({
-      propositions: propositions
-    });
-  }
-
-  saveSubject(e) {
-    e.preventDefault()
-    const {title, description, propositions} = this.state;
-    store.createSubject({
-      title,
-      description,
-      propositions
-    })
-    .then(subjectId => this.context.router.push(`/subjects/${subjectId}`));
-  }
-
+  
   render() {
     const { description, propositions } = this.state;
 
@@ -81,6 +50,37 @@ export default class NewSubject extends Component {
         </form>
       </Panel>
     );
+  }
+
+  handleChange(e, fieldName) {
+    e.preventDefault();
+    this.setState({[fieldName]: e.target.value});
+  }
+
+  addProposal(e) {
+    e.preventDefault();
+    this.setState({
+      propositions: [...this.state.propositions, {}]
+    });
+  }
+
+  setProposal(i, proposal) {
+    const { propositions }= this.state;
+    propositions[i] = proposal;
+    this.setState({
+      propositions: propositions
+    });
+  }
+
+  saveSubject(e) {
+    e.preventDefault()
+    const {title, description, propositions} = this.state;
+    store.createSubject({
+      title,
+      description,
+      propositions
+    })
+    .then(subjectId => this.context.router.push(`/subjects/${subjectId}`));
   }
 }
 NewSubject.contextTypes= {
