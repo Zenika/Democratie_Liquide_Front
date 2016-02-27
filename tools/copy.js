@@ -2,20 +2,20 @@ import path from 'path';
 import replace from 'replace';
 import task from './lib/task';
 import Promise from 'bluebird';
+import copy from './lib/copy';
 import watch from './lib/watch';
 
 /**
  * Copies static files such as robots.txt, favicon.ico to the
  * output (build) folder.
  */
-async function copy() {
-  const ncp = Promise.promisify(require('ncp'));
-
+async function copyTask() {
+  
   await Promise.all([
-    ncp('package.json', 'build/package.json'),
-    ncp('src/index.html', 'build/index.html'),
-    ncp('src/images', 'build/images'),
-    ncp('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'build/fonts'),
+    copy('package.json', 'build/package.json'),
+    copy('src/index.html', 'build/index.html'),
+    copy('src/images', 'build/images'),
+    copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'build/fonts'),
   ]);
 
   replace({
@@ -30,9 +30,9 @@ async function copy() {
     const watcher = await watch('src/**/*.*');
     watcher.on('changed', async (file) => {
       const relPath = file.substr(path.join(__dirname, '../src/').length);
-      await ncp(`src/${relPath}`, `build/src/${relPath}`);
+      await copy(`src/${relPath}`, `build/src/${relPath}`);
     });
   }
 }
 
-export default copy;
+export default copyTask;
