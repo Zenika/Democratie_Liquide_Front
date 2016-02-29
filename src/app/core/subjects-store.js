@@ -5,6 +5,9 @@ export class SubjectsStore {
   getSubjects() {
     return fetch(`${ApiUrl}subjects/inprogress`)
     .then(function(response) {
+      if (response.status === 204) {
+        return [];
+      }
       return response.json();
     });
   }
