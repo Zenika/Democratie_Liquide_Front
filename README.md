@@ -12,7 +12,7 @@ Ce front n'est rien sans son api. Elle se trouve ici -> [liquid-democracy-api](h
 
 Comme pour n'importe quel projet Javascript : Installer le projet avec `npm install`
 
-Il faut ensuite builder le projet : `ǹpm run build`
+Il faut ensuite builder le projet : `npm run build`
 Pour builder un code optimisé (pas de sourcemap, source minifiées) ajouter l'argument `release` : `npm run build release`.
 
 Une fois celà effectué, le résultat du build se trouve dans le dossier `build/`.
