@@ -21,15 +21,6 @@ const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
   __DEV__: DEBUG,
 };
-const JS_LOADERS = [
-  {
-    test: /\.js?$/,
-    include: [
-      path.resolve(__dirname, '../src'),
-    ],
-    loader: 'babel-loader',
-  }
-];
 
 const SASS_INCLUDES_PATHS = [
   ...bourbon.includePaths,
@@ -38,7 +29,8 @@ const SASS_INCLUDES_PATHS = [
   'node_modules/mathsass/dist'
 ];
 
-const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+const outputPath = path.join(__dirname, '../build');
+
 const appConfig = {
 
   cache: DEBUG,
@@ -66,10 +58,11 @@ const appConfig = {
     ],
   },
   output: {
-    path: path.join(__dirname, '../build'),
-    filename: '[name].js',
+    path: outputPath,
+    filename: DEBUG ? '[name].js?[hash]' : '[name].[hash].js',
     sourceMapFilename: '[name].js.map',
     chunkFilename: '[id].chunk.js',
+    publicPath: '/',
   },
 
   // Choose a developer tool to enhance debugging
@@ -87,10 +80,6 @@ const appConfig = {
       }),
       new webpack.optimize.AggressiveMergingPlugin(),
     ] : []),
-    ...(WATCH ? [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
-    ] : []),
   ],
   module: {
     loaders: [
@@ -99,7 +88,9 @@ const appConfig = {
         include: [
           path.resolve(__dirname, '../src'),
         ],
-        loaders: ['react-hot', 'babel-loader'],
+        loaders: [
+          ...(DEBUG ? ['react-hot'] : []), 'babel-loader'
+        ],
       },
       {
         test: /\.json$/,
