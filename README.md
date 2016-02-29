@@ -34,4 +34,4 @@ Cette application est construite en [React](https://github.com/facebook/react) g
 Codé en ES2015 la transpilation est transpilé par [babel](https://github.com/babel/babel) et le bundle est généré par [webpack](https://github.com/webpack)
 La build est configuré par quelques scripts js qui sont dans le répertoire `tools/`
 
-Piur démarer l'application en mode dev exécuter la commande `npm start`
+Pour démarer l'application en mode dev exécuter la commande `npm start`
