@@ -43,7 +43,6 @@ export default class ProposalDetails extends Component {
   }
 
   handlePointsChange(e) {
-    // e.preventDefault();
     this.setState({
       points: e.target.value
     });

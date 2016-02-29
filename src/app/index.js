@@ -1,4 +1,4 @@
-<small>Liquidifions la démocratie</small>/**
+/**
  * App entry point
  */
 
