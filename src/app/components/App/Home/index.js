@@ -15,7 +15,7 @@ import store from '../../../core/subjects-store';
 import './index.scss';
 
 export default class Home extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +46,7 @@ export default class Home extends Component {
           <Button bsStyle="success" bsSize="large" className="pull-right new-subject-btn">
             <Glyphicon glyph="plus" /> Create
           </Button>
-        </LinkContainer> 
+        </LinkContainer>
 
         <h2>Subjects in progress</h2>
         <SubjectsList subjects={ subjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>

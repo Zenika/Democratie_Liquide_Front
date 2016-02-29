@@ -5,6 +5,11 @@
   cursor: pointer;
 
   &.well:hover {
-    background-color: darken($main_color, 10%); 
+    background-color: darken($main_color, 10%);
   }
+
+}
+
+button.action-button {
+  border-radius: 0px!important;
 }

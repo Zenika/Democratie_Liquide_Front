@@ -3,6 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import {
   Grid,
   Row,
+  Col,
+  Button,
+  ButtonGroup,
+  Glyphicon,
   Well,
   Badge
 } from 'react-bootstrap';
@@ -16,13 +20,25 @@ export default class SubjectsList extends Component {
     const { subjects } = this.props;
 
     const createSubjectEntry = subject => (
-      <Row key={subject.uuid} >
-        <Well onClick={ e => this.selectSubject(e, subject) } className="subject-item">
-          <h3>{subject.title}</h3>
-          <ReactMarkdown source={ subject.description } />
-          <Badge>{subject.votes.length} votes</Badge>
-        </Well>  
-      </Row>
+      <Well key={subject.uuid}>
+        <Row>
+            <Col xs={10}>
+              <h3>{subject.title}</h3>
+              <ReactMarkdown source={ subject.description } />
+              <Badge>{subject.votes.length} votes</Badge>
+            </Col>
+            <Col xs={2}>
+              <ButtonGroup vertical block>
+                <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
+                  Vote <Glyphicon glyph="edit" className="pull-left"/>
+                </Button>
+                <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
+                  Delegate <Glyphicon glyph="transfer"  className="pull-left"/>
+                </Button>
+              </ButtonGroup>
+            </Col>
+        </Row>
+      </Well>
     );
     if (!subjects.length) {
       return (
@@ -43,9 +59,15 @@ export default class SubjectsList extends Component {
     e.preventDefault();
     this.props.onSelect(subject);
   }
+
+  delegateSubject(e, subject){
+    e.preventDefault();
+    this.props.onDelegate(subject);
+  }
 }
 
 SubjectsList.propTypes = {
   subjects: PropTypes.array.isRequired,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onDelegate: PropTypes.func
 };
