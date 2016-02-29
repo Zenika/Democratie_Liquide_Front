@@ -22,7 +22,14 @@ export default class SubjectsList extends Component {
         </Well>  
       </Row>
     );
-
+    if (!subjects.length) {
+      return (
+        <Well>
+          There is currently no subject in progress.
+          You can create one by clicking on the <em>Create</em> button
+        </Well>
+      )
+    }
     return (
       <div>
         {subjects.map(createSubjectEntry)}
