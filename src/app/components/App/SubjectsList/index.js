@@ -3,7 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import {
   Grid,
   Row,
-  Well
+  Well,
+  Badge
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
@@ -19,6 +20,7 @@ export default class SubjectsList extends Component {
         <Well onClick={ e => this.selectSubject(e, subject) } className="subject-item">
           <h3>{subject.title}</h3>
           <ReactMarkdown source={ subject.description } />
+          <Badge>{subject.votes.length} votes</Badge>
         </Well>  
       </Row>
     );

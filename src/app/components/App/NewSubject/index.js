@@ -16,12 +16,16 @@ import store from '../../../core/subjects-store';
 export default class NewSubject extends Component {
   constructor(props) {
     super(props);
-    this.state = {title: '', description: '', propositions: [{}, {}]};
+    this.state = {
+      title: '',
+      description: '',
+      maxPoints: 1,
+      propositions: [{}, {}]};
 
   }
   
   render() {
-    const { description, propositions } = this.state;
+    const { propositions } = this.state;
 
     const createProposal = (proposition, i) => (
       <NewProposal key={ i } rank={ i } 
@@ -36,6 +40,8 @@ export default class NewSubject extends Component {
             <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
             <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
               label="Description" placeholder="Enter Description... (Markdown supported)"/>
+
+              <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Max points" placeholder="Choose the max points for each proposition" />
 
             { propositions.map(createProposal) }
             <Button onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Add proposal</Button>
@@ -74,10 +80,17 @@ export default class NewSubject extends Component {
 
   saveSubject(e) {
     e.preventDefault()
-    const {title, description, propositions} = this.state;
+    const {
+      title,
+      description,
+      maxPoints,
+      propositions
+    } = this.state;
+
     store.createSubject({
       title,
       description,
+      maxPoints,
       propositions
     })
     .then(subjectId => this.context.router.push(`/subjects/${subjectId}`));
