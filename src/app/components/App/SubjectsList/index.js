@@ -3,11 +3,16 @@ import React, { Component, PropTypes } from 'react';
 import {
   Grid,
   Row,
+<<<<<<< HEAD
   Col,
   Button,
   ButtonGroup,
   Glyphicon,
   Well
+=======
+  Well,
+  Badge
+>>>>>>> f9e3c7f3edd683a7ff20eeb4e5b697c3216de556
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
@@ -24,6 +29,7 @@ export default class SubjectsList extends Component {
             <Col xs={10}>
               <h3>{subject.title}</h3>
               <ReactMarkdown source={ subject.description } />
+              <Badge>{subject.votes.length} votes</Badge>
             </Col>
             <Col xs={2}>
               <ButtonGroup vertical block>

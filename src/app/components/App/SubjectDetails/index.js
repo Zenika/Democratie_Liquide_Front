@@ -52,7 +52,10 @@ export default class SubjectDetails extends Component {
       }
     };
     const createProposition = (proposition, i) => (
-      <ProposalDetails key={ i } proposal={ proposition } onVote={ proposal => this.voteFor(proposal) }/>
+      <ProposalDetails key={ i } 
+        maxPoints= { subject.maxPoints } 
+        proposal={ proposition } 
+        onVote={ (proposal, points) => this.voteFor(proposal, points) } />
     );
     return (
       <Well>
@@ -64,10 +67,10 @@ export default class SubjectDetails extends Component {
     );
   }
 
-  voteFor(proposition) {
+  voteFor(proposition, points) {
     const {id} = this.props.params;
     const propositionId = proposition.id;
-    votesStore.voteFor(id, propositionId)
+    votesStore.voteFor(id, propositionId, points)
     .then(() => {
       this.setState({
         isAlertVisible : true
