@@ -3,16 +3,12 @@ import React, { Component, PropTypes } from 'react';
 import {
   Grid,
   Row,
-<<<<<<< HEAD
   Col,
   Button,
   ButtonGroup,
   Glyphicon,
-  Well
-=======
   Well,
   Badge
->>>>>>> f9e3c7f3edd683a7ff20eeb4e5b697c3216de556
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
