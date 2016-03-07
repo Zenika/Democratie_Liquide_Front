@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { 
+import {
   Navbar,
   Nav,
-  NavItem
+  NavItem,
+  Button,
+  Glyphicon
 } from 'react-bootstrap';
 
 import { LinkContainer } from 'react-router-bootstrap';
@@ -27,6 +29,9 @@ export default class ZNavbar extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
+            <LinkContainer to="/subjects/new">
+              <NavItem><Glyphicon glyph="plus" /> Create</NavItem>
+            </LinkContainer>
             <LinkContainer to={{ pathname: '/about' }} >
               <NavItem>about</NavItem>
             </LinkContainer>

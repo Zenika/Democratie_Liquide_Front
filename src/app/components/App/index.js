@@ -19,7 +19,6 @@ export default class App extends Component {
         <ZNavbar />
         <Grid>
           <Row >
-            <PageHeader>ZDemocracy</PageHeader>
             {this.props.children}
           </Row>
         </Grid>

@@ -2,12 +2,14 @@
 @import '../../variables';
 
 .subject-item {
-  cursor: pointer;
-
-  &.well:hover {
-    background-color: darken($main_color, 10%);
+  &.well{
+    padding:0px;
+    margin-bottom:0px;
   }
 
+  & > .row{
+    line-height: 33.6px;
+  }
 }
 
 button.action-button {

@@ -8,7 +8,9 @@ import {
   ButtonGroup,
   Glyphicon,
   Well,
-  Badge
+  Badge,
+  OverlayTrigger,
+  Popover
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
@@ -20,32 +22,39 @@ export default class SubjectsList extends Component {
     const { subjects } = this.props;
 
     const createSubjectEntry = subject => (
-      <Well key={subject.uuid}>
-        <Row>
-            <Col xs={10}>
-              <h3>{subject.title}</h3>
-              <ReactMarkdown source={ subject.description } />
+        <div key={subject.uuid} className="subject-item">
+          <Row>
+            <Col xs={5}>
+              <span>{subject.title}</span>
+            </Col>
+            <Col xs={3}>
               <Badge>{subject.votes.length} votes</Badge>
             </Col>
-            <Col xs={2}>
-              <ButtonGroup vertical block>
-                <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
-                  Vote <Glyphicon glyph="edit" className="pull-left"/>
+            <Col xs={4}>
+              <ButtonGroup className="pull-right">
+              <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
+                <Button className="action-button">
+                  <Glyphicon glyph="zoom-in"/>
                 </Button>
-                <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
-                  Delegate <Glyphicon glyph="transfer"  className="pull-left"/>
-                </Button>
+              </OverlayTrigger>
+              {this.props.onDelegate ? (
+              <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
+                <Glyphicon glyph="transfer"/>
+              </Button>
+              ) : null}
+              {this.props.onSelect ? (
+              <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
+                <Glyphicon glyph="check"/>
+              </Button>
+              ) : null}
               </ButtonGroup>
             </Col>
-        </Row>
-      </Well>
+          </Row>
+        </div>
     );
     if (!subjects.length) {
       return (
-        <Well>
-          There is currently no subject in progress.
-          You can create one by clicking on the <em>Create</em> button
-        </Well>
+        <span>{this.props.emptyMessage}</span>
       )
     }
     return (
@@ -69,5 +78,6 @@ export default class SubjectsList extends Component {
 SubjectsList.propTypes = {
   subjects: PropTypes.array.isRequired,
   onSelect: PropTypes.func,
-  onDelegate: PropTypes.func
+  onDelegate: PropTypes.func,
+  emptyMessage: PropTypes.string
 };
