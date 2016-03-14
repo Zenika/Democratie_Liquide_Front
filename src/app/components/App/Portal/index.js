@@ -16,7 +16,7 @@ export default class Portal extends Component {
 
 
   getGoogleUrl(){
-    return `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+    return 'http://localhost:8080/signin/google';
   }
 
   getToken(){
@@ -36,7 +36,9 @@ export default class Portal extends Component {
     return (
       <div>
         {!this.getToken() ?
-          <a href={this.getGoogleUrl()}>GO GO GOOGLE I CHOOSE YOU</a> :
+          <form method="POST" action={this.getGoogleUrl()}>
+            <input type="submit" value="Authenticate by google"/>
+          </form> :
           <div> Connexion réussie, redirection </div>
         }
       </div>

@@ -5,6 +5,8 @@ export class ReactHttp {
   checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
       return response
+    } else if(response.status === 403){
+      window.location.hash = `#${RedirectUrl}`;
     } else {
       var error = new Error(response.statusText)
       error.response = response
@@ -13,10 +15,10 @@ export class ReactHttp {
   }
 
   fetch(endPointUrl, options) {
-    var user = window.localStorage.getItem('user');
-    if(!user){
-      window.location.hash = `#${RedirectUrl}`;
+    if(!options){
+      options = {}
     }
+    options.credentials = 'include';
     return fetch(endPointUrl, options)
     .then(this.checkStatus);
   }
