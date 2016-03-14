@@ -17,7 +17,7 @@ export default class App extends Component {
     return (
       <div>
         <ZNavbar />
-        <Grid>
+        <Grid fluid className="zdemocracy-container">
           <Row >
             {this.props.children}
           </Row>

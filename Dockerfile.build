@@ -1,0 +1,12 @@
+FROM node:4.2.2
+
+WORKDIR /data
+
+COPY package.json package.json
+RUN npm install --unsafe-perm
+
+COPY . .
+
+RUN npm run build --unsafe-perm
+
+CMD cp -R build/ dist/

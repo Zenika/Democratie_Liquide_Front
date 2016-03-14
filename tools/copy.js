@@ -10,7 +10,7 @@ import watch from './lib/watch';
  * output (build) folder.
  */
 async function copyTask() {
-  
+
   await Promise.all([
     copy('package.json', 'build/package.json'),
     copy('src/manifest.json', 'build/manifest.json'),

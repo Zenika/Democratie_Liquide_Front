@@ -25,6 +25,7 @@ import App from './components/App';
 import Home from './components/App/Home';
 import NewSubject from './components/App/NewSubject';
 import SubjectDetails from './components/App/SubjectDetails';
+import Portal from './components/App/Portal'
 import About from './components/App/About';
 
 // ID of the DOM element to mount app on
@@ -37,6 +38,8 @@ ReactDOM.render((
       <IndexRoute component={Home} />
       <Route path="subjects/new" component={NewSubject} />
       <Route path="subjects/:id" component={SubjectDetails} />
+      <Route path="portal" component={Portal} />
+      <Route path="access_token=:token&token_type=:tokenType&expires_in:expiresIn" component={Portal} />
       <Route path="about" component={About} />
     </Route>
   </Router>

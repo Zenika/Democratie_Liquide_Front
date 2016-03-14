@@ -24,13 +24,11 @@ export default class SubjectsList extends Component {
     const createSubjectEntry = subject => (
         <div key={subject.uuid} className="subject-item">
           <Row>
-            <Col xs={5}>
+            <Col xs={6} lg={7}>
               <span>{subject.title}</span>
             </Col>
-            <Col xs={3}>
+            <Col xs={6} lg={5}>
               <Badge>{subject.votes.length} votes</Badge>
-            </Col>
-            <Col xs={4}>
               <ButtonGroup className="pull-right">
               <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
                 <Button className="action-button">

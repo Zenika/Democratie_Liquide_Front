@@ -11,4 +11,3 @@ async function clean() {
 }
 
 export default clean;
-
