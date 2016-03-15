@@ -5,14 +5,15 @@ import {
   Panel,
   Input,
   Button,
-  RadioGroup
+  RadioGroup,
+  Row,
+  Col
 } from 'react-bootstrap';
 
 export default class ProposalDetails extends Component {
 
   constructor(props) {
     super(props);
-
     this.state= {
       points: undefined
     }
@@ -20,42 +21,32 @@ export default class ProposalDetails extends Component {
 
   render() {
     const { proposal, maxPoints } = this.props;
-    
-    const votesCheckBox = Array(maxPoints).fill().map((e, index) => {
-      const nbPoints = index + 1;
+    const votesCheckBox = Array(this.props.leftPoints + this.props.proposalPoints + 1).fill().map((e, index) => {
+      const nbPoints = ""+index;
       return (
-      <Input key={ index } onChange={ e => this.handlePointsChange(e) }
-        type="radio" name="vote" label={ nbPoints } value={ nbPoints } ref={ nbPoints } groupClassName="col-sm-1"/>
+      <Input key={ index } onChange={ e =>{this.props.onChangePoints(this.props.proposal, parseInt(e.target.value))} }
+        type="radio" name='vote' label={ nbPoints } value={ nbPoints } ref={ nbPoints } groupClassName="col-sm-1"/>
     )});
 
     return (
       <Panel>
         <h3>{proposal.title}</h3>
         <ReactMarkdown source={ proposal.description } />
-        <form className="form-inline">
-          <Input label="Points" labelClassName="col-sm-2" wrapperClassName="col-sm-10">
-            { votesCheckBox }
-          </Input>
-          <Button onClick={ e => this.vote(e) } className="pull-rigth" >Vote</Button>
-        </form>
+         <Row>
+          <form>
+             <Col sm={6}>
+                { votesCheckBox }
+             </Col>
+          </form>
+         </Row>
       </Panel>
     );
   }
-
-  handlePointsChange(e) {
-    this.setState({
-      points: e.target.value
-    });
-
-  }
-
-  vote(e) {
-    e.preventDefault();
-    this.props.onVote(this.props.proposal, this.state.points);
-  }
 }
+
 ProposalDetails.propTypes = {
   proposal: PropTypes.object.isRequired,
-  maxPoints: PropTypes.number.isRequired,
-  onVote: PropTypes.func.isRequired
+  proposalPoints: PropTypes.number.isRequired,
+  leftPoints: PropTypes.number.isRequired,
+  onChangePoints: PropTypes.func.isRequired
 }

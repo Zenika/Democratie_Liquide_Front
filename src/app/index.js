@@ -39,7 +39,6 @@ ReactDOM.render((
       <Route path="subjects/new" component={NewSubject} />
       <Route path="subjects/:id" component={SubjectDetails} />
       <Route path="portal" component={Portal} />
-      <Route path="access_token=:token&token_type=:tokenType&expires_in:expiresIn" component={Portal} />
       <Route path="about" component={About} />
     </Route>
   </Router>

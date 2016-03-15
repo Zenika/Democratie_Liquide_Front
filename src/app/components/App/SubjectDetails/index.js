@@ -5,7 +5,8 @@ import ReactMarkdown from 'react-markdown';
 
 import {
   Well,
-  Alert
+  Alert,
+  Button
 } from 'react-bootstrap';
 import ProposalDetails from './ProposalDetails';
 import Spinner from '../../Spinner';
@@ -18,6 +19,7 @@ export default class SubjectDetails extends Component {
       isDataResolved: false,
       isAlertVisible: false,
       subject: {},
+      leftPoints: 0
     };
 
   }
@@ -27,15 +29,21 @@ export default class SubjectDetails extends Component {
 
     subjectsStore.getSubject(id)
     .then(subject => {
+      var ppArray = [];
+      subject.propositions.map(function(value, index){
+        ppArray[index] = 0;
+      })
       this.setState({
         isDataResolved: true,
-        subject: subject
+        subject: subject,
+        leftPoints: 0+subject.maxPoints,
+        proposalPointsArray:ppArray
       });
     });
   }
 
   render() {
-    const { subject, isDataResolved, isAlertVisible } = this.state;
+    const { subject, isDataResolved, isAlertVisible, leftPoints } = this.state;
 
     if (!isDataResolved) {
       return <Spinner />;
@@ -51,11 +59,12 @@ export default class SubjectDetails extends Component {
         )
       }
     };
-    const createProposition = (proposition, i) => (
-      <ProposalDetails key={ i } 
-        maxPoints= { subject.maxPoints } 
-        proposal={ proposition } 
-        onVote={ (proposal, points) => this.voteFor(proposal, points) } />
+    const createProposition = (proposition, index) => (
+      <ProposalDetails key={ index }
+        leftPoints= { leftPoints }
+        proposal={ proposition }
+        proposalPoints = {this.state.proposalPointsArray[index]}
+        onChangePoints={ (proposal, points) => this.handlePointsChange(index, points) } />
     );
     return (
       <Well>
@@ -63,18 +72,33 @@ export default class SubjectDetails extends Component {
         <h2>{subject.title}</h2>
         <ReactMarkdown source={ subject.description } />
         {subject.propositions.map(createProposition)}
+        <Button onClick={e => this.vote(this.state.subject,this.state.proposalPointsArray)}>
+        Vote
+        </Button>
       </Well>
     );
   }
 
-  voteFor(proposition, points) {
+  handlePointsChange(proposalIndex, points) {
+    this.setState(function(previousState, currentProps){
+      var previousTotal = previousState.leftPoints + previousState.proposalPointsArray[proposalIndex]
+      previousState.proposalPointsArray[proposalIndex] = points;
+      return{
+        proposalPointsArray : previousState.proposalPointsArray,
+        leftPoints : previousTotal - previousState.proposalPointsArray[proposalIndex],
+      }
+    })
+  }
+
+  vote(subject, pointArray) {
     const {id} = this.props.params;
-    const propositionId = proposition.id;
-    votesStore.voteFor(id, propositionId, points)
+    const propositions = this.state.subject.propositions;
+    const pointsArray = this.state.proposalPointsArray;
+    votesStore.voteFor(id, propositions, pointsArray)
     .then(() => {
       this.setState({
         isAlertVisible : true
-      });  
+      });
     });
   }
 

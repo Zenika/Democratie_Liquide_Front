@@ -14,6 +14,7 @@ import Spinner from '../../Spinner';
 import DelegateModal from '../DelegateModal'
 
 import store from '../../../core/subjects-store';
+import usersStore from '../../../core/users-store';
 
 import './index.scss';
 
@@ -23,44 +24,60 @@ export default class Home extends Component {
     super(props);
     this.state = {
       subjects: [],
+      collaborator: {},
       isDataResolved: false,
       showDelegate: false,
     };
   }
 
-  getNewSubjects(subjects){
-    return subjects.filter(element => { return element.votes.length === 0 });
-  }
+  getNewSubjects(subjects, collaboratorId){
+    return subjects.filter(subject => {
+      var userVotes = subject.votes.filter(vote => {
+        return collaboratorId === vote.collaborateurId;
+      })
+      return userVotes.length === 0
+     });
+   }
 
   getDelegatedSubjects(subjects){
     return [];
   }
 
-  getMySubjects(subjects){
-    return [];
+  getMySubjects(subjects, collaboratorId){
+    return subjects.filter(element => {
+      return element.collaborateurId === collaboratorId
+    });
   }
 
-  getVotedSubjects(subjects){
-    return subjects.filter(element => { return element.votes.length > 0 });
+  getVotedSubjects(subjects, collaboratorId){
+    return subjects.filter(subject => {
+      var userVotes = subject.votes.filter(vote => {
+        return collaboratorId === vote.collaborateurId;
+      })
+      return userVotes.length > 0
+     });
   }
 
 
   componentDidMount() {
-    store.getSubjects()
-    .then(subjects => {
+    usersStore.getCurrentUser().then(user => {
+      store.getSubjects()
+      .then(subjects => {
+        //user.collaboratorId = 123456;
+        var newSubjects = this.getNewSubjects(subjects, user.collaboratorId);
+        var delegatedSubjects = this.getDelegatedSubjects(subjects, user.collaboratorId);
+        var mySubjects = this.getMySubjects(subjects, user.collaboratorId);
+        var votedSubjects = this.getVotedSubjects(subjects, user.collaboratorId);
 
-      var newSubjects = this.getNewSubjects(subjects);
-      var delegatedSubjects = this.getDelegatedSubjects(subjects);
-      var mySubjects = this.getMySubjects(subjects);
-      var votedSubjects = this.getVotedSubjects(subjects);
 
-
-      this.setState({
-        newSubjects: newSubjects,
-        delegatedSubjects: delegatedSubjects,
-        mySubjects: mySubjects,
-        votedSubjects: votedSubjects,
-        isDataResolved: true
+        this.setState({
+          newSubjects: newSubjects,
+          delegatedSubjects: delegatedSubjects,
+          mySubjects: mySubjects,
+          votedSubjects: votedSubjects,
+          collaborator: user,
+          isDataResolved: true
+        });
       });
     });
   }
@@ -94,6 +111,8 @@ export default class Home extends Component {
               <SubjectsList emptyMessage="You didn't vote on any subject yet" subjects={ votedSubjects }></SubjectsList>
             </Panel>
           </Col>
+        </Row>
+        <Row>
           <Col xs={6}>
             <Panel header="Delegated" >
               <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
@@ -101,7 +120,7 @@ export default class Home extends Component {
           </Col>
           <Col xs={6}>
             <Panel header="Your subjects" >
-              <SubjectsList emptyMessage="You don't have created any subject yet" subjects={ mySubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
+              <SubjectsList emptyMessage="You don't have created any subject yet" subjects={ mySubjects }></SubjectsList>
             </Panel>
           </Col>
         </Row>

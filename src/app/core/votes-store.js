@@ -1,20 +1,23 @@
 import { URL as ApiUrl} from '../config/api';
+import ReactHttp from './react-http';
 
 export class VotesStore {
 
-  voteFor(subjectId, propositionId, points = 1) {
+  voteFor(subjectId, propositionArray, pointsArray) {
+    var choices = []
+    propositionArray.forEach(function(proposition, index){
+      choices.push({
+        proposition: {
+          id:proposition.id,
+        },
+        points: pointsArray[index]
+      })
+    })
     const requestBody = {
-      choices: [
-        {
-          proposition: {
-            id: propositionId
-          },
-          points : points
-        }
-      ]
+      choices: choices
     };
 
-    return fetch(`${ApiUrl}votes/${subjectId}`, {
+    return ReactHttp.fetch(`${ApiUrl}votes/${subjectId}`, {
       method: 'put',
       headers: {
         'Accept': 'application/json',
@@ -27,4 +30,3 @@ export class VotesStore {
 }
 
 export default new VotesStore();
-
