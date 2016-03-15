@@ -25,6 +25,7 @@ export default class Home extends Component {
     this.state = {
       subjects: [],
       collaborator: {},
+      delegateSubject: {},
       isDataResolved: false,
       showDelegate: false,
     };
@@ -35,12 +36,20 @@ export default class Home extends Component {
       var userVotes = subject.votes.filter(vote => {
         return collaboratorId === vote.collaborateurId;
       })
-      return userVotes.length === 0
+      var userDelegations = subject.powers.filter(power => {
+        return collaboratorId === power.collaborateurIdFrom;
+      })
+      return userVotes.length === 0 && userDelegations.length === 0;
      });
    }
 
-  getDelegatedSubjects(subjects){
-    return [];
+  getDelegatedSubjects(subjects, collaboratorId){
+    return subjects.filter(subject => {
+      var userDelegations = subject.powers.filter(power => {
+        return collaboratorId === power.collaborateurIdFrom;
+      })
+      return userDelegations.length > 0
+     });
   }
 
   getMySubjects(subjects, collaboratorId){
@@ -58,8 +67,7 @@ export default class Home extends Component {
      });
   }
 
-
-  componentDidMount() {
+  refreshData() {
     usersStore.getCurrentUser().then(user => {
       store.getSubjects()
       .then(subjects => {
@@ -82,12 +90,20 @@ export default class Home extends Component {
     });
   }
 
+  componentDidMount() {
+    this.refreshData();
+  }
+
   openDelegate(subject){
-    this.setState({showDelegate:true});
+    this.setState({
+      showDelegate:true,
+      delegateSubject:subject
+    });
   }
 
   closeDelegate(){
     this.setState({showDelegate:false});
+    this.refreshData();
   }
 
 
@@ -99,7 +115,7 @@ export default class Home extends Component {
     return (
 
       <div>
-        <DelegateModal show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
+        <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
         <Row>
           <Col xs={6}>
             <Panel header="Need an action">
@@ -115,7 +131,7 @@ export default class Home extends Component {
         <Row>
           <Col xs={6}>
             <Panel header="Delegated" >
-              <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
+              <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects }></SubjectsList>
             </Panel>
           </Col>
           <Col xs={6}>
