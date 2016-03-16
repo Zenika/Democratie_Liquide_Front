@@ -13,6 +13,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import NewProposal from './NewProposal';
 import store from '../../../core/subjects-store';
 
+import './index.scss';
+
 export default class NewSubject extends Component {
   constructor(props) {
     super(props);
@@ -23,12 +25,12 @@ export default class NewSubject extends Component {
       propositions: [{}, {}]};
 
   }
-  
+
   render() {
     const { propositions } = this.state;
 
     const createProposal = (proposition, i) => (
-      <NewProposal key={ i } rank={ i } 
+      <NewProposal key={ i } rank={ i }
         onChange={ (i, proposal) => this.setProposal(i, proposal) } />
     );
 
@@ -38,19 +40,19 @@ export default class NewSubject extends Component {
           <fieldset>
             <legend>New Subject</legend>
             <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
-            <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
+            <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
               label="Description" placeholder="Enter Description... (Markdown supported)"/>
 
               <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Max points" placeholder="Choose the max points for each proposition" />
 
             { propositions.map(createProposal) }
-            <Button onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Add proposal</Button>
+            <Button className="new-subject-buttons" onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Ajouter une réponse</Button>
 
             <ButtonToolbar>
               <LinkContainer to={ {pathname: '/'} }>
-                <Button ><Glyphicon glyph="remove" /> Cancel</Button>
+                <Button className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
               </LinkContainer>
-              <ButtonInput type="submit" bsStyle="success" value="Save" />
+              <ButtonInput className="new-subject-buttons" type="submit" bsStyle="success" value="Save" />
             </ButtonToolbar>
           </fieldset>
         </form>

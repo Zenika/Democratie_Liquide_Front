@@ -25,6 +25,7 @@ import App from './components/App';
 import Home from './components/App/Home';
 import NewSubject from './components/App/NewSubject';
 import SubjectDetails from './components/App/SubjectDetails';
+import SubjectResults from './components/App/SubjectResults';
 import Portal from './components/App/Portal'
 import About from './components/App/About';
 
@@ -38,6 +39,7 @@ ReactDOM.render((
       <IndexRoute component={Home} />
       <Route path="subjects/new" component={NewSubject} />
       <Route path="subjects/:id" component={SubjectDetails} />
+      <Route path="subjects/:id/results" component={SubjectResults} />
       <Route path="portal" component={Portal} />
       <Route path="about" component={About} />
     </Route>

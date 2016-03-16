@@ -16,7 +16,7 @@ export class PowersStore {
     })
   }
 
-  deletePower(subject) {
+  removePower(subject) {
     return ReactHttp.fetch(`${ApiUrl}powers/${subject.uuid}`, {
       method: 'DELETE',
       headers: {

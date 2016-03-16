@@ -40,6 +40,11 @@ export default class SubjectsList extends Component {
                 <Glyphicon glyph="transfer"/>
               </Button>
               ) : null}
+              {this.props.onRemoveDelegation ? (
+              <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
+                <Glyphicon glyph="remove"/>
+              </Button>
+              ) : null}
               {this.props.onSelect ? (
               <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
                 <Glyphicon glyph="check"/>
@@ -71,11 +76,18 @@ export default class SubjectsList extends Component {
     e.preventDefault();
     this.props.onDelegate(subject);
   }
+
+  removeDelegation(e, subject){
+    e.preventDefault();
+    this.props.onRemoveDelegation(subject);
+  }
 }
 
 SubjectsList.propTypes = {
   subjects: PropTypes.array.isRequired,
   onSelect: PropTypes.func,
   onDelegate: PropTypes.func,
+  onRemoveDelegation: PropTypes.func,
+  collaborator: PropTypes.object,
   emptyMessage: PropTypes.string
 };

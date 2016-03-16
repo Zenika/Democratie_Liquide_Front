@@ -15,6 +15,7 @@ import DelegateModal from '../DelegateModal'
 
 import store from '../../../core/subjects-store';
 import usersStore from '../../../core/users-store';
+import powersStore from '../../../core/powers-store';
 
 import './index.scss';
 
@@ -101,6 +102,12 @@ export default class Home extends Component {
     });
   }
 
+  removeDelegation(subject){
+    powersStore.removePower(subject).then(()=>{
+      this.refreshData();
+    })
+  }
+
   closeDelegate(){
     this.setState({showDelegate:false});
     this.refreshData();
@@ -124,19 +131,19 @@ export default class Home extends Component {
           </Col>
           <Col xs={6}>
             <Panel header="Voted" >
-              <SubjectsList emptyMessage="You didn't vote on any subject yet" subjects={ votedSubjects }></SubjectsList>
+              <SubjectsList emptyMessage="You didn't vote on any subject yet" subjects={ votedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
             <Panel header="Delegated" >
-              <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects }></SubjectsList>
+              <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
           <Col xs={6}>
             <Panel header="Your subjects" >
-              <SubjectsList emptyMessage="You don't have created any subject yet" subjects={ mySubjects }></SubjectsList>
+              <SubjectsList emptyMessage="You don't have created any subject yet" subjects={ mySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
         </Row>

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Panel, 
+  Panel,
   Input,
   ButtonInput,
   ButtonToolbar,
@@ -10,20 +10,20 @@ import {
 import MarkdownTextArea from '../../../MarkdownTextArea';
 
 export default class NewProposal extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {proposal: {}};
   }
-  
+
   render() {
     const { rank } = this.props;
     return (
-      <Panel>
+      <Panel className="proposal-box">
         <fieldset>
           <legend>Proposal { rank + 1 }</legend>
           <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
-          <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') } 
+          <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
               label="Description" placeholder="Write a proposal description... (Markdown supported)"/>
         </fieldset>
       </Panel>
