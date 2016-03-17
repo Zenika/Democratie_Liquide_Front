@@ -2,11 +2,12 @@ FROM node:4.2.2
 
 WORKDIR /data
 
+ENV NPM_CONFIG_LOGLEVEL warn
 COPY package.json package.json
 RUN npm install --unsafe-perm
 
 COPY . .
 
-RUN npm run build --unsafe-perm
+RUN npm run build release --unsafe-perm
 
-CMD cp -R build/ dist/
+CMD cp -R build/* /dist/

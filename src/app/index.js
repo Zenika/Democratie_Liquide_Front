@@ -33,15 +33,17 @@ import About from './components/App/About';
 const DOM_APP_EL_ID = 'app';
 
 // Render the router
-ReactDOM.render((
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="subjects/new" component={NewSubject} />
-      <Route path="subjects/:id" component={SubjectDetails} />
-      <Route path="subjects/:id/results" component={SubjectResults} />
-      <Route path="portal" component={Portal} />
-      <Route path="about" component={About} />
-    </Route>
-  </Router>
-), document.getElementById(DOM_APP_EL_ID));
+document.addEventListener('DOMContentLoaded',() => {
+    ReactDOM.render((
+    <Router history={hashHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute component={Home} />
+        <Route path="subjects/new" component={NewSubject} />
+        <Route path="subjects/:id" component={SubjectDetails} />
+        <Route path="subjects/:id/results" component={SubjectResults} />
+        <Route path="portal" component={Portal} />
+        <Route path="about" component={About} />
+      </Route>
+    </Router>
+  ), document.getElementById(DOM_APP_EL_ID));
+});
