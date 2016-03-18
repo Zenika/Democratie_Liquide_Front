@@ -23,7 +23,7 @@ export default class SubjectsList extends Component {
 
     const createSubjectEntry = subject => (
         <div key={subject.uuid} className="subject-item">
-          <Row className="coucou">
+          <Row>
             <Col xs={6} lg={7}>
               <span>{subject.title}</span>
             </Col>
@@ -46,7 +46,7 @@ export default class SubjectsList extends Component {
                 </Button>
                 ) : null}
                 <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
-                  <Button className="action-button coucou">
+                  <Button className="action-button">
                     <Glyphicon glyph="zoom-in"/>
                   </Button>
                 </OverlayTrigger>
