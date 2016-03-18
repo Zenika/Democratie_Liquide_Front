@@ -39,11 +39,11 @@ export default class NewSubject extends Component {
         <form onSubmit={e => this.saveSubject(e)} >
           <fieldset>
             <legend>New Subject</legend>
-            <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
+            <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez votre titre..." />
             <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
-              label="Description" placeholder="Enter Description... (Markdown supported)"/>
+              label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
 
-              <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Max points" placeholder="Choose the max points for each proposition" />
+              <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Nombre de points à répartir " placeholder="Nombre de points à répartir en dot voting." />
 
             { propositions.map(createProposal) }
             <Button className="new-subject-buttons" onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Ajouter une réponse</Button>

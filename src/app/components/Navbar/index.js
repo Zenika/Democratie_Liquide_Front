@@ -30,10 +30,7 @@ export default class ZNavbar extends Component {
         <Navbar.Collapse>
           <Nav pullRight>
             <LinkContainer to="/subjects/new">
-              <NavItem><Glyphicon glyph="plus" /> Create</NavItem>
-            </LinkContainer>
-            <LinkContainer to={{ pathname: '/about' }} >
-              <NavItem>about</NavItem>
+              <NavItem><Glyphicon glyph="plus" /> Créer un sujet</NavItem>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>

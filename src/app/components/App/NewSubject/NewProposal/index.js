@@ -22,9 +22,9 @@ export default class NewProposal extends Component {
       <Panel className="proposal-box">
         <fieldset>
           <legend>Proposal { rank + 1 }</legend>
-          <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Title" placeholder="Enter title..." />
+          <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Titre de la proposition..." />
           <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
-              label="Description" placeholder="Write a proposal description... (Markdown supported)"/>
+              label="Description" placeholder="Description de la proposition... (Markdown supporté)"/>
         </fieldset>
       </Panel>
     );

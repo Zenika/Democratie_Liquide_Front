@@ -23,33 +23,43 @@ export default class SubjectsList extends Component {
 
     const createSubjectEntry = subject => (
         <div key={subject.uuid} className="subject-item">
-          <Row>
+          <Row className="coucou">
             <Col xs={6} lg={7}>
               <span>{subject.title}</span>
             </Col>
             <Col xs={6} lg={5}>
               <Badge>{subject.votes.length} votes</Badge>
+              {subject.delegation ? (
+              <Badge style={{"marginLeft":'10px'}}>
+                {subject.delegation}
+              </Badge>
+              ) : null}
+              {subject.delegatedToMe ? (
+              <Badge style={{"marginLeft":'10px'}}>
+                {subject.delegatedToMe} délégation{subject.delegatedToMe > 1 ? 's' : ''}
+              </Badge>
+              ) : null}
               <ButtonGroup className="pull-right">
-              <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
-                <Button className="action-button">
-                  <Glyphicon glyph="zoom-in"/>
+                {this.props.onDelegate && !subject.delegatedToMe ? (
+                <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
+                  <Glyphicon glyph="transfer"/>
                 </Button>
-              </OverlayTrigger>
-              {this.props.onDelegate ? (
-              <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
-                <Glyphicon glyph="transfer"/>
-              </Button>
-              ) : null}
-              {this.props.onRemoveDelegation ? (
-              <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
-                <Glyphicon glyph="remove"/>
-              </Button>
-              ) : null}
-              {this.props.onSelect ? (
-              <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
-                <Glyphicon glyph="check"/>
-              </Button>
-              ) : null}
+                ) : null}
+                <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
+                  <Button className="action-button coucou">
+                    <Glyphicon glyph="zoom-in"/>
+                  </Button>
+                </OverlayTrigger>
+                {this.props.onRemoveDelegation ? (
+                <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
+                  <Glyphicon glyph="remove"/>
+                </Button>
+                ) : null}
+                {this.props.onSelect ? (
+                <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
+                  <Glyphicon glyph="check"/>
+                </Button>
+                ) : null}
               </ButtonGroup>
             </Col>
           </Row>

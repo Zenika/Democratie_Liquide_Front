@@ -32,7 +32,8 @@ export default class Home extends Component {
     };
   }
 
-  getNewSubjects(subjects, collaboratorId){
+  getNewSubjects(subjects, collaborator){
+    var collaboratorId = collaborator.collaboratorId;
     return subjects.filter(subject => {
       var userVotes = subject.votes.filter(vote => {
         return collaboratorId === vote.collaborateurId;
@@ -40,7 +41,16 @@ export default class Home extends Component {
       var userDelegations = subject.powers.filter(power => {
         return collaboratorId === power.collaborateurIdFrom;
       })
-      return userVotes.length === 0 && userDelegations.length === 0;
+      if(userVotes.length === 0 && userDelegations.length === 0){
+        var delegatedToMe = subject.powers.filter(power => {
+          return collaborator.email === power.collaborateurIdTo;
+        })
+        if (delegatedToMe.length > 0){
+          subject.delegatedToMe = delegatedToMe.length;
+        }
+        return true;
+      };
+      return false;
      });
    }
 
@@ -49,6 +59,9 @@ export default class Home extends Component {
       var userDelegations = subject.powers.filter(power => {
         return collaboratorId === power.collaborateurIdFrom;
       })
+      if(userDelegations.length > 0){
+        subject.delegation = userDelegations[0].collaborateurIdTo.replace('@zenika.com', '');
+      }
       return userDelegations.length > 0
      });
   }
@@ -73,7 +86,7 @@ export default class Home extends Component {
       store.getSubjects()
       .then(subjects => {
         //user.collaboratorId = 123456;
-        var newSubjects = this.getNewSubjects(subjects, user.collaboratorId);
+        var newSubjects = this.getNewSubjects(subjects, user);
         var delegatedSubjects = this.getDelegatedSubjects(subjects, user.collaboratorId);
         var mySubjects = this.getMySubjects(subjects, user.collaboratorId);
         var votedSubjects = this.getVotedSubjects(subjects, user.collaboratorId);
@@ -125,25 +138,25 @@ export default class Home extends Component {
         <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
         <Row>
           <Col xs={6}>
-            <Panel header="Need an action">
-              <SubjectsList subjects={ newSubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
+            <Panel header="A traiter">
+              <SubjectsList emptyMessage="Rien à traiter" subjects={ newSubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
             </Panel>
           </Col>
           <Col xs={6}>
-            <Panel header="Voted" >
-              <SubjectsList emptyMessage="You didn't vote on any subject yet" subjects={ votedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+            <Panel header="Voté" >
+              <SubjectsList emptyMessage="Vous n'avez pas encore voté sur un sujet" subjects={ votedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
-            <Panel header="Delegated" >
-              <SubjectsList emptyMessage="You don't have any delegated subject" subjects={ delegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+            <Panel header="Délégué" >
+              <SubjectsList emptyMessage="Vous n'avez pas encore délégué de sujet" subjects={ delegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
           <Col xs={6}>
-            <Panel header="Your subjects" >
-              <SubjectsList emptyMessage="You don't have created any subject yet" subjects={ mySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+            <Panel header="Vos sujets" >
+              <SubjectsList emptyMessage="Vous n'avez pas encore créé de sujet" subjects={ mySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
         </Row>
