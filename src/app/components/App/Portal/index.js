@@ -16,7 +16,7 @@ export default class Portal extends Component {
 
 
   getGoogleUrl(){
-    return 'http://localhost:8080/signin/google';
+    return '/signin/google';
   }
 
   render() {

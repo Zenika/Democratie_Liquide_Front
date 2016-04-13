@@ -7,9 +7,7 @@ export class VotesStore {
     var choices = []
     propositionArray.forEach(function(proposition, index){
       choices.push({
-        proposition: {
-          id:proposition.id,
-        },
+        propositionId:proposition.id,
         points: pointsArray[index]
       })
     })

@@ -32,8 +32,8 @@ export default class Home extends Component {
     };
   }
 
-  getNewSubjects(subjects, collaborator){
-    var collaboratorId = collaborator.collaboratorId;
+  getNewSubjects(subjects, collaboratorId){
+    var collaboratorId = collaboratorId;
     return subjects.filter(subject => {
       var userVotes = subject.votes.filter(vote => {
         return collaboratorId === vote.collaborateurId;
@@ -43,7 +43,7 @@ export default class Home extends Component {
       })
       if(userVotes.length === 0 && userDelegations.length === 0){
         var delegatedToMe = subject.powers.filter(power => {
-          return collaborator.email === power.collaborateurIdTo;
+          return collaboratorId === power.collaborateurIdTo;
         })
         if (delegatedToMe.length > 0){
           subject.delegatedToMe = delegatedToMe.length;
@@ -86,10 +86,10 @@ export default class Home extends Component {
       store.getSubjects()
       .then(subjects => {
         //user.collaboratorId = 123456;
-        var newSubjects = this.getNewSubjects(subjects, user);
-        var delegatedSubjects = this.getDelegatedSubjects(subjects, user.collaboratorId);
-        var mySubjects = this.getMySubjects(subjects, user.collaboratorId);
-        var votedSubjects = this.getVotedSubjects(subjects, user.collaboratorId);
+        var newSubjects = this.getNewSubjects(subjects, user.email);
+        var delegatedSubjects = this.getDelegatedSubjects(subjects, user.email);
+        var mySubjects = this.getMySubjects(subjects, user.email);
+        var votedSubjects = this.getVotedSubjects(subjects, user.email);
 
 
         this.setState({
