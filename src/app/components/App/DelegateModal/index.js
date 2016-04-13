@@ -37,6 +37,7 @@ export default class DelegateModal extends Component {
         'sylvain.revereault@zenika.com',
         'herminael.rougier@zenika.com	',
         'erwann.thebault@zenika.com',
+        'sandra.parlant@zenika.com',
         'benoit.travers@zenika.com'
       ]
     };
