@@ -13,7 +13,9 @@ export class PowersStore {
       body: JSON.stringify({
         collaborateurIdTo:delegatingTo,
       })
-    })
+    }).then(function(response) {
+      return response;
+    });
   }
 
   removePower(subject) {
@@ -23,6 +25,8 @@ export class PowersStore {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
+    }).then(function(response) {
+      return response;
     });
   }
 

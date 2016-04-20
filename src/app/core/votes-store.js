@@ -22,6 +22,8 @@ export class VotesStore {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(requestBody)
+    }).then(function(response) {
+      return response;
     });
   }
 

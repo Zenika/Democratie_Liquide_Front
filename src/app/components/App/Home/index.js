@@ -18,8 +18,10 @@ import usersStore from '../../../core/users-store';
 import powersStore from '../../../core/powers-store';
 
 import './index.scss';
+import MessageManager from '../MessageManager';
+import Messagebar from '../../Messagebar';
 
-export default class Home extends Component {
+export default class Home extends MessageManager {
 
   constructor(props) {
     super(props);
@@ -116,8 +118,9 @@ export default class Home extends Component {
   }
 
   removeDelegation(subject){
-    powersStore.removePower(subject).then(()=>{
+    powersStore.removePower(subject).then((response)=>{
       this.refreshData();
+      this.displayMessage(response, "Délégation supprimée");
     })
   }
 
@@ -135,6 +138,7 @@ export default class Home extends Component {
     return (
 
       <div>
+        <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
         <Row>
           <Col xs={6}>

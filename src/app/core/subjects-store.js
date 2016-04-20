@@ -30,9 +30,12 @@ export class SubjectsStore {
       },
       body: JSON.stringify(subject)
     }).then(function(response) {
-      const location= response.headers.get('location');
-      const splittedLocation = location.split('/');
-      return splittedLocation[splittedLocation.length -1];
+      if (response.error == false) {
+        const location= response.headers.get('location');
+        const splittedLocation = location.split('/');
+        response.subjectId = splittedLocation[splittedLocation.length -1];
+      }
+      return response;
     });
   }
 

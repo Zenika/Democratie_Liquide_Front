@@ -10,8 +10,10 @@ import {
 } from 'react-bootstrap';
 
 import './index.scss';
+import MessageManager from '../MessageManager';
+import Messagebar from '../../Messagebar';
 
-export default class DelegateModal extends Component {
+export default class DelegateModal extends MessageManager {
 
   constructor(props){
     super(props);
@@ -44,13 +46,14 @@ export default class DelegateModal extends Component {
   }
 
   close() {
+    this.handleAlertDismiss();
     this.props.onClose();
   }
 
   selectEmail(e) {
     var email = e.target.textContent;
-    powersStore.givePower(this.props.subject, email).then( () => {
-      this.close();
+    powersStore.givePower(this.props.subject, email).then( (response) => {
+      this.displayMessage(response, "Délégation effectuée à " + email);
     })
   }
 
@@ -66,6 +69,7 @@ export default class DelegateModal extends Component {
             <Modal.Title>Délégation</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
             <p>Choisissez la personne à qui vous souhaitez déléguer votre vote.</p>
             <ul>
               {this.state.emails.map(renderEmail)}

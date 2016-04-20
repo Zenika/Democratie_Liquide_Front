@@ -12,22 +12,24 @@ import MarkdownTextArea from '../../MarkdownTextArea';
 import { LinkContainer } from 'react-router-bootstrap';
 import NewProposal from './NewProposal';
 import store from '../../../core/subjects-store';
+import MessageManager from '../MessageManager';
+import Messagebar from '../../Messagebar';
 
 import './index.scss';
 
-export default class NewSubject extends Component {
+export default class NewSubject extends MessageManager {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
       description: '',
       maxPoints: 1,
-      propositions: [{}, {}]};
-
+      propositions: [{}, {}]
+    };
   }
 
   render() {
-    const { propositions } = this.state;
+    const { propositions, isMessageSuccessVisible, isMessageDangerVisible, message } = this.state;
 
     const createProposal = (proposition, i) => (
       <NewProposal key={ i } rank={ i }
@@ -36,6 +38,7 @@ export default class NewSubject extends Component {
 
     return (
       <Well>
+        <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <form onSubmit={e => this.saveSubject(e)} >
           <fieldset>
             <legend>New Subject</legend>
@@ -95,7 +98,13 @@ export default class NewSubject extends Component {
       maxPoints,
       propositions
     })
-    .then(subjectId => this.context.router.push(`/subjects/${subjectId}`));
+    .then((response) => {
+      this.displayMessage(response, "Sujet créé");
+      if (response.error == false) {
+        var subjectId = response.subjectId;
+        this.context.router.push(`/subjects/${subjectId}`);
+      }
+    });
   }
 }
 NewSubject.contextTypes= {

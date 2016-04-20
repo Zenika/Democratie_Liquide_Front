@@ -10,8 +10,10 @@ import {
 } from 'react-bootstrap';
 import ProposalDetails from './ProposalDetails';
 import Spinner from '../../Spinner';
+import MessageManager from '../MessageManager';
+import Messagebar from '../../Messagebar';
 
-export default class SubjectDetails extends Component {
+export default class SubjectDetails extends MessageManager {
 
   constructor(props) {
     super(props);
@@ -49,17 +51,7 @@ export default class SubjectDetails extends Component {
       return <Spinner />;
     }
 
-    const displayAlert = () => {
-      if (isAlertVisible) {
-        return (
-          <Alert bsStyle="success" onDismiss={() => this.handleAlertDismiss()} dismissAfter={5000} className="fixed">
-            <h4>You vote!</h4>
-            <p>Thank you very much.</p>
-          </Alert>
-        )
-      }
-    };
-    const createProposition = (proposition, index) => (
+        const createProposition = (proposition, index) => (
       <ProposalDetails key={ index }
         leftPoints= { leftPoints }
         proposal={ proposition }
@@ -68,7 +60,7 @@ export default class SubjectDetails extends Component {
     );
     return (
       <Well>
-        { displayAlert() }
+        <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <h2>{subject.title}</h2>
         <ReactMarkdown source={ subject.description } />
         {subject.propositions.map(createProposition)}
@@ -95,16 +87,10 @@ export default class SubjectDetails extends Component {
     const propositions = this.state.subject.propositions;
     const pointsArray = this.state.proposalPointsArray;
     votesStore.voteFor(id, propositions, pointsArray)
-    .then(() => {
-      this.setState({
-        isAlertVisible : true
-      });
+    .then((response) => {
+      this.displayMessage(response, "Vote effectué");
     });
   }
 
-  handleAlertDismiss() {
-    this.setState({
-      isAlertVisible : false
-    });
-  }
+
 }
