@@ -21,6 +21,21 @@ export default class SubjectsList extends Component {
   render() {
     const { subjects } = this.props;
 
+    const showSubjectDetails = subject => (
+      <Popover id="subjectDescription">
+          <h3>{subject.title} : </h3>
+          <ReactMarkdown source={ subject.description } />
+          {subject.propositions.map(showProposalDetails)}
+      </Popover>
+    );
+
+    const showProposalDetails = (proposal, index) => (
+        <div key={index}>
+          <h3>{proposal.title} : </h3>
+          <ReactMarkdown source={ proposal.description } />
+        </div>
+    );
+
     const createSubjectEntry = subject => (
         <div key={subject.uuid} className="subject-item">
           <Row>
@@ -45,7 +60,7 @@ export default class SubjectsList extends Component {
                   <Glyphicon glyph="transfer"/>
                 </Button>
                 ) : null}
-                <OverlayTrigger placement="top" trigger="click" overlay={(<Popover id="subjectDescription"><ReactMarkdown source={ subject.description } /></Popover>)}>
+                <OverlayTrigger placement="left" trigger="click" overlay={showSubjectDetails(subject)}>
                   <Button className="action-button">
                     <Glyphicon glyph="zoom-in"/>
                   </Button>
@@ -91,6 +106,7 @@ export default class SubjectsList extends Component {
     e.preventDefault();
     this.props.onRemoveDelegation(subject);
   }
+
 }
 
 SubjectsList.propTypes = {
