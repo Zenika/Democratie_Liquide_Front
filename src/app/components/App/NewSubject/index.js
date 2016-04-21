@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  Well,
+  Modal,
   Input,
   ButtonInput,
   ButtonToolbar,
   Button,
-  Glyphicon
+  Glyphicon,
+  DropdownButton,
+  MenuItem,
+  FormControl
 } from 'react-bootstrap';
 import MarkdownTextArea from '../../MarkdownTextArea';
 
@@ -24,6 +27,7 @@ export default class NewSubject extends MessageManager {
       title: '',
       description: '',
       maxPoints: 1,
+      category: undefined,
       propositions: [{}, {}]
     };
   }
@@ -37,30 +41,53 @@ export default class NewSubject extends MessageManager {
     );
 
     return (
-      <Well>
-        <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
-        <form onSubmit={e => this.saveSubject(e)} >
-          <fieldset>
-            <legend>New Subject</legend>
-            <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez votre titre..." />
-            <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
-              label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
+        <Modal show={this.props.show} onHide={()=>this.close()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Délégation</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
+              <form onSubmit={e => this.saveSubject(e)} >
+                <fieldset>
+                  <legend>New Subject</legend>
+                  <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez votre titre..." />
+                  <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
+                    label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
 
-              <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Nombre de points à répartir " placeholder="Nombre de points à répartir en dot voting." />
+                    <DropdownButton title={this.state.category == undefined ? "Catégorie..." : this.state.category.title} id="bg-nested-dropdown" onSelect={(eventKey,event) => this.change(event)}>
+                            <MenuItem eventKey="-1">Aucune</MenuItem>
+                      {
+                        this.props.categories.map( (c,i) =>
+                            <MenuItem eventKey={i}>{c.title}</MenuItem>
+                        )
+                      }
+                    </DropdownButton>
 
-            { propositions.map(createProposal) }
-            <Button className="new-subject-buttons" onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Ajouter une réponse</Button>
+                    <Input onChange={ e => this.handleChange(e, 'maxPoints') } type="number" defaultValue="1" label="Nombre de points à répartir " placeholder="Nombre de points à répartir en dot voting." />
 
-            <ButtonToolbar>
-              <LinkContainer to={ {pathname: '/'} }>
-                <Button className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
-              </LinkContainer>
-              <ButtonInput className="new-subject-buttons" type="submit" bsStyle="success" value="Save" />
-            </ButtonToolbar>
-          </fieldset>
-        </form>
-      </Well>
+                  { propositions.map(createProposal) }
+                  <Button className="new-subject-buttons" onClick={ e => this.addProposal(e) }><Glyphicon glyph="plus" /> Ajouter une réponse</Button>
+
+                  <ButtonToolbar>
+                    <LinkContainer to={ {pathname: '/'} }>
+                      <Button className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
+                    </LinkContainer>
+                    <ButtonInput className="new-subject-buttons" type="submit" bsStyle="success" value="Save" />
+                  </ButtonToolbar>
+                </fieldset>
+              </form>
+            </Modal.Body>
+        </Modal>
     );
+  }
+
+  change(event){
+      this.setState({category: event < 0 ? undefined : this.props.categories[event]});
+  }
+
+  close() {
+    this.handleAlertDismiss();
+    this.props.onClose();
   }
 
   handleChange(e, fieldName) {
@@ -89,6 +116,7 @@ export default class NewSubject extends MessageManager {
       title,
       description,
       maxPoints,
+      category,
       propositions
     } = this.state;
 
@@ -96,17 +124,16 @@ export default class NewSubject extends MessageManager {
       title,
       description,
       maxPoints,
+      category,
       propositions
     })
     .then((response) => {
       this.displayMessage(response, "Sujet créé");
-      if (response.error == false) {
+      if (!response.isInError) {
         var subjectId = response.subjectId;
+        console.log("redirect")
         this.context.router.push(`/subjects/${subjectId}`);
       }
     });
   }
 }
-NewSubject.contextTypes= {
-  router: PropTypes.object.isRequired
-};

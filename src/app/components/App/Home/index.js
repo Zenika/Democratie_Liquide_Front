@@ -5,17 +5,22 @@ import {
   Button,
   Glyphicon,
   Row,
-  Col
+  Col,
+  DropdownButton,
+  MenuItem
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import SubjectsList from '../SubjectsList';
 import Spinner from '../../Spinner';
 import DelegateModal from '../DelegateModal'
+import NewSubject from '../NewSubject'
+import NewCategory from '../NewCategory'
 
-import store from '../../../core/subjects-store';
+import subjectStore from '../../../core/subjects-store';
 import usersStore from '../../../core/users-store';
 import powersStore from '../../../core/powers-store';
+import categoriesStore from '../../../core/categories-store';
 
 import './index.scss';
 import MessageManager from '../MessageManager';
@@ -85,7 +90,7 @@ export default class Home extends MessageManager {
 
   refreshData() {
     usersStore.getCurrentUser().then(user => {
-      store.getSubjects()
+      subjectStore.getSubjects()
       .then(subjects => {
         //user.collaboratorId = 123456;
         var newSubjects = this.getNewSubjects(subjects, user.email);
@@ -93,15 +98,22 @@ export default class Home extends MessageManager {
         var mySubjects = this.getMySubjects(subjects, user.email);
         var votedSubjects = this.getVotedSubjects(subjects, user.email);
 
-
         this.setState({
           newSubjects: newSubjects,
           delegatedSubjects: delegatedSubjects,
           mySubjects: mySubjects,
           votedSubjects: votedSubjects,
-          collaborator: user,
-          isDataResolved: true
+          collaborator: user
         });
+
+        categoriesStore.getCategories()
+          .then(categories => {
+            this.setState({
+              categories: categories,
+              isDataResolved: true
+            });
+          });
+
       });
     });
   }
@@ -129,17 +141,46 @@ export default class Home extends MessageManager {
     this.refreshData();
   }
 
+  closeNewSubject(){
+    this.setState({showNewSubject:false});
+    this.refreshData();
+  }
+
+  closeNewCategory(){
+    this.setState({showNewCategory:false});
+    this.refreshData();
+  }
+
 
   render() {
-    const { newSubjects, delegatedSubjects, mySubjects, votedSubjects, isDataResolved } = this.state;
+    const { newSubjects, delegatedSubjects, mySubjects, votedSubjects, categories, isDataResolved } = this.state;
     if (!isDataResolved) {
       return <Spinner />;
     }
     return (
-
+     <panel>
+      <div>
+        <row>
+          <Col xs={6}>
+          </Col>
+          <Col xs={6}>
+              <DropdownButton title="Catégories" id="bg-nested-dropdown">
+                  {
+                    this.state.categories.map( (c,i) =>
+                      <MenuItem eventKey={i}>{c.title}</MenuItem>
+                    )
+                  }
+              </DropdownButton>
+              <Button onClick={()=>this.setState({showNewSubject:true})}><Glyphicon glyph="plus" /> Créer un sujet</Button>
+              <Button onClick={()=>this.setState({showNewCategory:true})}><Glyphicon glyph="plus" /> Créer une nouvelle catégorie</Button>
+          </Col>
+        </row>
+      </div>
       <div>
         <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
+        <NewSubject show={this.state.showNewSubject} onClose={()=> this.closeNewSubject()} categories={this.state.categories}/>
+        <NewCategory show={this.state.showNewCategory} onClose={()=> this.closeNewCategory()}/>
         <Row>
           <Col xs={6}>
             <Panel header="A traiter">
@@ -165,6 +206,7 @@ export default class Home extends MessageManager {
           </Col>
         </Row>
       </div>
+     </panel>
     );
   }
 }

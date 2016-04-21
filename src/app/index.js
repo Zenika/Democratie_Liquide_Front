@@ -23,7 +23,6 @@ import {
 import ZNavbar from './components/Navbar';
 import App from './components/App';
 import Home from './components/App/Home';
-import NewSubject from './components/App/NewSubject';
 import SubjectDetails from './components/App/SubjectDetails';
 import SubjectResults from './components/App/SubjectResults';
 import Portal from './components/App/Portal'
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded',() => {
     <Router history={hashHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
-        <Route path="subjects/new" component={NewSubject} />
         <Route path="subjects/:id" component={SubjectDetails} />
         <Route path="subjects/:id/results" component={SubjectResults} />
         <Route path="portal" component={Portal} />

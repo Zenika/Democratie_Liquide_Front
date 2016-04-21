@@ -27,13 +27,6 @@ export default class ZNavbar extends Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <LinkContainer to="/subjects/new">
-              <NavItem><Glyphicon glyph="plus" /> Créer un sujet</NavItem>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
       </Navbar>
     );
   }
