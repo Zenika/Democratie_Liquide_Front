@@ -6,8 +6,6 @@ import {
   Glyphicon,
   Row,
   Col,
-  DropdownButton,
-  MenuItem
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -16,6 +14,7 @@ import Spinner from '../../Spinner';
 import DelegateModal from '../DelegateModal'
 import NewSubject from '../NewSubject'
 import NewCategory from '../NewCategory'
+import ActionBar  from '../ActionBar'
 
 import subjectStore from '../../../core/subjects-store';
 import usersStore from '../../../core/users-store';
@@ -147,13 +146,13 @@ export default class Home extends MessageManager {
     this.refreshData();
   }
 
-  closeNewSubject(){
-    this.setState({showNewSubject:false});
+  manageNewSubject(value){
+    this.setState({showNewSubject:value});
     this.refreshData();
   }
 
-  closeNewCategory(){
-    this.setState({showNewCategory:false});
+  manageNewCategory(value){
+    this.setState({showNewCategory:value});
     this.refreshData();
   }
 
@@ -173,16 +172,16 @@ export default class Home extends MessageManager {
     } else {
       this.setState({
         newSubjects: this.state.completeNewSubjects.filter(s => {
-              return s.category && s.category.title === key;
+              return s.category && s.category.uuid === key;
             }),
         delegatedSubjects: this.state.completeDelegatedSubjects.filter(s => {
-              return s.category && s.category.title === key;
+              return s.category && s.category.uuid === key;
             }),
         mySubjects: this.state.completeMySubjects.filter(s => {
-              return s.category && s.category.title === key;
+              return s.category && s.category.uuid === key;
             }),
         votedSubjects: this.state.completeVotedSubjects.filter(s => {
-              return s.category && s.category.title === key;
+              return s.category && s.category.uuid === key;
             })
       });
     }
@@ -196,29 +195,12 @@ export default class Home extends MessageManager {
     }
     return (
      <panel>
-      <div>
-        <row>
-          <Col xs={6}>
-          </Col>
-          <Col xs={6}>
-              <DropdownButton title={this.state.selectedCategory} id="bg-nested-dropdown" >
-                    <MenuItem eventKey="ALL" onSelect={(e,key) => this.selectCategory(key)}>ALL</MenuItem>
-                  {
-                    this.state.categories.map( (c,i) =>
-                      <MenuItem eventKey={c.title} onSelect={(e,key) => this.selectCategory(key)}>{c.title}</MenuItem>
-                    )
-                  }
-              </DropdownButton>
-              <Button onClick={()=>this.setState({showNewSubject:true})}><Glyphicon glyph="plus" /> Créer un sujet</Button>
-              <Button onClick={()=>this.setState({showNewCategory:true})}><Glyphicon glyph="plus" /> Créer une nouvelle catégorie</Button>
-          </Col>
-        </row>
-      </div>
+      <ActionBar manageNewSubject = {this.manageNewSubject} manageNewCategory = {this.manageNewCategory} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory} selectCategory = {(key) => this.selectCategory(key)} />
       <div>
         <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
-        <NewSubject show={this.state.showNewSubject} onClose={()=> this.closeNewSubject()} categories={this.state.categories}/>
-        <NewCategory show={this.state.showNewCategory} onClose={()=> this.closeNewCategory()}/>
+        <NewSubject show={this.state.showNewSubject} onClose={()=> this.manageNewSubject(false)} categories={this.state.categories}/>
+        <NewCategory show={this.state.showNewCategory} onClose={()=> this.manageNewCategory(false)}/>
         <Row>
           <Col xs={6}>
             <Panel header="A traiter">
