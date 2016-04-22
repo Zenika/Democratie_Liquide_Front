@@ -34,6 +34,7 @@ export default class Home extends MessageManager {
       subjects: [],
       collaborator: {},
       delegateSubject: {},
+      selectedCategory: "ALL",
       isDataResolved: false,
       showDelegate: false,
     };
@@ -92,7 +93,6 @@ export default class Home extends MessageManager {
     usersStore.getCurrentUser().then(user => {
       subjectStore.getSubjects()
       .then(subjects => {
-        //user.collaboratorId = 123456;
         var newSubjects = this.getNewSubjects(subjects, user.email);
         var delegatedSubjects = this.getDelegatedSubjects(subjects, user.email);
         var mySubjects = this.getMySubjects(subjects, user.email);
@@ -103,8 +103,14 @@ export default class Home extends MessageManager {
           delegatedSubjects: delegatedSubjects,
           mySubjects: mySubjects,
           votedSubjects: votedSubjects,
+          completeNewSubjects: newSubjects,
+          completeDelegatedSubjects: delegatedSubjects,
+          completeMySubjects: mySubjects,
+          completeVotedSubjects: votedSubjects,
           collaborator: user
         });
+
+        this.filterSubjectsByCategory(this.state.selectedCategory);
 
         categoriesStore.getCategories()
           .then(categories => {
@@ -151,9 +157,40 @@ export default class Home extends MessageManager {
     this.refreshData();
   }
 
+  selectCategory(key) {
+    this.setState({selectedCategory:key});
+    this.filterSubjectsByCategory(key);
+  }
+
+  filterSubjectsByCategory(key) {
+    if (key == "ALL") {
+      this.setState({
+        newSubjects: this.state.completeNewSubjects,
+        delegatedSubjects: this.state.completeDelegatedSubjects,
+        mySubjects: this.state.completeMySubjects,
+        votedSubjects: this.state.completeVotedSubjects
+      });
+    } else {
+      this.setState({
+        newSubjects: this.state.completeNewSubjects.filter(s => {
+              return s.category && s.category.title === key;
+            }),
+        delegatedSubjects: this.state.completeDelegatedSubjects.filter(s => {
+              return s.category && s.category.title === key;
+            }),
+        mySubjects: this.state.completeMySubjects.filter(s => {
+              return s.category && s.category.title === key;
+            }),
+        votedSubjects: this.state.completeVotedSubjects.filter(s => {
+              return s.category && s.category.title === key;
+            })
+      });
+    }
+  }
+
 
   render() {
-    const { newSubjects, delegatedSubjects, mySubjects, votedSubjects, categories, isDataResolved } = this.state;
+    const { completeNewSubjects, completeDelegatedSubjects, completeMySubjects, completeVotedSubjects, newSubjects, delegatedSubjects, mySubjects, votedSubjects, categories, selectedCategory, isDataResolved } = this.state;
     if (!isDataResolved) {
       return <Spinner />;
     }
@@ -164,10 +201,11 @@ export default class Home extends MessageManager {
           <Col xs={6}>
           </Col>
           <Col xs={6}>
-              <DropdownButton title="Catégories" id="bg-nested-dropdown">
+              <DropdownButton title={this.state.selectedCategory} id="bg-nested-dropdown" >
+                    <MenuItem eventKey="ALL" onSelect={(e,key) => this.selectCategory(key)}>ALL</MenuItem>
                   {
                     this.state.categories.map( (c,i) =>
-                      <MenuItem eventKey={i}>{c.title}</MenuItem>
+                      <MenuItem eventKey={c.title} onSelect={(e,key) => this.selectCategory(key)}>{c.title}</MenuItem>
                     )
                   }
               </DropdownButton>

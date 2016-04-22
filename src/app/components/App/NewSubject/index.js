@@ -54,11 +54,11 @@ export default class NewSubject extends MessageManager {
                   <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
                     label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
 
-                    <DropdownButton title={this.state.category == undefined ? "Catégorie..." : this.state.category.title} id="bg-nested-dropdown" onSelect={(eventKey,event) => this.change(event)}>
-                            <MenuItem eventKey="-1">Aucune</MenuItem>
+                    <DropdownButton title={this.state.category == undefined ? "Catégorie..." : this.state.category.title} id="bg-nested-dropdown">
+                            <MenuItem eventKey="-1" onSelect={(e, key) => this.change(key)}>Aucune</MenuItem>
                       {
                         this.props.categories.map( (c,i) =>
-                            <MenuItem eventKey={i}>{c.title}</MenuItem>
+                            <MenuItem eventKey={i} onSelect={(e, key) => this.change(key)}>{c.title}</MenuItem>
                         )
                       }
                     </DropdownButton>
@@ -137,3 +137,6 @@ export default class NewSubject extends MessageManager {
     });
   }
 }
+NewSubject.contextTypes= {
+  router: PropTypes.object.isRequired
+};
