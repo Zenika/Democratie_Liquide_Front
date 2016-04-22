@@ -11,7 +11,7 @@ export class PowersStore {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        collaborateurIdTo:delegatingTo,
+        collaboratorIdTo:delegatingTo,
       })
     }).then(function(response) {
       return response;

@@ -43,14 +43,14 @@ export default class Home extends MessageManager {
     var collaboratorId = collaboratorId;
     return subjects.filter(subject => {
       var userVotes = subject.votes.filter(vote => {
-        return collaboratorId === vote.collaborateurId;
+        return collaboratorId === vote.collaboratorId;
       })
       var userDelegations = subject.powers.filter(power => {
-        return collaboratorId === power.collaborateurIdFrom;
+        return collaboratorId === power.collaboratorIdFrom;
       })
       if(userVotes.length === 0 && userDelegations.length === 0){
         var delegatedToMe = subject.powers.filter(power => {
-          return collaboratorId === power.collaborateurIdTo;
+          return collaboratorId === power.collaboratorIdTo;
         })
         if (delegatedToMe.length > 0){
           subject.delegatedToMe = delegatedToMe.length;
@@ -64,10 +64,10 @@ export default class Home extends MessageManager {
   getDelegatedSubjects(subjects, collaboratorId){
     return subjects.filter(subject => {
       var userDelegations = subject.powers.filter(power => {
-        return collaboratorId === power.collaborateurIdFrom;
+        return collaboratorId === power.collaboratorIdFrom;
       })
       if(userDelegations.length > 0){
-        subject.delegation = userDelegations[0].collaborateurIdTo.replace('@zenika.com', '');
+        subject.delegation = userDelegations[0].collaboratorIdTo.replace('@zenika.com', '');
       }
       return userDelegations.length > 0
      });
@@ -75,14 +75,14 @@ export default class Home extends MessageManager {
 
   getMySubjects(subjects, collaboratorId){
     return subjects.filter(element => {
-      return element.collaborateurId === collaboratorId
+      return element.collaboratorId === collaboratorId
     });
   }
 
   getVotedSubjects(subjects, collaboratorId){
     return subjects.filter(subject => {
       var userVotes = subject.votes.filter(vote => {
-        return collaboratorId === vote.collaborateurId;
+        return collaboratorId === vote.collaboratorId;
       })
       return userVotes.length > 0
      });

@@ -21,7 +21,7 @@ export class SubjectsStore {
   }
 
   createSubject(subject) {
-    subject.collaborateurId = window.localStorage.getItem('user');
+    subject.collaboratorId = window.localStorage.getItem('user');
     return ReactHttp.fetch(`${ApiUrl}subjects/`, {
       method: 'post',
       headers: {
