@@ -11,7 +11,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import SubjectsList from '../SubjectsList';
 import Spinner from '../../Spinner';
-import DelegateModal from '../DelegateModal'
+import DelegateSubjectModal from '../DelegateSubjectModal'
+import DelegateCategoryModal from '../DelegateCategoryModal'
 import NewSubject from '../NewSubject'
 import NewCategory from '../NewCategory'
 import ActionBar  from '../ActionBar'
@@ -35,7 +36,8 @@ export default class Home extends MessageManager {
       delegateSubject: {},
       selectedCategory: "ALL",
       isDataResolved: false,
-      showDelegate: false,
+      showSubjectDelegate: false,
+      showCategoryDelegate: false
     };
   }
 
@@ -127,11 +129,29 @@ export default class Home extends MessageManager {
     this.refreshData();
   }
 
-  openDelegate(subject){
+  openSubjectDelegate(subject) {
     this.setState({
-      showDelegate:true,
       delegateSubject:subject
     });
+    this.manageSubjectDelegate(true);
+  }
+
+  manageSubjectDelegate(value){
+    this.setState({
+      showSubjectDelegate:value
+    });
+    if (!value) {
+      this.refreshData();
+    }
+  }
+
+  manageCategoryDelegate(value){
+    this.setState({
+      showCategoryDelegate:value
+    });
+    if (!value) {
+      this.refreshData();
+    }
   }
 
   removeDelegation(subject){
@@ -139,11 +159,6 @@ export default class Home extends MessageManager {
       this.refreshData();
       this.displayMessage(response, "Délégation supprimée");
     })
-  }
-
-  closeDelegate(){
-    this.setState({showDelegate:false});
-    this.refreshData();
   }
 
   manageNewSubject(value){
@@ -195,16 +210,17 @@ export default class Home extends MessageManager {
     }
     return (
      <panel>
-      <ActionBar manageNewSubject = {this.manageNewSubject} manageNewCategory = {this.manageNewCategory} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory} selectCategory = {(key) => this.selectCategory(key)} />
+      <ActionBar manageNewSubject = {(value) => this.manageNewSubject(value)} manageNewCategory = {(value) => this.manageNewCategory(value)} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory}  selectCategory = {(key) => this.selectCategory(key)} showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)} />
       <div>
         <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
-        <DelegateModal subject={this.state.delegateSubject} show={this.state.showDelegate} onClose={()=> this.closeDelegate()}/>
+        <DelegateSubjectModal subject={this.state.delegateSubject} show={this.state.showSubjectDelegate} onClose={()=> this.manageSubjectDelegate()}/>
+        <DelegateCategoryModal category={this.state.selectedCategory} show={this.state.showCategoryDelegate} onClose={()=> this.manageCategoryDelegate()}/>
         <NewSubject show={this.state.showNewSubject} onClose={()=> this.manageNewSubject(false)} categories={this.state.categories}/>
         <NewCategory show={this.state.showNewCategory} onClose={()=> this.manageNewCategory(false)}/>
         <Row>
           <Col xs={6}>
             <Panel header="A traiter">
-              <SubjectsList emptyMessage="Rien à traiter" subjects={ newSubjects } onDelegate={ subject => this.openDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
+              <SubjectsList emptyMessage="Rien à traiter" subjects={ newSubjects } onDelegate={ subject => this.openSubjectDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
             </Panel>
           </Col>
           <Col xs={6}>

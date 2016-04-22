@@ -4,7 +4,22 @@ import ReactHttp from './react-http';
 export class PowersStore {
 
   givePower(subject, delegatingTo) {
-    return ReactHttp.fetch(`${ApiUrl}powers/${subject.uuid}`, {
+    return ReactHttp.fetch(`${ApiUrl}powers/subjects/${subject.uuid}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        collaboratorIdTo:delegatingTo,
+      })
+    }).then(function(response) {
+      return response;
+    });
+  }
+
+  giveCategoryPower(categoryUuid, delegatingTo) {
+    return ReactHttp.fetch(`${ApiUrl}powers/categories/${categoryUuid}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',

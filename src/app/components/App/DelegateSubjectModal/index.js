@@ -13,7 +13,7 @@ import './index.scss';
 import MessageManager from '../MessageManager';
 import Messagebar from '../../Messagebar';
 
-export default class DelegateModal extends MessageManager {
+export default class DelegateSubjectModal extends MessageManager {
 
   constructor(props){
     super(props);
@@ -47,7 +47,7 @@ export default class DelegateModal extends MessageManager {
 
   close() {
     this.handleAlertDismiss();
-    this.props.onClose();
+    this.props.onClose(false);
   }
 
   selectEmail(e) {
@@ -82,7 +82,7 @@ export default class DelegateModal extends MessageManager {
     );
   }
 }
-DelegateModal.propTypes= {
+DelegateSubjectModal.propTypes= {
   show : PropTypes.bool.isRequired,
   onClose : PropTypes.func.isRequired,
   subject : PropTypes.object.isRequired
