@@ -161,6 +161,13 @@ export default class Home extends MessageManager {
     })
   }
 
+  removeCategoryDelegation(){
+    powersStore.removeCategoryPower(this.state.selectedCategory).then((response)=>{
+      this.refreshData();
+      this.displayMessage(response, "Délégation supprimée");
+    })
+  }
+
   manageNewSubject(value){
     this.setState({showNewSubject:value});
     this.refreshData();
@@ -210,7 +217,7 @@ export default class Home extends MessageManager {
     }
     return (
      <panel>
-      <ActionBar manageNewSubject = {(value) => this.manageNewSubject(value)} manageNewCategory = {(value) => this.manageNewCategory(value)} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory}  selectCategory = {(key) => this.selectCategory(key)} showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)} />
+      <ActionBar manageNewSubject = {(value) => this.manageNewSubject(value)} manageNewCategory = {(value) => this.manageNewCategory(value)} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory}  selectCategory = {(key) => this.selectCategory(key)} showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)} onRemoveDelegation = {() => this.removeCategoryDelegation()} />
       <div>
         <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
         <DelegateSubjectModal subject={this.state.delegateSubject} show={this.state.showSubjectDelegate} onClose={()=> this.manageSubjectDelegate()}/>

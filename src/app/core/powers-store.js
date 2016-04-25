@@ -34,7 +34,19 @@ export class PowersStore {
   }
 
   removePower(subject) {
-    return ReactHttp.fetch(`${ApiUrl}powers/${subject.uuid}`, {
+    return ReactHttp.fetch(`${ApiUrl}powers/subjects/${subject.uuid}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }).then(function(response) {
+      return response;
+    });
+  }
+
+  removeCategoryPower(categoryUuid) {
+    return ReactHttp.fetch(`${ApiUrl}powers/categories/${categoryUuid}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

@@ -47,6 +47,7 @@ export default class ActionBar extends Component {
                           <Row>
                             <Col xs={12} md={8}>{c.title} </Col>
                             <Col xs={9} md={6}><Button className="action-button" onClick = {(e) => this.props.showCategoryDelegate(true)}><Glyphicon glyph="transfer"/></Button></Col>
+                            <Col xs={9} md={6}><Button className="action-button" onClick = {(e) => this.props.onRemoveDelegation()}><Glyphicon glyph="remove"/></Button></Col>
                           </Row>
                       </MenuItem>
                     )
