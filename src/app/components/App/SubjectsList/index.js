@@ -10,7 +10,8 @@ import {
   Well,
   Badge,
   OverlayTrigger,
-  Popover
+  Popover,
+  Tooltip
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
@@ -56,9 +57,11 @@ export default class SubjectsList extends Component {
               ) : null}
               <ButtonGroup className="pull-right">
                 {this.props.onDelegate && !subject.delegatedToMe ? (
-                <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
-                  <Glyphicon glyph="transfer"/>
-                </Button>
+                  <OverlayTrigger placement="top" overlay={<Tooltip>Déléguer</Tooltip>}>
+                    <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
+                      <Glyphicon glyph="transfer"/>
+                    </Button>
+                  </OverlayTrigger>
                 ) : null}
                 <OverlayTrigger placement="left" trigger="click" overlay={showSubjectDetails(subject)}>
                   <Button className="action-button">
@@ -66,14 +69,18 @@ export default class SubjectsList extends Component {
                   </Button>
                 </OverlayTrigger>
                 {this.props.onRemoveDelegation ? (
-                <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
-                  <Glyphicon glyph="remove"/>
-                </Button>
+                  <OverlayTrigger placement="top" overlay={<Tooltip>Supprimer la délégation</Tooltip>}>
+                    <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
+                      <Glyphicon glyph="remove"/>
+                    </Button>
+                  </OverlayTrigger>
                 ) : null}
                 {this.props.onSelect ? (
-                <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
-                  <Glyphicon glyph="check"/>
-                </Button>
+                  <OverlayTrigger placement="top" overlay={<Tooltip>Voter ou voir le résultat des votes</Tooltip>}>
+                    <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
+                      <Glyphicon glyph="check"/>
+                    </Button>
+                  </OverlayTrigger>
                 ) : null}
               </ButtonGroup>
             </Col>
