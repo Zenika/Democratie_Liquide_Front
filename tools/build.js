@@ -9,7 +9,6 @@ async function build() {
   await run(require('./clean'));
   await run(require('./copy'));
   await run(require('./bundle'));
-  await run(require('./inject'));
 }
 
 export default build;

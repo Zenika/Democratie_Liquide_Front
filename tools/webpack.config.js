@@ -3,6 +3,12 @@ import webpack from 'webpack';
 import merge from 'lodash.merge';
 
 import bourbon from 'node-bourbon';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+
+const htmlWebpackConf = {
+  title: 'ZDemocracy',
+  template: 'src/index.html',
+};
 
 const DEBUG = !process.argv.includes('release');
 const VERBOSE = process.argv.includes('verbose');
@@ -69,6 +75,7 @@ const appConfig = {
   // http://webpack.github.io/docs/configuration.html#devtool
   devtool: DEBUG ? 'source-map' : false,
   plugins: [
+    new HtmlWebpackPlugin(htmlWebpackConf),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
     ...(!DEBUG ? [

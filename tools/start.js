@@ -6,7 +6,6 @@ import run from './run';
 import runServer from './runServer';
 import webpackConfig from './webpack.config';
 import clean from './clean';
-import inject from './inject';
 import copy from './copy';
 import proxyMiddleware from 'http-proxy-middleware';
 
@@ -19,7 +18,6 @@ const DEBUG = !process.argv.includes('release');
 async function start() {
   await run(clean);
   await run(copy.bind(undefined, { watch: true }));
-  await run(inject);
   await new Promise(resolve => {
     // Patch the client-side bundle configurations
     // to enable Hot Module Replacement (HMR) and React Transform
@@ -80,7 +78,8 @@ async function start() {
             middleware: [
               wpMiddleware,
               hotMiddleware,
-              proxyMiddleware('/api', {target: 'http://localhost:8080/'})
+              proxyMiddleware('/api', {target: 'http://localhost:8080/'}),
+              proxyMiddleware('/signin', {target: 'http://localhost:8080/'})
             ],
           },
 
