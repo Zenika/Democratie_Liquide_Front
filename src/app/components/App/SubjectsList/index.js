@@ -57,7 +57,7 @@ export default class SubjectsList extends Component {
               ) : null}
               <ButtonGroup className="pull-right">
                 {this.props.onDelegate && !subject.delegatedToMe ? (
-                  <OverlayTrigger placement="top" overlay={<Tooltip>Déléguer</Tooltip>}>
+                  <OverlayTrigger placement="top" overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}>
                     <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
                       <Glyphicon glyph="transfer"/>
                     </Button>
@@ -69,14 +69,14 @@ export default class SubjectsList extends Component {
                   </Button>
                 </OverlayTrigger>
                 {this.props.onRemoveDelegation ? (
-                  <OverlayTrigger placement="top" overlay={<Tooltip>Supprimer la délégation</Tooltip>}>
+                  <OverlayTrigger placement="top" overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}>
                     <Button onClick={ e => this.removeDelegation(e, subject)} className="action-button">
                       <Glyphicon glyph="remove"/>
                     </Button>
                   </OverlayTrigger>
                 ) : null}
                 {this.props.onSelect ? (
-                  <OverlayTrigger placement="top" overlay={<Tooltip>Voter ou voir le résultat des votes</Tooltip>}>
+                  <OverlayTrigger placement="top" overlay={<Tooltip id="Voter">Voter ou voir le résultat des votes</Tooltip>}>
                     <Button onClick={ e => this.selectSubject(e, subject) } className="action-button">
                       <Glyphicon glyph="check"/>
                     </Button>

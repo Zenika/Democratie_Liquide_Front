@@ -16,20 +16,28 @@ export default class Messagebar extends Component {
     const displayMessageSuccess = () => {
       if (this.props.isMessageSuccessVisible) {
         return (
-          <Alert bsStyle="success" onDismiss={() => this.props.handleAlertDismiss()} dismissAfter={5000} className="fixed">
+          <Alert
+            bsStyle="success"
+            onDismiss={() => this.props.handleAlertDismiss()}
+            dismissAfter={5000}
+            className="fixed" >
             <h2>{this.props.message}</h2>
           </Alert>
-        )
+        );
       }
     };
 
     const displayMessageDanger = () => {
       if (this.props.isMessageDangerVisible) {
         return (
-          <Alert bsStyle="danger" onDismiss={() => this.props.handleAlertDismiss()} dismissAfter={5000} className="fixed">
+          <Alert
+            bsStyle="danger"
+            onDismiss={() => this.props.handleAlertDismiss()}
+            dismissAfter={5000}
+            className="fixed" >
             <h2>{this.props.message}</h2>
           </Alert>
-        )
+        );
       }
     };
 

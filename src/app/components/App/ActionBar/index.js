@@ -34,7 +34,6 @@ export default class ActionBar extends Component {
   }
 
   render() {
-
     const { selectedLabel } = this.state;
 
     return (
@@ -42,14 +41,14 @@ export default class ActionBar extends Component {
         <row>
           <Col xs={6}>
               Catégorie : <DropdownButton title={this.state.selectedLabel} id="bg-nested-dropdown" >
-                <MenuItem eventKey="ALL" onSelect={(e,key) => this.props.selectCategory(key)}>ALL</MenuItem>
+                <MenuItem eventKey="ALL" onSelect={(e, key) => this.props.selectCategory(key)}>ALL</MenuItem>
                   {
-                    this.props.categories.map( (c,i) =>
-                      <MenuItem eventKey={c.uuid} onSelect={(e,key) => this.selectCategory(key)}>
+                    this.props.categories.map((c, i) =>
+                      <MenuItem key={i} eventKey={c.uuid} onSelect={(e, key) => this.selectCategory(key)}>
                           <Row>
                             <Col xs={12} md={8}>{c.title} </Col>
-                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip>Déléguer</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.showCategoryDelegate(true)}><Glyphicon glyph="transfer"/></Button></OverlayTrigger></Col>
-                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip>Supprimer la délégation</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.onRemoveDelegation()}><Glyphicon glyph="remove"/></Button></OverlayTrigger></Col>
+                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.showCategoryDelegate(true)}><Glyphicon glyph="transfer"/></Button></OverlayTrigger></Col>
+                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.onRemoveDelegation()}><Glyphicon glyph="remove"/></Button></OverlayTrigger></Col>
                           </Row>
                       </MenuItem>
                     )
