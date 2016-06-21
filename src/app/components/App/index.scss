@@ -7,8 +7,10 @@ html, body {
 }
 body {
   background-color: #eeeeef;
-  font-family: 'Lucida Grande', Verdana, sans-serif;
-  //background: url('/images/zenika-background.png') no-repeat center center;
+  font-family: 'Roboto', sans-serif;
+}
+h1, h2, h3, h4 {
+  font-family: 'Baloo', cursive;
 }
 
 .zdemocracy-container{
@@ -26,4 +28,19 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+}
+
+
+.modal {
+  padding-right: 15px;
+  .modal-dialog {
+    width: 100%;
+  }
+}
+@media (min-width: $large-screen) {
+  .modal {
+    .modal-dialog {
+      width: $large-screen;
+    }
+  }
 }

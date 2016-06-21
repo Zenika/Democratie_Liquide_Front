@@ -2,10 +2,16 @@
 
 .navbar {
   box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-  
-  .navbar-brand > img {
-    display: inline-block;
-    margin-right: 1em;
+
+  .navbar-brand {
+    padding: 0 15px;
+    h1 {
+      margin-top: 5px;
+      img {
+        display: inline-block;
+        margin-right: 1em;
+      }
+    }
   }
 
   &::after {
