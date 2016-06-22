@@ -33,6 +33,7 @@
     "classnames": "^2.2.3",
     "es6-promise": "^3.2.1",
     "json-loader": "^0.5.4",
+    "moment": "^2.13.0",
     "normalize.css": "^3.0.3",
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.5",

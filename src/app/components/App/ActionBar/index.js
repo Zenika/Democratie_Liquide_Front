@@ -16,20 +16,21 @@ export default class ActionBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLabel: "ALL"
+      selectedLabel: "ALL",
     };
   }
 
   selectCategory(key) {
     if (key === "ALL") {
       this.setState({
-        selectedLabel: "ALL"
+        selectedLabel: "ALL",
       });
     } else {
       this.setState({
-        selectedLabel: this.props.categories.find(c => c.uuid === key).title
+        selectedLabel: this.props.categories.find(c => c.uuid === key).title,
       });
     }
+
     this.props.selectCategory(key);
   }
 
@@ -40,15 +41,48 @@ export default class ActionBar extends Component {
       <div>
         <row>
           <Col xs={6}>
-              Catégorie : <DropdownButton title={this.state.selectedLabel} id="bg-nested-dropdown" >
-                <MenuItem eventKey="ALL" onSelect={(e, key) => this.props.selectCategory(key)}>ALL</MenuItem>
+              Catégorie :
+              <DropdownButton title={this.state.selectedLabel} id="bg-nested-dropdown" >
+                <MenuItem eventKey="ALL" onSelect={key => this.props.selectCategory(key)}>ALL</MenuItem>
                   {
                     this.props.categories.map((c, i) =>
-                      <MenuItem key={i} eventKey={c.uuid} onSelect={(e, key) => this.selectCategory(key)}>
+                      <MenuItem key={i} eventKey={c.uuid} onSelect={key => this.selectCategory(key)}>
                           <Row>
-                            <Col xs={12} md={8}>{c.title} </Col>
-                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.showCategoryDelegate(true)}><Glyphicon glyph="transfer"/></Button></OverlayTrigger></Col>
-                            <Col xs={9} md={6}><OverlayTrigger placement="top" overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}><Button className="action-button" onClick = {(e) => this.props.onRemoveDelegation()}><Glyphicon glyph="remove"/></Button></OverlayTrigger></Col>
+
+                            <Col xs={12} md={8}>
+                              {c.title}
+                            </Col>
+
+                            <Col xs={9} md={6}>
+                              <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}
+                              >
+                                <Button
+                                  className="action-button"
+                                  onClick={(e) => this.props.showCategoryDelegate(true)}
+                                >
+                                  <Glyphicon
+                                    glyph="transfer"
+                                  />
+                                </Button>
+                              </OverlayTrigger>
+                            </Col>
+
+                            <Col xs={9} md={6}>
+                              <OverlayTrigger
+                                placement="top"
+                                overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}
+                              >
+                                <Button
+                                  className="action-button"
+                                  onClick={(e) => this.props.onRemoveDelegation()}
+                                >
+                                  <Glyphicon glyph="remove" />
+                                </Button>
+                              </OverlayTrigger>
+                            </Col>
+
                           </Row>
                       </MenuItem>
                     )
@@ -56,8 +90,12 @@ export default class ActionBar extends Component {
               </DropdownButton>
           </Col>
           <Col xs={6}>
-              <Button onClick={() => this.props.manageNewSubject(true)}><Glyphicon glyph="plus" /> Créer un sujet</Button>
-              <Button onClick={() => this.props.manageNewCategory(true)}><Glyphicon glyph="plus" /> Créer une nouvelle catégorie</Button>
+              <Button onClick={() => this.props.manageNewSubject(true)}>
+                <Glyphicon glyph="plus" /> Créer un sujet
+              </Button>
+              <Button onClick={() => this.props.manageNewCategory(true)}>
+                <Glyphicon glyph="plus" /> Créer une nouvelle catégorie
+              </Button>
           </Col>
         </row>
       </div>

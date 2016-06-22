@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+import moment from 'moment';
 import {
   Grid,
   Row,
@@ -42,16 +42,17 @@ export default class SubjectsList extends Component {
           <Row>
             <Col xs={6} lg={7}>
               <span>{subject.title}</span>
+              {subject.deadLine ? <span className="pull-right">{moment(subject.deadLine).format('DD/MM/YYYY')}</span>: ''}
             </Col>
             <Col xs={6} lg={5}>
               <Badge>{subject.votes.length} votes</Badge>
               {subject.delegation ? (
-              <Badge style={{"marginLeft":'10px'}}>
+              <Badge style={{ marginLeft: '10px' }}>
                 {subject.delegation}
               </Badge>
               ) : null}
               {subject.delegatedToMe ? (
-              <Badge style={{"marginLeft":'10px'}}>
+              <Badge style={{ marginLeft: '10px' }}>
                 {subject.delegatedToMe} délégation{subject.delegatedToMe > 1 ? 's' : ''}
               </Badge>
               ) : null}
