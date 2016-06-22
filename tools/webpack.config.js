@@ -31,8 +31,8 @@ const GLOBALS = {
 const SASS_INCLUDES_PATHS = [
   ...bourbon.includePaths,
   'node_modules/bootstrap-sass/assets/stylesheets',
-  'node_modules/normalize.css',
-  'node_modules/mathsass/dist'
+  'node_modules/react-datepicker/dist',
+  'node_modules/mathsass/dist',
 ];
 
 const outputPath = path.join(__dirname, '../build');
@@ -96,7 +96,7 @@ const appConfig = {
           path.resolve(__dirname, '../src'),
         ],
         loaders: [
-          ...(DEBUG ? ['react-hot'] : []), 'babel-loader'
+          ...(DEBUG ? ['react-hot'] : []), 'babel-loader',
         ],
       },
       {
@@ -126,8 +126,8 @@ const appConfig = {
     ],
   },
   sassLoader: {
-    includePaths: SASS_INCLUDES_PATHS
-  }
+    includePaths: SASS_INCLUDES_PATHS,
+  },
 };
 
 export default appConfig;

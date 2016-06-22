@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 import {
   Panel,
-  Input,
+  Radio,
   Button,
   RadioGroup,
   Row,
@@ -24,7 +24,7 @@ export default class ProposalDetails extends Component {
     const votesCheckBox = Array(this.props.leftPoints + this.props.proposalPoints + 1).fill().map((e, index) => {
       const nbPoints = ""+index;
       return (
-      <Input key={ index } onChange={ e =>{this.props.onChangePoints(this.props.proposal, parseInt(e.target.value))} }
+      <Radio key={ index } onChange={ e =>{this.props.onChangePoints(this.props.proposal, parseInt(e.target.value))} }
         type="radio" name='vote' label={ nbPoints } value={ nbPoints } ref={ nbPoints } groupClassName="col-sm-1"/>
     )});
 

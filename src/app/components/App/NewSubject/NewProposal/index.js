@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Panel,
-  Input,
-  ButtonInput,
-  ButtonToolbar,
+  FormControl,
   Button,
+  ButtonToolbar,
   Glyphicon
 } from 'react-bootstrap';
 import MarkdownTextArea from '../../../MarkdownTextArea';
@@ -13,7 +12,7 @@ export default class NewProposal extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {proposal: {}};
+    this.state = { proposal: {} };
   }
 
   render() {
@@ -22,7 +21,12 @@ export default class NewProposal extends Component {
       <Panel className="proposal-box">
         <fieldset>
           <legend>Proposal { rank + 1 }</legend>
-          <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Titre de la proposition..." />
+          <FormControl
+            type="text"
+            label="Titre"
+            placeholder="Titre de la proposition..."
+            onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Titre de la proposition..."
+          />
           <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
               label="Description" placeholder="Description de la proposition... (Markdown supporté)"/>
         </fieldset>
@@ -39,14 +43,11 @@ export default class NewProposal extends Component {
       this.props.rank,
       proposal
     );
-    this.setState({proposal: proposal});
-
+    this.setState({ proposal: proposal });
   }
-
-
 }
 NewProposal.propTypes = {
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 NewProposal.defaultProps = {

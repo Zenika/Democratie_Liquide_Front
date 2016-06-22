@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Modal,
-  Input,
-  ButtonInput,
+  FormControl,
   ButtonToolbar,
   Button,
   Glyphicon
@@ -21,7 +20,7 @@ export default class NewCategory extends MessageManager {
     super(props);
     this.state = {
       title: '',
-      description: ''
+      description: '',
     };
   }
 
@@ -38,15 +37,15 @@ export default class NewCategory extends MessageManager {
           <form id="categoryForm" onSubmit={e => this.saveCategory(e)} >
             <fieldset>
               <legend>New Category</legend>
-              <Input onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez votre titre..." />
+              <FormControl onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez votre titre..." />
               <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
                 label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
 
               <ButtonToolbar>
-                <LinkContainer to={ {pathname: '/'} }>
+                <LinkContainer to={{ pathname: '/' }}>
                   <Button className="new-category-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
                 </LinkContainer>
-                <ButtonInput className="new-category-buttons" type="submit" bsStyle="success" value="Save" />
+                <Button className="new-category-buttons" type="submit" bsStyle="success" >Save</Button>
               </ButtonToolbar>
             </fieldset>
           </form>
@@ -57,7 +56,7 @@ export default class NewCategory extends MessageManager {
 
   handleChange(e, fieldName) {
     e.preventDefault();
-    this.setState({[fieldName]: e.target.value});
+    this.setState({ [fieldName]: e.target.value });
   }
 
   close() {
@@ -66,24 +65,24 @@ export default class NewCategory extends MessageManager {
   }
 
   saveCategory(e) {
-    e.preventDefault()
+    e.preventDefault();
     const {
       title,
-      description
+      description,
     } = this.state;
 
     store.createCategory({
       title,
-      description
+      description,
     })
     .then((response) => {
       this.displayMessage(response, "Catégorie créée");
       if (!response.isInError) {
-          this.context.router.push(`/`);
+        this.context.router.push(`/`);
       }
     });
   }
 }
-NewCategory.contextTypes= {
-  router: PropTypes.object.isRequired
+NewCategory.contextTypes = {
+  router: PropTypes.object.isRequired,
 };

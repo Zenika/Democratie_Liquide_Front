@@ -4,7 +4,7 @@ import {
   Panel,
   Tabs,
   Tab,
-  Input,
+  FormControl,
   Button
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
@@ -35,9 +35,9 @@ export default class MarkdownTextArea extends Component {
     return (
       <Panel>
         <label className="controle-label">{ label }</label>
-        <Tabs activeKey={ this.state.mode } onSelect={ mode => this.setState({mode: mode}) }>
+        <Tabs id="mode" activeKey={ this.state.mode } onSelect={ mode => this.setState({mode: mode}) }>
           <Tab eventKey={ MODE.write } title="Write">
-            <Input onChange={ e => this.fieldChange(e) } type="textarea" placeholder={ placeholder } />
+            <FormControl onChange={ e => this.fieldChange(e) } type="textarea" placeholder={ placeholder } />
           </Tab>
           <Tab eventKey={ MODE.preview }  title="Preview">
             <ReactMarkdown source={ field } />
