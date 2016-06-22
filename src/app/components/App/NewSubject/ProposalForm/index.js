@@ -40,7 +40,7 @@ export default class ProposalForm extends Component {
   }
 
   onCategoryChange(key) {
-    const category = key < 0 ? undefined : categories[key];
+    const category = key < 0 ? undefined : this.props.categories[key];
     this.handleChange('category', category);
   }
 
@@ -89,7 +89,7 @@ export default class ProposalForm extends Component {
     );
 
     const categoriesMenuItems = categories.map((c, i) =>
-      <MenuItem key={i} eventKey={i} onSelect={(e, key) => onCategoryChange(key)}>{c.title}</MenuItem>
+      <MenuItem key={i} eventKey={i} onSelect={key => this.onCategoryChange(key)}>{c.title}</MenuItem>
     );
 
     const category = this.state.category == undefined ? "Catégorie..." : this.state.category.title;
@@ -115,7 +115,7 @@ export default class ProposalForm extends Component {
               <DropdownButton
                 id="bg-nested-dropdown"
                 title={category}
-                onSelect={(e, key) => this.onCategoryChange(e, key)}
+                onSelect={key => this.onCategoryChange(key)}
               >
                 <MenuItem eventKey="-1">Aucune</MenuItem>
                 { categoriesMenuItems }
