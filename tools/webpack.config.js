@@ -73,7 +73,7 @@ const appConfig = {
 
   // Choose a developer tool to enhance debugging
   // http://webpack.github.io/docs/configuration.html#devtool
-  devtool: DEBUG ? 'source-map' : false,
+  devtool: DEBUG ? 'eval' : false,
   plugins: [
     new HtmlWebpackPlugin(htmlWebpackConf),
     new webpack.optimize.OccurenceOrderPlugin(),
