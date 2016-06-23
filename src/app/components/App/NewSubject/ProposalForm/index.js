@@ -36,7 +36,7 @@ export default class ProposalForm extends Component {
   }
 
   handleDateChange(moment) {
-    this.handleChange('deadLine', moment);
+    this.handleChange('deadLine', moment.endOf('day'));
   }
 
   onCategoryChange(key) {
@@ -81,7 +81,8 @@ export default class ProposalForm extends Component {
   }
 
   render() {
-    const { categories, propositions } = this.props;
+    const { categories } = this.props;
+    const { propositions } = this.state;
 
     const createProposal = (proposition, i) => (
       <NewProposal key={ i } rank={ i }
