@@ -15,6 +15,8 @@ import {
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
+import DeadLine from './DeadLine';
+
 import './index.scss';
 
 export default class SubjectsList extends Component {
@@ -42,7 +44,7 @@ export default class SubjectsList extends Component {
           <Row>
             <Col xs={6} lg={7}>
               <span>{subject.title}</span>
-              {subject.deadLine ? <span className="pull-right">{moment(subject.deadLine).format('DD/MM/YYYY')}</span>: ''}
+              <span className="pull-right"><DeadLine deadLine={subject.deadLine} /> </span>
             </Col>
             <Col xs={6} lg={5}>
               <Badge>{subject.votes.length} votes</Badge>
