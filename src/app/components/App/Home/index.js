@@ -11,11 +11,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import SubjectsList from '../SubjectsList';
 import Spinner from '../../Spinner';
-import DelegateSubjectModal from '../DelegateSubjectModal'
-import DelegateCategoryModal from '../DelegateCategoryModal'
-import NewSubject from '../NewSubject'
-import NewCategory from '../NewCategory'
-import ActionBar  from '../ActionBar'
+import DelegateSubjectModal from '../DelegateSubjectModal';
+import DelegateCategoryModal from '../DelegateCategoryModal';
+import NewSubject from '../NewSubject';
+import NewCategory from '../NewCategory';
+import ActionBar  from '../ActionBar';
 
 import subjectStore from '../../../core/subjects-store';
 import usersStore from '../../../core/users-store';
@@ -37,67 +37,60 @@ export default class Home extends MessageManager {
       selectedCategory: "ALL",
       isDataResolved: false,
       showSubjectDelegate: false,
-      showCategoryDelegate: false
+      showCategoryDelegate: false,
     };
   }
 
-  getNewSubjects(subjects, collaboratorId){
-    var collaboratorId = collaboratorId;
+  getNewSubjects(subjects, collaboratorId) {
     return subjects.filter(subject => {
-      var userVotes = subject.votes.filter(vote => {
-        return collaboratorId === vote.collaboratorId;
-      })
-      var userDelegations = subject.powers.filter(power => {
-        return collaboratorId === power.collaboratorIdFrom;
-      })
-      if(userVotes.length === 0 && userDelegations.length === 0){
-        var delegatedToMe = subject.powers.filter(power => {
-          return collaboratorId === power.collaboratorIdTo;
-        })
-        if (delegatedToMe.length > 0){
+      const userVotes = subject.votes.filter(vote => collaboratorId === vote.collaboratorId);
+      const userDelegations = subject.powers.filter(power => collaboratorId === power.collaboratorIdFrom);
+
+      if (userVotes.length === 0 && userDelegations.length === 0) {
+        const delegatedToMe = subject.powers.filter(power => collaboratorId === power.collaboratorIdTo);
+        if (delegatedToMe.length > 0) {
           subject.delegatedToMe = delegatedToMe.length;
         }
+
         return true;
       };
+
       return false;
-     });
-   }
-
-  getDelegatedSubjects(subjects, collaboratorId){
-    return subjects.filter(subject => {
-      var userDelegations = subject.powers.filter(power => {
-        return collaboratorId === power.collaboratorIdFrom;
-      })
-      if(userDelegations.length > 0){
-        subject.delegation = userDelegations[0].collaboratorIdTo.replace('@zenika.com', '');
-      }
-      return userDelegations.length > 0
-     });
-  }
-
-  getMySubjects(subjects, collaboratorId){
-    return subjects.filter(element => {
-      return element.collaboratorId === collaboratorId
     });
   }
 
-  getVotedSubjects(subjects, collaboratorId){
+  getDelegatedSubjects(subjects, collaboratorId) {
     return subjects.filter(subject => {
-      var userVotes = subject.votes.filter(vote => {
-        return collaboratorId === vote.collaboratorId;
-      })
-      return userVotes.length > 0
-     });
+      const userDelegations = subject.powers.filter(power => collaboratorId === power.collaboratorIdFrom);
+      if (userDelegations.length > 0) {
+        subject.delegation = userDelegations[0].collaboratorIdTo.replace('@zenika.com', '');
+      }
+
+      return userDelegations.length > 0;
+    });
+  }
+
+  getMySubjects(subjects, collaboratorId) {
+    return subjects.filter(element => element.collaboratorId === collaboratorId);
+  }
+
+  getVotedSubjects(subjects, collaboratorId) {
+    return subjects.filter(subject => {
+      const userVotes = subject.votes.filter(vote => collaboratorId === vote.collaboratorId);
+      return userVotes.length > 0;
+    });
   }
 
   refreshData() {
     usersStore.getCurrentUser().then(user => {
       subjectStore.getSubjects()
       .then(subjects => {
-        var newSubjects = this.getNewSubjects(subjects, user.email);
-        var delegatedSubjects = this.getDelegatedSubjects(subjects, user.email);
-        var mySubjects = this.getMySubjects(subjects, user.email);
-        var votedSubjects = this.getVotedSubjects(subjects, user.email);
+        const { opened, closed } = subjects;
+        const all = [...opened, ...closed];
+        const newSubjects = this.getNewSubjects(opened, user.email);
+        const delegatedSubjects = this.getDelegatedSubjects(all, user.email);
+        const mySubjects = this.getMySubjects(all, user.email);
+        const votedSubjects = this.getVotedSubjects(all, user.email);
 
         this.setState({
           newSubjects: newSubjects,
@@ -108,7 +101,7 @@ export default class Home extends MessageManager {
           completeDelegatedSubjects: delegatedSubjects,
           completeMySubjects: mySubjects,
           completeVotedSubjects: votedSubjects,
-          collaborator: user
+          collaborator: user,
         });
 
         this.filterSubjectsByCategory(this.state.selectedCategory);
@@ -117,7 +110,7 @@ export default class Home extends MessageManager {
           .then(categories => {
             this.setState({
               categories: categories,
-              isDataResolved: true
+              isDataResolved: true,
             });
           });
 
@@ -131,55 +124,55 @@ export default class Home extends MessageManager {
 
   openSubjectDelegate(subject) {
     this.setState({
-      delegateSubject:subject
+      delegateSubject: subject,
     });
     this.manageSubjectDelegate(true);
   }
 
-  manageSubjectDelegate(value){
+  manageSubjectDelegate(value) {
     this.setState({
-      showSubjectDelegate:value
+      showSubjectDelegate: value,
     });
     if (!value) {
       this.refreshData();
     }
   }
 
-  manageCategoryDelegate(value){
+  manageCategoryDelegate(value) {
     this.setState({
-      showCategoryDelegate:value
+      showCategoryDelegate: value,
     });
     if (!value) {
       this.refreshData();
     }
   }
 
-  removeDelegation(subject){
-    powersStore.removePower(subject).then((response)=>{
+  removeDelegation(subject) {
+    powersStore.removePower(subject).then((response)=> {
       this.refreshData();
       this.displayMessage(response, "Délégation supprimée");
-    })
+    });
   }
 
-  removeCategoryDelegation(){
-    powersStore.removeCategoryPower(this.state.selectedCategory).then((response)=>{
+  removeCategoryDelegation() {
+    powersStore.removeCategoryPower(this.state.selectedCategory).then((response)=> {
       this.refreshData();
       this.displayMessage(response, "Délégation supprimée");
-    })
+    });
   }
 
-  manageNewSubject(value){
-    this.setState({showNewSubject:value});
+  manageNewSubject(value) {
+    this.setState({ showNewSubject: value });
     this.refreshData();
   }
 
-  manageNewCategory(value){
-    this.setState({showNewCategory:value});
+  manageNewCategory(value) {
+    this.setState({ showNewCategory: value });
     this.refreshData();
   }
 
   selectCategory(key) {
-    this.setState({selectedCategory:key});
+    this.setState({ selectedCategory: key });
     this.filterSubjectsByCategory(key);
   }
 
@@ -189,32 +182,37 @@ export default class Home extends MessageManager {
         newSubjects: this.state.completeNewSubjects,
         delegatedSubjects: this.state.completeDelegatedSubjects,
         mySubjects: this.state.completeMySubjects,
-        votedSubjects: this.state.completeVotedSubjects
+        votedSubjects: this.state.completeVotedSubjects,
       });
     } else {
       this.setState({
-        newSubjects: this.state.completeNewSubjects.filter(s => {
-              return s.category && s.category.uuid === key;
-            }),
-        delegatedSubjects: this.state.completeDelegatedSubjects.filter(s => {
-              return s.category && s.category.uuid === key;
-            }),
-        mySubjects: this.state.completeMySubjects.filter(s => {
-              return s.category && s.category.uuid === key;
-            }),
-        votedSubjects: this.state.completeVotedSubjects.filter(s => {
-              return s.category && s.category.uuid === key;
-            })
+        newSubjects: this.state.completeNewSubjects.filter(s => s.category && s.category.uuid === key),
+        delegatedSubjects: this.state.completeDelegatedSubjects.filter(s => s.category && s.category.uuid === key),
+        mySubjects: this.state.completeMySubjects.filter(s => s.category && s.category.uuid === key),
+        votedSubjects: this.state.completeVotedSubjects.filter(s => s.category && s.category.uuid === key),
       });
     }
   }
 
-
   render() {
-    const { completeNewSubjects, completeDelegatedSubjects, completeMySubjects, completeVotedSubjects, newSubjects, delegatedSubjects, mySubjects, votedSubjects, categories, selectedCategory, isDataResolved } = this.state;
+    const {
+      completeNewSubjects,
+      completeDelegatedSubjects,
+      completeMySubjects,
+      completeVotedSubjects,
+      newSubjects,
+      delegatedSubjects,
+      mySubjects,
+      votedSubjects,
+      categories,
+      selectedCategory,
+      isDataResolved,
+    } = this.state;
+
     if (!isDataResolved) {
       return <Spinner />;
     }
+
     return (
      <panel>
       <ActionBar manageNewSubject = {(value) => this.manageNewSubject(value)} manageNewCategory = {(value) => this.manageNewCategory(value)} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory}  selectCategory = {(key) => this.selectCategory(key)} showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)} onRemoveDelegation = {() => this.removeCategoryDelegation()} />
@@ -253,6 +251,6 @@ export default class Home extends MessageManager {
     );
   }
 }
-Home.contextTypes= {
-  router: PropTypes.object.isRequired
+Home.contextTypes = {
+  router: PropTypes.object.isRequired,
 };

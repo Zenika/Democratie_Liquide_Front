@@ -1,23 +1,16 @@
-import { URL as ApiUrl} from '../config/api';
+import { URL as ApiUrl } from '../config/api';
 import ReactHttp from './react-http';
 
 export class SubjectsStore {
 
   getSubjects() {
-    return ReactHttp.fetch(`${ApiUrl}subjects/inprogress`)
-    .then(function(response) {
-      if (response.status === 204) {
-        return [];
-      }
-      return response.json();
-    });
+    return ReactHttp.fetch(`${ApiUrl}subjects/`)
+    .then(response => response.json());
   }
 
   getSubject(id) {
     return ReactHttp.fetch(`${ApiUrl}subjects/${id}`)
-    .then(function(response) {
-      return response.json();
-    });
+    .then(response => response.json());
   }
 
   createSubject(subject) {
@@ -25,20 +18,20 @@ export class SubjectsStore {
     return ReactHttp.fetch(`${ApiUrl}subjects/`, {
       method: 'post',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(subject)
-    }).then(function(response) {
+      body: JSON.stringify(subject),
+    }).then(function (response) {
       if (!response.isInError) {
-        const location= response.headers.get('location');
+        const location = response.headers.get('location');
         const splittedLocation = location.split('/');
-        response.subjectId = splittedLocation[splittedLocation.length -1];
+        response.subjectId = splittedLocation[splittedLocation.length - 1];
       }
+
       return response;
     });
   }
-
 }
 
 export default new SubjectsStore();
