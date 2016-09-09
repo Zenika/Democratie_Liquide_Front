@@ -31,7 +31,7 @@ const GLOBALS = {
 const SASS_INCLUDES_PATHS = [
   ...bourbon.includePaths,
   'node_modules/bootstrap-sass/assets/stylesheets',
-  'node_modules/react-datepicker/dist',
+  'node_modules/react-datetime/css',
   'node_modules/mathsass/dist',
 ];
 

@@ -251,6 +251,7 @@ export default class Home extends MessageManager {
     );
   }
 }
+
 Home.contextTypes = {
   router: PropTypes.object.isRequired,
 };

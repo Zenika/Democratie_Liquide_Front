@@ -7,7 +7,7 @@ import express from 'express';
  */
 function runServer() {
   return new Promise((resolve, reject) => {
-    
+
     const server = global.server = express();
 
     server.set('port', (process.env.PORT || 5000));
@@ -19,7 +19,7 @@ function runServer() {
     // -----------------------------------------------------------------------------
     server.listen(server.get('port'), () => {
       /* eslint-disable no-console */
-      const url = `http://localhost:${server.get('port')}`
+      const url = `http://localhost:${server.get('port')}`;
       console.log('The server is running at', url);
       resolve(url);
       if (process.send) {

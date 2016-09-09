@@ -31,7 +31,7 @@ export default class NewSubject extends MessageManager {
     return (
         <Modal show={this.props.show} onHide={()=>this.close()}>
           <Modal.Header closeButton>
-            <Modal.Title>Créez votre votre sujet</Modal.Title>
+            <Modal.Title>Créez votre sujet</Modal.Title>
             </Modal.Header>
             <Modal.Body>
 

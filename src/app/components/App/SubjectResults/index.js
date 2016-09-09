@@ -19,7 +19,7 @@ export default class SubjectResult extends Component {
     this.state = {
       isDataResolved: false,
       subject: {},
-      leftPoints: 0
+      leftPoints: 0,
     };
 
   }
@@ -28,12 +28,12 @@ export default class SubjectResult extends Component {
     const { id } = this.props.params;
 
     subjectsStore.getSubject(id)
-    .then(subject => {
-      this.setState({
-        isDataResolved: true,
-        subject: subject,
+      .then(subject => {
+        this.setState({
+          isDataResolved: true,
+          subject: subject,
+        });
       });
-    });
   }
 
   render() {
@@ -41,17 +41,18 @@ export default class SubjectResult extends Component {
     if (!isDataResolved) {
       return <Spinner />;
     }
+
     const createProposition = (proposal, index) => (
-        <Panel key={index}>
-          <h3>{proposal.title}</h3>
-          <Badge>{proposal.points} points</Badge>
-          <ReactMarkdown source={ proposal.description } />
-        </Panel>
+      <Panel key={index}>
+        <h3>{proposal.title}</h3>
+        <Badge>{proposal.points} points</Badge>
+        <ReactMarkdown source={ proposal.description }/>
+      </Panel>
     );
     return (
       <Well>
         <h2>{subject.title}</h2>
-        <ReactMarkdown source={ subject.description } />
+        <ReactMarkdown source={ subject.description }/>
         {subject.propositions.map(createProposition)}
       </Well>
     );

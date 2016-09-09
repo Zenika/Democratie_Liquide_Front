@@ -9,6 +9,6 @@ export default class Spinner extends Component {
       <spin-rotate>
         <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
       </spin-rotate>
-    )
+    );
   }
 }

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import { Label } from 'react-bootstrap';
 
-const DATE_FORMAT = 'DD/MM/YYYY';
+const DATE_FORMAT = 'DD/MM/YYYY à k:mm';
 
 const DeadLine = ({ deadLine }) => {
   if (deadLine) {

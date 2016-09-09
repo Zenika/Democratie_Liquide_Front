@@ -22,7 +22,7 @@ import './index.scss';
 export default class SubjectsList extends Component {
 
   render() {
-    const { subjects } = this.props;
+    const {subjects} = this.props;
 
     const showSubjectDetails = subject => (
       <Popover id="subjectDescription">
@@ -93,8 +93,9 @@ export default class SubjectsList extends Component {
     if (!subjects.length) {
       return (
         <span>{this.props.emptyMessage}</span>
-      )
+      );
     }
+
     return (
       <div>
         {subjects.map(createSubjectEntry)}
@@ -107,12 +108,12 @@ export default class SubjectsList extends Component {
     this.props.onSelect(subject);
   }
 
-  delegateSubject(e, subject){
+  delegateSubject(e, subject) {
     e.preventDefault();
     this.props.onDelegate(subject);
   }
 
-  removeDelegation(e, subject){
+  removeDelegation(e, subject) {
     e.preventDefault();
     this.props.onRemoveDelegation(subject);
   }
@@ -125,5 +126,5 @@ SubjectsList.propTypes = {
   onDelegate: PropTypes.func,
   onRemoveDelegation: PropTypes.func,
   collaborator: PropTypes.object,
-  emptyMessage: PropTypes.string
+  emptyMessage: PropTypes.string,
 };

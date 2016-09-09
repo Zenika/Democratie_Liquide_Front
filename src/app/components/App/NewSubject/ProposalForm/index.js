@@ -12,7 +12,9 @@ import {
   MenuItem,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import DatePicker from 'react-datepicker';
+
+import Datetime from 'react-datetime';
+
 import moment from 'moment';
 
 import NewProposal from '../NewProposal';
@@ -36,7 +38,7 @@ export default class ProposalForm extends Component {
   }
 
   handleDateChange(moment) {
-    this.handleChange('deadLine', moment.endOf('day'));
+    this.handleChange('deadLine', moment);
   }
 
   onCategoryChange(key) {
@@ -79,6 +81,11 @@ export default class ProposalForm extends Component {
       propositions,
     });
   }
+
+  isValidDate(current) {
+    const yesterday = Datetime.moment().subtract(1, 'day');
+    return current.isAfter(yesterday);
+  };
 
   render() {
     const { categories } = this.props;
@@ -123,13 +130,12 @@ export default class ProposalForm extends Component {
               </DropdownButton>
             </Col>
             <Col sm={4}>
-              <DatePicker
-                selected={this.state.deadLine}
-                minDate={moment()}
+              <Datetime
+                value={this.state.deadLine}
+                isValidDate={this.isValidDate}
                 onChange={ date => this.handleDateChange(date) }
-                locale='fr-FR'
-                placeholderText="Date de fin"
-                className="form-control"
+                locale="fr-FR"
+                inputProps={{ placeholder: "Date de fin" }}
               />
             </Col>
             <Col sm={4}>
@@ -169,5 +175,3 @@ ProposalForm.propTypes = {
   propositions: PropTypes.array.isRequired,
   saveSubject: PropTypes.func.isRequired,
 };
-
-export default ProposalForm;
