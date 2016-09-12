@@ -15,7 +15,7 @@ import {
 } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
 
-import DeadLine from './DeadLine';
+import DeadLine from '../../DeadLine/DeadLine';
 
 import './index.scss';
 

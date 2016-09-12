@@ -10,35 +10,49 @@ import {
   Col
 } from 'react-bootstrap';
 
+import './index.scss';
+
 export default class ProposalDetails extends Component {
 
   constructor(props) {
     super(props);
-    this.state= {
-      points: undefined
-    }
+    this.state = {
+      points: undefined,
+    };
   }
 
   render() {
     const { proposal, maxPoints } = this.props;
     const votesCheckBox = Array(this.props.leftPoints + this.props.proposalPoints + 1).fill().map((e, index) => {
-      const nbPoints = ""+index;
+      const nbPoints = "" + index;
       return (
-      <Radio key={ index } onChange={ e =>{this.props.onChangePoints(this.props.proposal, parseInt(e.target.value))} }
-        type="radio" name='vote' label={ nbPoints } value={ nbPoints } ref={ nbPoints } groupClassName="col-sm-1"/>
-    )});
+        <Radio inline
+               key={ index }
+               type="radio"
+               name="vote"
+               className="voteBtn"
+               value={ nbPoints }
+               ref={ nbPoints }
+               onChange={ e => {this.props.onChangePoints(this.props.proposal, parseInt(e.target.value))}}
+        >
+          <span>{ nbPoints }</span>
+        </Radio>
+      );
+    });
 
     return (
       <Panel>
-        <h3>{proposal.title}</h3>
-        <ReactMarkdown source={ proposal.description } />
-         <Row>
-          <form>
-             <Col sm={6}>
+        <Row>
+          <Col md={6}>
+            <h3>{proposal.title}</h3>
+            <ReactMarkdown source={ proposal.description }/>
+          </Col>
+          <Col md={6} className="voteProposal">
+            <form className="voteBtn-group">
                 { votesCheckBox }
-             </Col>
-          </form>
-         </Row>
+            </form>
+          </Col>
+        </Row>
       </Panel>
     );
   }
@@ -48,5 +62,5 @@ ProposalDetails.propTypes = {
   proposal: PropTypes.object.isRequired,
   proposalPoints: PropTypes.number.isRequired,
   leftPoints: PropTypes.number.isRequired,
-  onChangePoints: PropTypes.func.isRequired
-}
+  onChangePoints: PropTypes.func.isRequired,
+};

@@ -6,6 +6,8 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router';
 
+import './index.scss';
+
 export default class Messagebar extends Component {
 
   constructor(props) {
