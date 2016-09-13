@@ -41,8 +41,8 @@ export default class ActionBar extends Component {
 
     return (
       <Row className="action-bar">
-        <Col xs={6}>
-            Catégorie :
+        <Col xs={12} md={6}>
+          Catégorie :
             <DropdownButton title={this.state.selectedLabel} id="bg-nested-dropdown" >
               <MenuItem eventKey="ALL" onSelect={key => this.props.selectCategory(key)}>ALL</MenuItem>
                 {
@@ -90,16 +90,16 @@ export default class ActionBar extends Component {
                 }
             </DropdownButton>
         </Col>
-        <Col xs={3}>
-          <Button className="pull-right"
+        <Col xs={6} md={3}>
+          <Button
             onClick={() => this.props.manageNewSubject(true)}
           >
-            <Glyphicon glyph="plus" /> Créer un sujet
+            <Glyphicon glyph="plus"/> Créer un sujet
           </Button>
         </Col>
-        <Col xs={3}>
+        <Col xs={6} md={3}>
           <Button onClick={() => this.props.manageNewCategory(true)}>
-            <Glyphicon glyph="plus" /> Créer une nouvelle catégorie
+            <Glyphicon glyph="plus"/> Créer une catégorie
           </Button>
         </Col>
       </Row>

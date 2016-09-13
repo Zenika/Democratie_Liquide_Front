@@ -5,21 +5,15 @@ import randomColor from 'randomcolor';
 export default class PointsProgress extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      colors: randomColor({
-        count: props.propositions.length,
-        hue: 'red'
-      }),
-    };
   }
 
   render() {
     const propProgress = this.props.propositions.map((proposition, index) => (
       <ProgressBar
         key={ index }
-        label={ this.props.proposalPoints[index] ? `Proposition ${index} : ${this.props.proposalPoints[index]} pts` : ''}
+        label={ this.props.proposalPoints[index] ? `${this.props.proposalPoints[index]} pts` : ''}
         now={ this.props.proposalPoints[index] }
-        style={{ backgroundColor: `${this.state.colors[index]}` }}
+        style={{ backgroundColor: `${this.props.colors[index]}` }}
         max={ this.props.maxPoints }
       >
       </ProgressBar>

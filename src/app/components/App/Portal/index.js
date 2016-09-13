@@ -25,7 +25,7 @@ export default class Portal extends Component {
     return (
       <Grid>
         <Row>
-          <Col xs={6} xsOffset={3}>
+          <Col md={6} xsOffset={3}>
             <form method="POST" action={this.getGoogleUrl()}>
               <FormGroup bsSize="large" >
                 <FormControl type="submit"

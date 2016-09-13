@@ -16,6 +16,7 @@ import MessageManager from '../MessageManager';
 import Messagebar from '../../Messagebar';
 import DeadLine from '../../DeadLine/DeadLine';
 import PointsProgress from './PointsProgress';
+import randomColor from 'randomcolor';
 
 export default class SubjectDetails extends MessageManager {
 
@@ -26,6 +27,7 @@ export default class SubjectDetails extends MessageManager {
       isAlertVisible: false,
       subject: {},
       leftPoints: 0,
+      colors: [],
     };
 
   }
@@ -45,6 +47,9 @@ export default class SubjectDetails extends MessageManager {
         subject: subject,
         leftPoints: 0 + subject.maxPoints,
         proposalPointsArray: ppArray,
+        colors: randomColor({
+          count: subject.propositions.length,
+        }),
       });
     });
   }
@@ -58,10 +63,12 @@ export default class SubjectDetails extends MessageManager {
 
     const createProposition = (proposition, index) => (
       <ProposalDetails key={ index }
-        leftPoints= { leftPoints }
-        proposal={ proposition }
-        proposalPoints = {this.state.proposalPointsArray[index]}
-        onChangePoints={ (proposal, points) => this.handlePointsChange(index, points) } />
+                       leftPoints={ leftPoints }
+                       proposal={ proposition }
+                       proposalPoints={this.state.proposalPointsArray[index]}
+                       onChangePoints={ (proposal, points) => this.handlePointsChange(index, points) }
+                       color={ this.state.colors[index] }
+      />
     );
 
     return (
@@ -81,8 +88,11 @@ export default class SubjectDetails extends MessageManager {
             </Col>
           </Row>
           <ReactMarkdown source={ subject.description }/>
-          <PointsProgress propositions={ subject.propositions } maxPoints={subject.maxPoints}
-                          proposalPoints={this.state.proposalPointsArray}/>
+          <PointsProgress propositions={ subject.propositions }
+                          maxPoints={subject.maxPoints}
+                          proposalPoints={this.state.proposalPointsArray}
+                          colors={ this.state.colors }
+          />
           {subject.propositions.map(createProposition)}
           <Button onClick={e => this.vote(this.state.subject, this.state.proposalPointsArray)}>
             Vote

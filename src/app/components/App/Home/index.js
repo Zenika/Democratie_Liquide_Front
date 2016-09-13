@@ -223,24 +223,24 @@ export default class Home extends MessageManager {
         <NewSubject show={this.state.showNewSubject} onClose={()=> this.manageNewSubject(false)} categories={this.state.categories}/>
         <NewCategory show={this.state.showNewCategory} onClose={()=> this.manageNewCategory(false)}/>
         <Row>
-          <Col xs={6}>
+          <Col md={6}>
             <Panel header="A traiter">
               <SubjectsList emptyMessage="Rien à traiter" subjects={ newSubjects } onDelegate={ subject => this.openSubjectDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
             </Panel>
           </Col>
-          <Col xs={6}>
+          <Col md={6}>
             <Panel header="Voté" >
               <SubjectsList emptyMessage="Vous n'avez pas encore voté sur un sujet" subjects={ votedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col md={6}>
             <Panel header="Délégué" >
               <SubjectsList emptyMessage="Vous n'avez pas encore délégué de sujet" subjects={ delegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>
           </Col>
-          <Col xs={6}>
+          <Col md={6}>
             <Panel header="Vos sujets" >
               <SubjectsList emptyMessage="Vous n'avez pas encore créé de sujet" subjects={ mySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
             </Panel>

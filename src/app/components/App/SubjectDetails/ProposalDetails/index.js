@@ -44,10 +44,16 @@ export default class ProposalDetails extends Component {
       <Panel>
         <Row>
           <Col md={6}>
-            <h3>{proposal.title}</h3>
+            <div className="proposalHeader">
+              <p className="pastille"
+                 style={{ backgroundColor: `${this.props.color}` }}></p>
+              <h3>
+                {proposal.title}
+              </h3>
+            </div>
             <ReactMarkdown source={ proposal.description }/>
           </Col>
-          <Col md={6} className="voteProposal">
+          <Col md={6} className="proposalVote">
             <form className="voteBtn-group">
                 { votesCheckBox }
             </form>

@@ -31,7 +31,7 @@ export default class NewCategory extends MessageManager {
       <Modal show={this.props.show} onHide={()=>this.close()}>
       <Modal.Header closeButton>
         <Modal.Title>Délégation</Modal.Title>
-        </Modal.Header>
+      </Modal.Header>
         <Modal.Body>
           <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
           <form id="categoryForm" onSubmit={e => this.saveCategory(e)} >

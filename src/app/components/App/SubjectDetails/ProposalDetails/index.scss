@@ -1,9 +1,25 @@
 @import '../../../variables';
 
+.proposalHeader {
+  display: flex;
+
+  .pastille {
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+}
+
+
 .voteBtn-group {
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 20px;
 
   .voteBtn {
     display: flex;
@@ -12,7 +28,7 @@
       display: none;
 
       &:checked + span {
-        background-color: lighten($secondary-color, 15%);
+        background-color: lighten(midnightblue, 15%);
         color: white;
       }
     }
@@ -20,7 +36,7 @@
     span {
       padding: 10px;
       display: inline-block;
-      border: solid 2px $secondary-color;
+      border: solid 2px midnightblue;
     }
 
     padding: 0;
@@ -30,5 +46,3 @@
     margin-left: -2px;
   }
 }
-
-

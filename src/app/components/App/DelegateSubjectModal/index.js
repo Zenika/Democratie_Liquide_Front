@@ -15,10 +15,10 @@ import Messagebar from '../../Messagebar';
 
 export default class DelegateSubjectModal extends MessageManager {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      emails:[
+      emails: [
         'stephane.allaire@zenika.com',
         'benoit.averty@zenika.com',
         'alexandre.baron@zenika.com',
@@ -40,8 +40,8 @@ export default class DelegateSubjectModal extends MessageManager {
         'herminael.rougier@zenika.com	',
         'erwann.thebault@zenika.com',
         'sandra.parlant@zenika.com',
-        'benoit.travers@zenika.com'
-      ]
+        'benoit.travers@zenika.com',
+      ],
     };
   }
 
@@ -52,17 +52,16 @@ export default class DelegateSubjectModal extends MessageManager {
 
   selectEmail(e) {
     var email = e.target.textContent;
-    powersStore.givePower(this.props.subject, email).then( (response) => {
+    powersStore.givePower(this.props.subject, email).then((response) => {
       this.displayMessage(response, "Délégation effectuée à " + email);
-    })
+    });
   }
 
   render() {
-    var renderEmail = (email,key) => {
-      return (
-        <li key={key} className="delegate-item" onClick={e =>this.selectEmail(e)}>{email}</li>
-      )
-    }
+    var renderEmail = (email, key) => (
+      <li key={key} className="delegate-item" onClick={e =>this.selectEmail(e)}>{email}</li>
+    );
+
     return (
       <Modal show={this.props.show} onHide={()=>this.close()}>
           <Modal.Header closeButton>
@@ -82,8 +81,8 @@ export default class DelegateSubjectModal extends MessageManager {
     );
   }
 }
-DelegateSubjectModal.propTypes= {
-  show : PropTypes.bool.isRequired,
-  onClose : PropTypes.func.isRequired,
-  subject : PropTypes.object.isRequired
+DelegateSubjectModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  subject: PropTypes.object.isRequired,
 };
