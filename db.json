@@ -1,0 +1,353 @@
+{
+  "channels": [{
+    "uuid": 2,
+    "title": "random",
+    "author": "valentin.bailleul@zenika.com",
+    "people": [
+      "valentin.bailleul@zenika.com",
+      "corentin.cocoual@zenika.com",
+      "guillaume.gerbaud@zenika.com",
+      "michel.michel@zenika.com",
+      "tata.yoyo@zenika.com"
+    ]
+  }, {
+    "uuid": 3,
+    "title": "rennes",
+    "author": "valentin.bailleul@zenika.com",
+    "people": [
+      "valentin.bailleul@zenika.com",
+      "corentin.cocoual@zenika.com",
+      "guillaume.gerbaud@zenika.com",
+      "michel.michel@zenika.com",
+      "tata.yoyo@zenika.com"
+
+    ]
+  }, {
+    "uuid": 4,
+    "title": "paris",
+    "author": "valentin.bailleul@zenika.com",
+    "people": [
+      "corentin.cocoual@zenika.com",
+      "guillaume.gerbaud@zenika.com",
+      "michel.michel@zenika.com",
+      "tata.yoyo@zenika.com"
+
+    ]
+  }, {
+    "uuid": 5,
+    "title": "lilles",
+    "author": "valentin.bailleul@zenika.com",
+    "people": [
+      "corentin.cocoual@zenika.com",
+      "guillaume.gerbaud@zenika.com",
+      "michel.michel@zenika.com",
+      "tata.yoyo@zenika.com"
+
+    ]
+  }, {
+    "uuid": 6,
+    "title": "nantes",
+    "author": "valentin.bailleul@zenika.com",
+    "people": [
+      "valentin.bailleul@zenika.com",
+      "corentin.cocoual@zenika.com",
+      "guillaume.gerbaud@zenika.com",
+      "michel.michel@zenika.com",
+      "tata.yoyo@zenika.com"
+
+    ]
+  }],
+  "subjects": {
+    "opened": [{
+      "uuid": "57f61012e4b0cfda88d9a522",
+      "version": "1",
+      "title": "DeadLine Test Title n°0",
+      "description": "DeadLine Test Description n°0",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.923+0000",
+      "submitDate": "2016-10-05T08:49:22.923+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [{
+        "id": "57f651fae4b0cfda88d9aeb1",
+        "collaboratorIdFrom": "valentin.bailleul@zenika.com",
+        "collaboratorIdTo": "guillaume.gerbaud@zenika.com"
+      }],
+      "category": null
+    }, {
+      "uuid": "57f61012e4b0cfda88d9a525",
+      "version": "0",
+      "title": "DeadLine Test Title n°1",
+      "description": "DeadLine Test Description n°1",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.925+0000",
+      "submitDate": "2016-10-05T08:49:22.925+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a523",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f61012e4b0cfda88d9a528",
+      "version": "0",
+      "title": "DeadLine Test Title n°2",
+      "description": "DeadLine Test Description n°2",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.927+0000",
+      "submitDate": "2016-10-05T08:49:22.927+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a523",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a526",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f61012e4b0cfda88d9a52b",
+      "version": "0",
+      "title": "DeadLine Test Title n°3",
+      "description": "DeadLine Test Description n°3",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.929+0000",
+      "submitDate": "2016-10-05T08:49:22.929+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a523",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a526",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a529",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f61012e4b0cfda88d9a52e",
+      "version": "0",
+      "title": "DeadLine Test Title n°4",
+      "description": "DeadLine Test Description n°4",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.932+0000",
+      "submitDate": "2016-10-05T08:49:22.932+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a523",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a526",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a529",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a52c",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f61012e4b0cfda88d9a531",
+      "version": "0",
+      "title": "DeadLine Test Title n°5",
+      "description": "DeadLine Test Description n°5",
+      "maxPoints": 10,
+      "deadLine": "2016-10-08T08:49:22.934+0000",
+      "submitDate": "2016-10-05T08:49:22.934+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a520",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a523",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a526",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a529",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a52c",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }, {
+        "id": "57f61012e4b0cfda88d9a52f",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }],
+    "closed": [{
+      "uuid": "57f61012e4b0cfda88d9a51f",
+      "version": "0",
+      "title": "DeadLine Test Title",
+      "description": "DeadLine Test Description",
+      "maxPoints": 10,
+      "deadLine": "2016-10-06T06:49:22.883+0000",
+      "submitDate": "2016-10-05T08:49:22.880+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f61012e4b0cfda88d9a51d",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f75187e4b0cfdad9234d8e",
+      "version": "0",
+      "title": "DeadLine Test Title",
+      "description": "DeadLine Test Description",
+      "maxPoints": 10,
+      "deadLine": "2016-10-07T05:40:55.401+0000",
+      "submitDate": "2016-10-06T07:40:55.393+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f75187e4b0cfdad9234d8c",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f751f8e4b0f06f68b93496",
+      "version": "0",
+      "title": "DeadLine Test Title",
+      "description": "DeadLine Test Description",
+      "maxPoints": 10,
+      "deadLine": "2016-10-07T05:42:48.281+0000",
+      "submitDate": "2016-10-06T07:42:48.280+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f751f8e4b0f06f68b93494",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }, {
+      "uuid": "57f762a0e4b06ae483c032cd",
+      "version": "0",
+      "title": "DeadLine Test Title",
+      "description": "DeadLine Test Description",
+      "maxPoints": 10,
+      "deadLine": "2016-10-07T06:53:52.345+0000",
+      "submitDate": "2016-10-06T08:53:52.343+0000",
+      "collaboratorId": "corentin.cocoual@gmail.com",
+      "propositions": [{
+        "id": "57f762a0e4b06ae483c032cb",
+        "title": "Proposition 1 Title",
+        "description": "Proposition 1 Description",
+        "points": 0
+      }],
+      "votes": [],
+      "powers": [],
+      "category": null
+    }]
+  }
+}
