@@ -42,9 +42,7 @@ export default class NewCategory extends MessageManager {
                 label="Description" placeholder="Entrez votre description... (Markdown supporté)"/>
 
               <ButtonToolbar>
-                <LinkContainer to={{ pathname: '/' }}>
-                  <Button className="new-category-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
-                </LinkContainer>
+                <Button onClick={() => this.close()} className="new-category-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
                 <Button className="new-category-buttons" type="submit" bsStyle="success" >Save</Button>
               </ButtonToolbar>
             </fieldset>

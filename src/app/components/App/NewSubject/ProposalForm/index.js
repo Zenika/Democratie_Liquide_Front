@@ -159,9 +159,7 @@ export default class ProposalForm extends Component {
           </Button>
 
           <ButtonToolbar>
-            <LinkContainer to={ { pathname: '/' } }>
-              <Button className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
-            </LinkContainer>
+            <Button onClick={() => this.props.close()} className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
             <Button className="new-subject-buttons" type="submit" bsStyle="success">Save</Button>
           </ButtonToolbar>
         </fieldset>

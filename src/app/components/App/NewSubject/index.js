@@ -46,6 +46,7 @@ export default class NewSubject extends MessageManager {
                 categories={categories}
                 propositions={propositions}
                 saveSubject={e => this.saveSubject(e)}
+                close={() => this.close()}
               />
             </Modal.Body>
         </Modal>
