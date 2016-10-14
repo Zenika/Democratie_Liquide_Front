@@ -15,12 +15,16 @@ import DelegateSubjectModal from '../DelegateSubjectModal';
 import DelegateCategoryModal from '../DelegateCategoryModal';
 import NewSubject from '../NewSubject';
 import NewCategory from '../NewCategory';
+import NewChannel from '../NewChannel';
+import JoinedChannels from '../JoinedChannels';
 import ActionBar  from '../ActionBar';
+import SideBarWrapper  from '../SideBarWrapper';
 
 import subjectStore from '../../../core/subjects-store';
 import usersStore from '../../../core/users-store';
 import powersStore from '../../../core/powers-store';
 import categoriesStore from '../../../core/categories-store';
+import channelsStore from '../../../core/channels-store';
 
 import './index.scss';
 import MessageManager from '../MessageManager';
@@ -31,10 +35,10 @@ export default class Home extends MessageManager {
   constructor(props) {
     super(props);
     this.state = {
-      subjects: [],
       collaborator: {},
       delegateSubject: {},
       selectedCategory: "ALL",
+      selectedChannel: "general",
       isDataResolved: false,
       showSubjectDelegate: false,
       showCategoryDelegate: false,
@@ -87,24 +91,6 @@ export default class Home extends MessageManager {
       .then(subjects => {
         const { opened, closed } = subjects;
         const all = [...opened, ...closed];
-        const newSubjects = this.getNewSubjects(opened, user.email);
-        const delegatedSubjects = this.getDelegatedSubjects(all, user.email);
-        const mySubjects = this.getMySubjects(all, user.email);
-        const votedSubjects = this.getVotedSubjects(all, user.email);
-
-        this.setState({
-          newSubjects: newSubjects,
-          delegatedSubjects: delegatedSubjects,
-          mySubjects: mySubjects,
-          votedSubjects: votedSubjects,
-          completeNewSubjects: newSubjects,
-          completeDelegatedSubjects: delegatedSubjects,
-          completeMySubjects: mySubjects,
-          completeVotedSubjects: votedSubjects,
-          collaborator: user,
-        });
-
-        this.filterSubjectsByCategory(this.state.selectedCategory);
 
         categoriesStore.getCategories()
           .then(categories => {
@@ -113,6 +99,24 @@ export default class Home extends MessageManager {
               isDataResolved: true,
             });
           });
+
+        channelsStore.getChannels()
+          .then(channels => {
+            this.setState({
+              allChannels: channels,
+              joinedChannels: channels.filter((channel) => channel.people.indexOf(user.email) !== -1),
+            });
+          });
+
+        this.setState({
+          allNewSubjects: this.getNewSubjects(opened, user.email),
+          allDelegatedSubjects: this.getDelegatedSubjects(all, user.email),
+          allMySubjects: this.getMySubjects(all, user.email),
+          allVotedSubjects: this.getVotedSubjects(all, user.email),
+          collaborator: user,
+        });
+
+        this.filterSubjects();
 
       });
     });
@@ -123,28 +127,15 @@ export default class Home extends MessageManager {
   }
 
   openSubjectDelegate(subject) {
-    this.setState({
-      delegateSubject: subject,
-    });
-    this.manageSubjectDelegate(true);
+    this.setState({ delegateSubject: subject }, () => this.manageSubjectDelegate(true));
   }
 
-  manageSubjectDelegate(value) {
-    this.setState({
-      showSubjectDelegate: value,
-    });
-    if (!value) {
-      this.refreshData();
-    }
+  manageSubjectDelegate(show) {
+    this.setState({ showSubjectDelegate: show }, show ? undefined : this.refreshData);
   }
 
-  manageCategoryDelegate(value) {
-    this.setState({
-      showCategoryDelegate: value,
-    });
-    if (!value) {
-      this.refreshData();
-    }
+  manageCategoryDelegate(show) {
+    this.setState({ showCategoryDelegate: show }, show ? undefined : this.refreshData);
   }
 
   removeDelegation(subject) {
@@ -161,50 +152,77 @@ export default class Home extends MessageManager {
     });
   }
 
-  manageNewSubject(value) {
-    this.setState({ showNewSubject: value });
-    this.refreshData();
+  manageNewSubject(show) {
+    this.setState({ showNewSubject: show }, show ? undefined : this.refreshData);
   }
 
-  manageNewCategory(value) {
-    this.setState({ showNewCategory: value });
-    this.refreshData();
+  manageNewCategory(show) {
+    this.setState({ showNewCategory: show }, show ? undefined : this.refreshData);
+  }
+
+  manageNewChannel(show) {
+    this.setState({ showNewChannel: show }, show ? undefined : this.refreshData);
+  }
+
+  manageJoinedChannels(show) {
+    this.setState({ showJoinedChannels: show }, show ? undefined : this.refreshData);
   }
 
   selectCategory(key) {
-    this.setState({ selectedCategory: key });
-    this.filterSubjectsByCategory(key);
+    this.setState({ selectedCategory: key }, this.filterSubjects);
   }
 
-  filterSubjectsByCategory(key) {
-    if (key == "ALL") {
-      this.setState({
-        newSubjects: this.state.completeNewSubjects,
-        delegatedSubjects: this.state.completeDelegatedSubjects,
-        mySubjects: this.state.completeMySubjects,
-        votedSubjects: this.state.completeVotedSubjects,
-      });
-    } else {
-      this.setState({
-        newSubjects: this.state.completeNewSubjects.filter(s => s.category && s.category.uuid === key),
-        delegatedSubjects: this.state.completeDelegatedSubjects.filter(s => s.category && s.category.uuid === key),
-        mySubjects: this.state.completeMySubjects.filter(s => s.category && s.category.uuid === key),
-        votedSubjects: this.state.completeVotedSubjects.filter(s => s.category && s.category.uuid === key),
-      });
+  selectChannel(key) {
+    this.setState({ selectedChannel: key }, this.filterSubjects);
+  }
+
+  filterSubjects() {
+    console.log('app/components/App/Home@filterSubjects');
+
+    // Initialize objects
+    let filteredNewSubjects = this.state.allNewSubjects;
+    let filteredDelegatedSubjects = this.state.allDelegatedSubjects;
+    let filteredMySubjects = this.state.allMySubjects;
+    let filteredVotedSubjects = this.state.allVotedSubjects;
+
+    // Filter according to selected category
+    if (this.state.selectedCategory !== "ALL") {
+      filteredNewSubjects = filteredNewSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
+      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
+      filteredMySubjects = filteredMySubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
+      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
     }
+
+    // Filter according to selected channel
+    if (this.state.selectedChannel !== "general") {
+      filteredNewSubjects = filteredNewSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
+      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
+      filteredMySubjects = filteredMySubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
+      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
+    }
+
+    // Update state
+    this.setState({
+      filteredNewSubjects: filteredNewSubjects,
+      filteredDelegatedSubjects: filteredDelegatedSubjects,
+      filteredMySubjects: filteredMySubjects,
+      filteredVotedSubjects: filteredVotedSubjects,
+    });
   }
 
   render() {
     const {
-      completeNewSubjects,
-      completeDelegatedSubjects,
-      completeMySubjects,
-      completeVotedSubjects,
-      newSubjects,
-      delegatedSubjects,
-      mySubjects,
-      votedSubjects,
+      allNewSubjects,
+      allDelegatedSubjects,
+      allMySubjects,
+      allVotedSubjects,
+      filteredNewSubjects,
+      filteredDelegatedSubjects,
+      filteredMySubjects,
+      filteredVotedSubjects,
       categories,
+      allChannels,
+      joinedChannels,
       selectedCategory,
       isDataResolved,
     } = this.state;
@@ -214,40 +232,57 @@ export default class Home extends MessageManager {
     }
 
     return (
-     <panel>
-      <ActionBar manageNewSubject = {(value) => this.manageNewSubject(value)} manageNewCategory = {(value) => this.manageNewCategory(value)} categories = {this.state.categories} selectedCategory = {this.state.selectedCategory}  selectCategory = {(key) => this.selectCategory(key)} showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)} onRemoveDelegation = {() => this.removeCategoryDelegation()} />
-      <div>
-        <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
-        <DelegateSubjectModal subject={this.state.delegateSubject} show={this.state.showSubjectDelegate} onClose={()=> this.manageSubjectDelegate()}/>
-        <DelegateCategoryModal category={this.state.selectedCategory} show={this.state.showCategoryDelegate} onClose={()=> this.manageCategoryDelegate()}/>
-        <NewSubject show={this.state.showNewSubject} onClose={()=> this.manageNewSubject(false)} categories={this.state.categories}/>
-        <NewCategory show={this.state.showNewCategory} onClose={()=> this.manageNewCategory(false)}/>
-        <Row>
-          <Col md={6}>
-            <Panel header="A traiter">
-              <SubjectsList emptyMessage="Rien à traiter" subjects={ newSubjects } onDelegate={ subject => this.openSubjectDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
-            </Panel>
-          </Col>
-          <Col md={6}>
-            <Panel header="Voté" >
-              <SubjectsList emptyMessage="Vous n'avez pas encore voté sur un sujet" subjects={ votedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
-            </Panel>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Panel header="Délégué" >
-              <SubjectsList emptyMessage="Vous n'avez pas encore délégué de sujet" subjects={ delegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
-            </Panel>
-          </Col>
-          <Col md={6}>
-            <Panel header="Vos sujets" >
-              <SubjectsList emptyMessage="Vous n'avez pas encore créé de sujet" subjects={ mySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
-            </Panel>
-          </Col>
-        </Row>
-      </div>
-     </panel>
+      <SideBarWrapper
+        allChannels = {this.state.allChannels}
+        joinedChannels = {this.state.joinedChannels}
+        selectChannel = {(key) => this.selectChannel(key)}
+        manageNewChannel = {(show) => this.manageNewChannel(show)}
+        manageJoinedChannels = {(show) => this.manageJoinedChannels(show)}
+      >
+        <Panel>
+          <ActionBar
+            manageNewSubject = {(show) => this.manageNewSubject(show)}
+            manageNewCategory = {(show) => this.manageNewCategory(show)}
+            categories = {this.state.categories}
+            selectedCategory = {this.state.selectedCategory}
+            selectCategory = {(key) => this.selectCategory(key)}
+            showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)}
+            onRemoveDelegation = {() => this.removeCategoryDelegation()} />
+          <div>
+            <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
+            <DelegateSubjectModal subject={this.state.delegateSubject} show={this.state.showSubjectDelegate} onClose={()=> this.manageSubjectDelegate()}/>
+            <DelegateCategoryModal category={this.state.selectedCategory} show={this.state.showCategoryDelegate} onClose={()=> this.manageCategoryDelegate()}/>
+            <NewSubject show={this.state.showNewSubject} onClose={()=> this.manageNewSubject(false)} categories={this.state.categories}/>
+            <NewCategory show={this.state.showNewCategory} onClose={()=> this.manageNewCategory(false)}/>
+            <NewChannel show={this.state.showNewChannel} onClose={()=> this.manageNewChannel(false)}/>
+            <JoinedChannels show={this.state.showJoinedChannels} onClose={()=> this.manageJoinedChannels(false)}/>
+            <Row>
+              <Col md={6}>
+                <Panel header="A traiter">
+                  <SubjectsList emptyMessage="Rien à traiter" subjects={ filteredNewSubjects } onDelegate={ subject => this.openSubjectDelegate(subject) } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }></SubjectsList>
+                </Panel>
+              </Col>
+              <Col md={6}>
+                <Panel header="Voté" >
+                  <SubjectsList emptyMessage="Vous n'avez pas encore voté sur un sujet" subjects={ filteredVotedSubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+                </Panel>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <Panel header="Délégué" >
+                  <SubjectsList emptyMessage="Vous n'avez pas encore délégué de sujet" subjects={ filteredDelegatedSubjects } onRemoveDelegation={subject => this.removeDelegation(subject)} collaborator={this.state.collaborator} onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+                </Panel>
+              </Col>
+              <Col md={6}>
+                <Panel header="Vos sujets" >
+                  <SubjectsList emptyMessage="Vous n'avez pas encore créé de sujet" subjects={ filteredMySubjects } onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }></SubjectsList>
+                </Panel>
+              </Col>
+            </Row>
+          </div>
+        </Panel>
+      </SideBarWrapper>
     );
   }
 }
