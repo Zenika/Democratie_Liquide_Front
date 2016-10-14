@@ -28,25 +28,30 @@ export default class NewChannel extends MessageManager {
     const { isMessageSuccessVisible, isMessageDangerVisible, message } = this.state;
 
     return (
-      <Modal show={this.props.show} onHide={()=>this.close()}>
-      <Modal.Header closeButton>
-        <Modal.Title>Créer un channel</Modal.Title>
-      </Modal.Header>
-        <Modal.Body>
-          <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
-          <form id="categoryForm" onSubmit={e => this.saveChannel(e)} >
-            <fieldset>
-              <FormControl onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez le nom du channel" />
-              <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
-                label="Description" placeholder="Entrez la description (Markdown supporté)"/>
+        <Modal show={this.props.show} onHide={()=>this.close()}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Créer un channel
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
+            <form id="categoryForm" onSubmit={e => this.saveChannel(e)} >
+              <fieldset>
+                <FormControl onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez le nom du channel" />
+                <MarkdownTextArea
+                  onChange={ e => this.handleChange(e, 'description') }
+                  label="Description"
+                  placeholder="Entrez la description (Markdown supporté)"
+                />
 
-              <ButtonToolbar>
-                <Button onClick={() => this.close()} className="new-category-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
-                <Button className="new-category-buttons" type="submit" bsStyle="success" >Save</Button>
-              </ButtonToolbar>
-            </fieldset>
-          </form>
-        </Modal.Body>
+                <ButtonToolbar>
+                  <Button onClick={() => this.close()} className="new-category-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
+                  <Button className="new-category-buttons" type="submit" bsStyle="success" >Save</Button>
+                </ButtonToolbar>
+              </fieldset>
+              </form>
+          </Modal.Body>
       </Modal>
     );
   }

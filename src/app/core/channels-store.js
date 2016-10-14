@@ -44,8 +44,8 @@ export class ChannelsStore {
     return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/join`, { method: 'post' });
   }
 
-  leaveChannel(channelId) {
-    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/leave`, { method: 'post' });
+  quitChannel(channelId) {
+    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/quit`, { method: 'post' });
   }
 
 }

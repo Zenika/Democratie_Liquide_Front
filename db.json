@@ -2,6 +2,7 @@
   "channels": [{
     "uuid": 2,
     "title": "random",
+    "description": "Tout ce qui se passe à random",
     "author": "valentin.bailleul@zenika.com",
     "people": [
       "valentin.bailleul@zenika.com",
@@ -13,6 +14,7 @@
   }, {
     "uuid": 3,
     "title": "rennes",
+    "description": "Tout ce qui se passe à rennes",
     "author": "valentin.bailleul@zenika.com",
     "people": [
       "valentin.bailleul@zenika.com",
@@ -25,6 +27,7 @@
   }, {
     "uuid": 4,
     "title": "paris",
+    "description": "Tout ce qui se passe à paris",
     "author": "valentin.bailleul@zenika.com",
     "people": [
       "corentin.cocoual@zenika.com",
@@ -36,6 +39,7 @@
   }, {
     "uuid": 5,
     "title": "lilles",
+    "description": "Tout ce qui se passe à lilles",
     "author": "valentin.bailleul@zenika.com",
     "people": [
       "corentin.cocoual@zenika.com",
@@ -47,6 +51,7 @@
   }, {
     "uuid": 6,
     "title": "nantes",
+    "description": "Tout ce qui se passe à nantes",
     "author": "valentin.bailleul@zenika.com",
     "people": [
       "valentin.bailleul@zenika.com",

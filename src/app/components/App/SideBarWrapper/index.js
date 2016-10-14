@@ -33,18 +33,18 @@ export default class SideBarWrapper extends Component {
 
     return (
      <div id="wrapper" className={this.state.forceDisplay ? 'toggled' : ''}>
-      <div id="sidebar-wrapper">
-        <div className="sidebar-brand">
-          <span className="sidebar-title">
-            <a onClick={() => this.props.manageJoinedChannels(true)}>Channels ( {this.props.allChannels.length + 1} )</a>
-          </span>
-          <span className="sidebar-add">
-            <a onClick={() => this.props.manageNewChannel(true)}><Glyphicon glyph="plus-sign"/></a>
-          </span>
-        </div>
-        <ul className="sidebar-nav">
-          <li className={this.state.selectedChannel === 'general' ? 'selected' : ''}>
-            <a onClick={() => this.selectChannel('general')}>general</a>
+       <div id="sidebar-wrapper">
+         <div className="sidebar-brand">
+           <span className="sidebar-title">
+             <a onClick={() => this.props.manageChannelsList(true)}>Channels ( {this.props.unjoinedChannels.length + this.props.joinedChannels.length + 1} )</a>
+           </span>
+           <span className="sidebar-add">
+             <a onClick={() => this.props.manageNewChannel(true)}><Glyphicon glyph="plus-sign"/></a>
+           </span>
+         </div>
+         <ul className="sidebar-nav">
+           <li className={this.state.selectedChannel === 'general' ? 'selected' : ''}>
+             <a onClick={() => this.selectChannel('general')}>general</a>
           </li>
             {
               this.props.joinedChannels.map((c, i) =>
