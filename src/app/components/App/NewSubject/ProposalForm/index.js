@@ -4,6 +4,7 @@ import {
   Row,
   Col,
   Form,
+  ControlLabel,
   FormControl,
   ButtonToolbar,
   Button,
@@ -104,7 +105,9 @@ export default class ProposalForm extends Component {
     return (
       <Form onSubmit={e => this.submitForm(e)} >
         <fieldset>
-          <legend>New Subject</legend>
+          <ControlLabel>
+            Titre
+          </ControlLabel>
           <FormControl
             value={this.state.title}
             onChange={ e => this.handleEvent(e, 'title') }
@@ -120,6 +123,10 @@ export default class ProposalForm extends Component {
           />
           <Row>
             <Col sm={4}>
+              <ControlLabel>
+                Categorie
+              </ControlLabel>
+              <br/>
               <DropdownButton
                 id="bg-nested-dropdown"
                 title={category}
@@ -130,6 +137,9 @@ export default class ProposalForm extends Component {
               </DropdownButton>
             </Col>
             <Col sm={4}>
+              <ControlLabel>
+                Date de fin
+              </ControlLabel>
               <Datetime
                 value={this.state.deadLine}
                 isValidDate={this.isValidDate}
@@ -139,6 +149,9 @@ export default class ProposalForm extends Component {
               />
             </Col>
             <Col sm={4}>
+              <ControlLabel>
+                Nombre de points
+              </ControlLabel>
               <FormControl
                 value={this.state.maxPoints}
                 onChange={ e => this.handleEvent(e, 'maxPoints') }

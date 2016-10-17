@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Modal,
+  ControlLabel,
   FormControl,
   ButtonToolbar,
   Button,
@@ -38,6 +39,9 @@ export default class NewChannel extends MessageManager {
             <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
             <form id="categoryForm" onSubmit={e => this.saveChannel(e)} >
               <fieldset>
+                <ControlLabel>
+                  Titre
+                </ControlLabel>
                 <FormControl onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Entrez le nom du channel" />
                 <MarkdownTextArea
                   onChange={ e => this.handleChange(e, 'description') }
@@ -50,9 +54,9 @@ export default class NewChannel extends MessageManager {
                   <Button className="new-category-buttons" type="submit" bsStyle="success" >Save</Button>
                 </ButtonToolbar>
               </fieldset>
-              </form>
+            </form>
           </Modal.Body>
-      </Modal>
+        </Modal>
     );
   }
 

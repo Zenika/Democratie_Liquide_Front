@@ -32,23 +32,23 @@ export default class NewSubject extends MessageManager {
         <Modal show={this.props.show} onHide={()=>this.close()}>
           <Modal.Header closeButton>
             <Modal.Title>Créez votre sujet</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+          </Modal.Header>
+          <Modal.Body>
 
-              <Messagebar
-                message={this.state.message}
-                isMessageSuccessVisible={this.state.isMessageSuccessVisible}
-                isMessageDangerVisible={this.state.isMessageDangerVisible}
-                handleAlertDismiss={() => this.handleAlertDismiss()}
-              />
+            <Messagebar
+              message={this.state.message}
+              isMessageSuccessVisible={this.state.isMessageSuccessVisible}
+              isMessageDangerVisible={this.state.isMessageDangerVisible}
+              handleAlertDismiss={() => this.handleAlertDismiss()}
+            />
 
-              <ProposalForm
-                categories={categories}
-                propositions={propositions}
-                saveSubject={e => this.saveSubject(e)}
-                close={() => this.close()}
-              />
-            </Modal.Body>
+            <ProposalForm
+              categories={categories}
+              propositions={propositions}
+              saveSubject={e => this.saveSubject(e)}
+              close={() => this.close()}
+            />
+          </Modal.Body>
         </Modal>
     );
   }
