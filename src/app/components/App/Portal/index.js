@@ -11,6 +11,9 @@ import {
   Col,
   FormGroup,
   FormControl,
+  ControlLabel,
+  Button,
+  Panel
 } from 'react-bootstrap';
 
 import './index.scss';
@@ -22,6 +25,16 @@ export default class Portal extends Component {
   }
 
   render() {
+
+    function FieldGroup({ id, label, ...props }) {
+      return (
+        <FormGroup controlId={id}>
+          <ControlLabel>{label}</ControlLabel>
+          <FormControl {...props} />
+        </FormGroup>
+      );
+    }
+
     return (
       <Grid>
         <Row>
@@ -29,11 +42,29 @@ export default class Portal extends Component {
             <form method="POST" action={this.getGoogleUrl()}>
               <FormGroup bsSize="large" >
                 <FormControl type="submit"
-                  value="Authenticate by google"
+                  value="Authenticate with google"
                   className="google-button"
                 />
               </FormGroup>
             </form>
+            <Panel>
+              <form>
+                <FieldGroup
+                  id="formControlsEmail"
+                  type="email"
+                  label="Email address"
+                  placeholder="Enter email"
+                />
+                <FieldGroup
+                  id="formControlsPassword"
+                  label="Password"
+                  type="password"
+                />
+                <Button type="submit">
+                  Submit
+                </Button>
+              </form>
+            </Panel>
           </Col>
         </Row>
       </Grid>
