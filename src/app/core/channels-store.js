@@ -1,4 +1,5 @@
-import { URL as ApiUrl } from '../config/api_stubs';
+import { URL as ApiUrl } from '../config/api';
+import wording from '../config/wording';
 import ReactHttp from './react-http';
 
 export class ChannelsStore {
@@ -22,6 +23,15 @@ export class ChannelsStore {
   }
 
   createChannel(channel) {
+    if (channel.title === wording.defaultChannel) {
+      return new Promise(function (resolve, reject) {
+        resolve({
+          isInError: true,
+          msg: 'Vous ne pouvez pas recréer le channel par défaut ;)',
+        });
+      });
+    }
+
     return ReactHttp.fetch(`${ApiUrl}channels`, {
       method: 'post',
       headers: {
@@ -41,11 +51,11 @@ export class ChannelsStore {
   }
 
   joinChannel(channelId) {
-    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/join`, { method: 'post' });
+    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/join`);
   }
 
   quitChannel(channelId) {
-    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/quit`, { method: 'post' });
+    return ReactHttp.fetch(`${ApiUrl}channels/${channelId}/quit`);
   }
 
 }

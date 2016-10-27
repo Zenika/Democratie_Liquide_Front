@@ -1,4 +1,5 @@
 import { URL as ApiUrl } from '../config/api';
+import wording from '../config/wording';
 import ReactHttp from './react-http';
 
 export class CategoriesStore {
@@ -22,6 +23,15 @@ export class CategoriesStore {
   }
 
   createCategory(category) {
+    if (category.title === wording.noCategory || category.title === wording.allCategories) {
+      return new Promise(function (resolve, reject) {
+        resolve({
+          isInError: true,
+          msg: "Ce nom de catégorie n'est pas autorisé ;)",
+        });
+      });
+    }
+
     return ReactHttp.fetch(`${ApiUrl}categories/`, {
       method: 'post',
       headers: {
