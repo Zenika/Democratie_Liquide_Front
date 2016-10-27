@@ -27,10 +27,9 @@ import categoriesStore from '../../../core/categories-store';
 import channelsStore from '../../../core/channels-store';
 
 import './index.scss';
-import MessageManager from '../MessageManager';
-import Messagebar from '../../Messagebar';
+import MessageManager from '../../MessageManager';
 
-export default class Home extends MessageManager {
+export default class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -141,14 +140,14 @@ export default class Home extends MessageManager {
   removeDelegation(subject) {
     powersStore.removePower(subject).then((response)=> {
       this.refreshData();
-      this.displayMessage(response, "Délégation supprimée");
+      MessageManager.displayMessage(response, "Délégation supprimée");
     });
   }
 
   removeCategoryDelegation() {
     powersStore.removeCategoryPower(this.state.selectedCategory).then((response)=> {
       this.refreshData();
-      this.displayMessage(response, "Délégation supprimée");
+      MessageManager.displayMessage(response, "Délégation supprimée");
     });
   }
 
@@ -257,12 +256,6 @@ export default class Home extends MessageManager {
             showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)}
             onRemoveDelegation = {() => this.removeCategoryDelegation()} />
           <div>
-            <Messagebar
-              message = {this.state.message}
-              isMessageSuccessVisible = {this.state.isMessageSuccessVisible}
-              isMessageDangerVisible = {this.state.isMessageDangerVisible}
-              handleAlertDismiss = {() => this.handleAlertDismiss()}
-            />
             <DelegateSubjectModal
               subject={this.state.delegateSubject}
               show={this.state.showSubjectDelegate}

@@ -12,13 +12,12 @@ import {
 } from 'react-bootstrap';
 import ProposalDetails from './ProposalDetails';
 import Spinner from '../../Spinner';
-import MessageManager from '../MessageManager';
-import Messagebar from '../../Messagebar';
+import MessageManager from '../../MessageManager';
 import DeadLine from '../../DeadLine/DeadLine';
 import PointsProgress from './PointsProgress';
 import randomColor from 'randomcolor';
 
-export default class SubjectDetails extends MessageManager {
+export default class SubjectDetails extends Component {
 
   constructor(props) {
     super(props);
@@ -63,21 +62,16 @@ export default class SubjectDetails extends MessageManager {
 
     const createProposition = (proposition, index) => (
       <ProposalDetails key={ index }
-                       leftPoints={ leftPoints }
-                       proposal={ proposition }
-                       proposalPoints={this.state.proposalPointsArray[index]}
-                       onChangePoints={ (proposal, points) => this.handlePointsChange(index, points) }
+        leftPoints={ leftPoints }
+        proposal={ proposition }
+        proposalPoints={this.state.proposalPointsArray[index]}
+        onChangePoints={ (proposal, points) => this.handlePointsChange(index, points) }
                        color={ this.state.colors[index] }
       />
     );
 
     return (
       <div>
-        <Messagebar message={this.state.message}
-                    isMessageSuccessVisible={this.state.isMessageSuccessVisible}
-                    isMessageDangerVisible={this.state.isMessageDangerVisible}
-                    handleAlertDismiss={() => this.handleAlertDismiss()}
-        />
         <Well>
           <Row>
             <Col md={6}>
@@ -89,9 +83,9 @@ export default class SubjectDetails extends MessageManager {
           </Row>
           <ReactMarkdown source={ subject.description }/>
           <PointsProgress propositions={ subject.propositions }
-                          maxPoints={subject.maxPoints}
-                          proposalPoints={this.state.proposalPointsArray}
-                          colors={ this.state.colors }
+            maxPoints={subject.maxPoints}
+            proposalPoints={this.state.proposalPointsArray}
+            colors={ this.state.colors }
           />
           {subject.propositions.map(createProposition)}
           <Button onClick={e => this.vote(this.state.subject, this.state.proposalPointsArray)}>
@@ -120,7 +114,7 @@ export default class SubjectDetails extends MessageManager {
     const pointsArray = this.state.proposalPointsArray;
     votesStore.voteFor(id, propositions, pointsArray)
       .then((response) => {
-        this.displayMessage(response, "Vote effectué");
+        MessageManager.displayMessage(response, "Vote effectué");
       });
   }
 }

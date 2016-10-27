@@ -11,12 +11,11 @@ import MarkdownTextArea from '../../MarkdownTextArea';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import store from '../../../core/categories-store';
-import MessageManager from '../MessageManager';
-import Messagebar from '../../Messagebar';
+import MessageManager from '../../MessageManager';
 
 import './index.scss';
 
-export default class NewCategory extends MessageManager {
+export default class NewCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,8 +25,6 @@ export default class NewCategory extends MessageManager {
   }
 
   render() {
-    const { isMessageSuccessVisible, isMessageDangerVisible, message } = this.state;
-
     return (
       <Modal show={this.props.show} onHide={()=>this.close()}>
         <Modal.Header closeButton>
@@ -36,12 +33,6 @@ export default class NewCategory extends MessageManager {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Messagebar
-            message = {this.state.message}
-            isMessageSuccessVisible = {this.state.isMessageSuccessVisible}
-            isMessageDangerVisible = {this.state.isMessageDangerVisible}
-            handleAlertDismiss = {() => this.handleAlertDismiss()}
-          />
           <form id="categoryForm" onSubmit={e => this.saveCategory(e)} >
             <fieldset>
               <ControlLabel>
@@ -51,11 +42,13 @@ export default class NewCategory extends MessageManager {
                 onChange={ e => this.handleChange(e, 'title') }
                 type="text"
                 placeholder="Entrez votre titre..."
+                value={this.state.title}
               />
               <MarkdownTextArea
                 onChange={ e => this.handleChange(e, 'description') }
                 label="Description"
                 placeholder="Entrez votre description... (Markdown supporté)"
+                value={this.state.description}
               />
               <ButtonToolbar>
                 <Button onClick={() => this.close()} className="new-category-buttons">
@@ -78,7 +71,6 @@ export default class NewCategory extends MessageManager {
   }
 
   close() {
-    this.handleAlertDismiss();
     this.props.onClose();
   }
 
@@ -94,7 +86,8 @@ export default class NewCategory extends MessageManager {
       description,
     })
     .then((response) => {
-      this.displayMessage(response, "Catégorie créée");
+      MessageManager.displayMessage(response, "Catégorie créée");
+      this.close();
       if (!response.isInError) {
         this.context.router.push(`/`);
       }

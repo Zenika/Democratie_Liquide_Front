@@ -6,12 +6,11 @@ import MarkdownTextArea from '../../MarkdownTextArea';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import store from '../../../core/subjects-store';
-import MessageManager from '../MessageManager';
-import Messagebar from '../../Messagebar';
+import MessageManager from '../../MessageManager';
 
 import './index.scss';
 
-export default class NewSubject extends MessageManager {
+export default class NewSubject extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,32 +19,23 @@ export default class NewSubject extends MessageManager {
   }
 
   render() {
-    const { categories } = this.props;
-    const {
-      propositions,
-      isMessageSuccessVisible,
-      isMessageDangerVisible,
-      message,
-    } = this.state;
+    const { categories, channels, selectedCategory, selectedChannel } = this.props;
+    const { propositions } = this.state;
 
     return (
         <Modal show={this.props.show} onHide={()=>this.close()}>
           <Modal.Header closeButton>
             <Modal.Title>Créez votre sujet</Modal.Title>
-          </Modal.Header>
+            </Modal.Header>
           <Modal.Body>
-
-            <Messagebar
-              message={this.state.message}
-              isMessageSuccessVisible={this.state.isMessageSuccessVisible}
-              isMessageDangerVisible={this.state.isMessageDangerVisible}
-              handleAlertDismiss={() => this.handleAlertDismiss()}
-            />
 
             <ProposalForm
               categories={categories}
+              selectedCategory={selectedCategory}
+              selectedChannel={selectedChannel}
+              channels={channels}
               propositions={propositions}
-              saveSubject={e => this.saveSubject(e)}
+              saveSubject={subject => this.saveSubject(subject)}
               close={() => this.close()}
             />
           </Modal.Body>
@@ -54,15 +44,13 @@ export default class NewSubject extends MessageManager {
   }
 
   close() {
-    this.handleAlertDismiss();
     this.props.onClose();
   }
 
   saveSubject(subject) {
-
-    store.createSubject(subject)
-    .then((response) => {
-      this.displayMessage(response, "Sujet créé");
+    this.props.saveSubject(subject).then((response) => {
+      MessageManager.displayMessage(response, "Sujet créé");
+      this.close();
       if (!response.isInError) {
         var subjectId = response.subjectId;
         this.context.router.push(`/subjects/${subjectId}`);
