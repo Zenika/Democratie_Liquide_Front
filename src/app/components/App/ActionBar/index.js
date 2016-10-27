@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-
+import wording from '../../../config/wording';
 import {
   DropdownButton,
   MenuItem,
   Button,
+  ButtonGroup,
   Glyphicon,
   Row,
   Col,
@@ -18,14 +19,14 @@ export default class ActionBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCategory: "ALL",
+      selectedCategory: undefined,
     };
   }
 
-  selectCategory(key) {
-    console.log('app/components/App/ActionBar@selectCategory', key);
-    this.setState({ selectedCategory: key === 'ALL' ? 'ALL' : this.props.categories.find(c => c.uuid === key).title });
-    this.props.selectCategory(key);
+  selectCategory(category) {
+    console.log('app/components/App/ActionBar@selectCategory', category);
+    this.setState({ selectedCategory: category });
+    this.props.selectCategory(category);
   }
 
   render() {
@@ -44,58 +45,56 @@ export default class ActionBar extends Component {
 
         <Col xs={6} md={6}>
           Catégorie : &nbsp;
-            <DropdownButton title={this.state.selectedCategory} id="bg-nested-dropdown" >
-              <MenuItem eventKey="ALL" onSelect={key => this.selectCategory(key)}>ALL</MenuItem>
-                {
-                  this.props.categories.map((c, i) =>
-                    <MenuItem key={i} eventKey={c.uuid} onSelect={key => this.selectCategory(key)}>
-                        <Row>
+          <DropdownButton title={this.state.selectedCategory || wording.allCategories} id="bg-nested-dropdown" >
+            <MenuItem onSelect={() => this.selectCategory(wording.allCategories)}>{wording.allCategories}</MenuItem>
+            {
+              this.props.categories.map((c, i) =>
+                <MenuItem key={i} eventKey={c.uuid} onSelect={() => this.selectCategory(c.title)}>
 
-                          <Col xs={12} md={8}>
-                            {c.title}
-                          </Col>
+                  <span className="title">{c.title}</span>
+                    <ButtonGroup className="buttons">
 
-                          <Col xs={9} md={6}>
-                            <OverlayTrigger
-                              placement="top"
-                              overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}
-                            >
-                              <Button
-                                className="action-button"
-                                onClick={(e) => this.props.showCategoryDelegate(true)}
-                              >
-                                <Glyphicon
-                                  glyph="transfer"
-                                />
-                              </Button>
-                            </OverlayTrigger>
-                          </Col>
 
-                          <Col xs={9} md={6}>
-                            <OverlayTrigger
-                              placement="top"
-                              overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}
-                            >
-                              <Button
-                                className="action-button"
-                                onClick={(e) => this.props.onRemoveDelegation()}
-                              >
-                                <Glyphicon glyph="remove" />
-                              </Button>
-                            </OverlayTrigger>
-                          </Col>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}
+                      >
+                        <Button
+                          className="action-button"
+                          onClick={(e) => this.props.showCategoryDelegate(true)}
+                          bsSize="xsmall"
+                        >
+                          <Glyphicon
+                            glyph="transfer"
+                          />
+                        </Button>
+                      </OverlayTrigger>
 
-                        </Row>
-                    </MenuItem>
-                  )
-                }
-            </DropdownButton>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="Supprimer">Supprimer la délégation</Tooltip>}
+                      >
+                        <Button
+                          className="action-button"
+                          onClick={(e) => this.props.onRemoveDelegation()}
+                          bsSize="xsmall"
+                        >
+                          <Glyphicon glyph="remove" />
+                        </Button>
+                      </OverlayTrigger>
 
-            <OverlayTrigger placement="top" overlay={<Tooltip id="Créer">Créer</Tooltip>} >
-              <Button onClick={() => this.props.manageNewCategory(true)}>
-                <Glyphicon glyph="plus"/>
-              </Button>
-            </OverlayTrigger>
+                    </ButtonGroup>
+
+                </MenuItem>
+              )
+            }
+          </DropdownButton>
+
+          <OverlayTrigger placement="top" overlay={<Tooltip id="Créer">Créer</Tooltip>} >
+            <Button onClick={() => this.props.manageNewCategory(true)}>
+              <Glyphicon glyph="plus"/>
+            </Button>
+          </OverlayTrigger>
         </Col>
 
       </Row>
