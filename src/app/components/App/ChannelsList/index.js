@@ -40,11 +40,11 @@ export default class ChannelsList extends Component {
           <ul>
             {
               this.props.unjoinedChannels.map((channel) =>
-                <li>
-                  <span className="people"><Glyphicon glyph="user"/>{channel.people.length}</span>
+                <li key={channel.uuid}>
+                  <span className="collaborators"><Glyphicon glyph="user"/>{channel.collaborators.length}</span>
                   <span className="title">{channel.title}</span>
                   <span className="description">{channel.description}</span>
-                  <Button className="action">
+                  <Button className="action" onClick={() => this.props.joinChannel(channel.uuid)}>
                     <Glyphicon glyph="log-in"/> Rejoindre
                   </Button>
                 </li>
@@ -56,18 +56,18 @@ export default class ChannelsList extends Component {
           <ul>
             {
               this.props.joinedChannels.map((channel) =>
-                <li>
-                  <span className="people"><Glyphicon glyph="user"/>{channel.people.length}</span>
+                <li key={channel.uuid}>
+                  <span className="collaborators"><Glyphicon glyph="user"/>{channel.collaborators.length}</span>
                   <span className="title">{channel.title}</span>
                   <span className="description">{channel.description}</span>
-                  <Button className="action">
+                  <Button className="action" onClick={() => this.props.quitChannel(channel.uuid)}>
                     <Glyphicon glyph="log-out"/> Quitter
                   </Button>
                 </li>
               )
             }
             <li>
-              <span className="people"><Glyphicon glyph="user"/>all</span>
+              <span className="collaborators"><Glyphicon glyph="user"/>all</span>
               <span className="title">general</span>
               <span className="description">Le channel par défaut :)</span>
             </li>
