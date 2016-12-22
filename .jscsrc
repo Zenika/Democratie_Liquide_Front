@@ -1,6 +1,0 @@
-{
-  "preset": "airbnb",
-  "maximumLineLength": 180,
-  "excludeFiles": ["build/**", "node_modules/**"],
-  "validateQuoteMarks": null
-}
