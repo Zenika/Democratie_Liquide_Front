@@ -1,0 +1,43 @@
+.channelsList {
+    ul {
+        list-style: none;
+        max-height: 230px;
+        overflow-y: auto;
+
+        li {
+
+            padding: 10px 20px;
+            line-height: 30px;
+
+            &:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            &:nth-child(even) {
+                background-color: #f1f1f1;
+            }
+        }
+    }
+
+    .collaborators {
+        color: #999;
+        font-size: 12px;
+        display: inline-block;
+        width: 35px;
+    }
+
+    .title {
+        padding-left: 10px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .description {
+        padding-left: 10px;
+        font-style: italic;
+    }
+
+    .action {
+        float: right;
+    }
+}

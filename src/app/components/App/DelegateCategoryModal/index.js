@@ -10,10 +10,9 @@ import emails from '../../../datas/emails.json';
 import powersStore from '../../../core/powers-store';
 
 import './index.scss';
-import MessageManager from '../MessageManager';
-import Messagebar from '../../Messagebar';
+import MessageManager from '../../MessageManager';
 
-export default class DelegateCategoryModal extends MessageManager {
+export default class DelegateCategoryModal extends Component {
 
   constructor(props) {
     super(props);
@@ -23,14 +22,14 @@ export default class DelegateCategoryModal extends MessageManager {
   }
 
   close() {
-    this.handleAlertDismiss();
     this.props.onClose();
   }
 
   selectEmail(e) {
     var email = e.target.textContent;
     powersStore.giveCategoryPower(this.props.category, email).then((response) => {
-      this.displayMessage(response, "Délégation effectuée à " + email);
+        MessageManager.displayMessage(response, "Délégation effectuée à " + email);
+        this.close();
     });
   }
 
@@ -45,7 +44,6 @@ export default class DelegateCategoryModal extends MessageManager {
             <Modal.Title>Délégation</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Messagebar message = {this.state.message} isMessageSuccessVisible = {this.state.isMessageSuccessVisible}  isMessageDangerVisible = {this.state.isMessageDangerVisible} handleAlertDismiss = {() => this.handleAlertDismiss()} />
             <p>Choisissez la personne à qui vous souhaitez déléguer votre vote pour la catégorie sélectionnée.</p>
             <ul>
               {this.state.emails.map(renderEmail)}

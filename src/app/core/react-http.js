@@ -1,4 +1,4 @@
-import {REDIRECTON403 as RedirectUrl} from '../config/api';
+import { REDIRECTON403 as RedirectUrl } from '../config/api';
 
 export class ReactHttp {
 
@@ -9,7 +9,7 @@ export class ReactHttp {
     if (response.status >= 200 && response.status < 300) {
       myResponse.isInError = false;
       myResponse.msg = "Success";
-    } else if(response.status === 403){
+    } else if (response.status === 403) {
       window.location.hash = `#${RedirectUrl}`;
     } else {
       return response.json().then(body => {
@@ -17,20 +17,21 @@ export class ReactHttp {
           myResponse.isInError = true;
           myResponse.msg = body.message;
           return myResponse;
-      });
+        });
     }
+
     return response;
   }
 
   fetch(endPointUrl, options) {
-    if(!options){
-      options = {}
+    if (!options) {
+      options = {};
     }
+
     options.credentials = 'include';
     return fetch(endPointUrl, options)
     .then(this.checkStatus);
   }
 }
-
 
 export default new ReactHttp();

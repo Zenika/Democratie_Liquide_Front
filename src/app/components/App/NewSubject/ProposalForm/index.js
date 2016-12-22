@@ -1,9 +1,11 @@
 import React, { PropTypes, Component } from 'react';
+import wording from '../../../../config/wording';
 
 import {
   Row,
   Col,
   Form,
+  ControlLabel,
   FormControl,
   ButtonToolbar,
   Button,
@@ -25,7 +27,7 @@ export default class ProposalForm extends Component {
     super(props);
     this.state = {
       deadLine: undefined,
-      propositions: this.props.propositions,
+      propositions: this.props.propositions
     };
   }
 
@@ -44,6 +46,11 @@ export default class ProposalForm extends Component {
   onCategoryChange(key) {
     const category = key < 0 ? undefined : this.props.categories[key];
     this.handleChange('category', category);
+  }
+
+  onChannelChange(key) {
+    const channel = key < 0 ? undefined : this.props.channels[key];
+    this.handleChange('channel', channel);
   }
 
   addProposal(e) {
@@ -67,6 +74,7 @@ export default class ProposalForm extends Component {
       title,
       description,
       category,
+      channel,
       deadLine,
       maxPoints,
       propositions,
@@ -76,6 +84,7 @@ export default class ProposalForm extends Component {
       title,
       description,
       category,
+      channel,
       deadLine,
       maxPoints,
       propositions,
@@ -88,8 +97,8 @@ export default class ProposalForm extends Component {
   };
 
   render() {
-    const { categories } = this.props;
-    const { propositions } = this.state;
+    const { categories, channels } = this.props;
+    const { propositions, category, channel } = this.state;
 
     const createProposal = (proposition, i) => (
       <NewProposal key={ i } rank={ i }
@@ -97,14 +106,19 @@ export default class ProposalForm extends Component {
     );
 
     const categoriesMenuItems = categories.map((c, i) =>
-      <MenuItem key={i} eventKey={i} onSelect={key => this.onCategoryChange(key)}>{c.title}</MenuItem>
+      <MenuItem key={i} eventKey={i}>{c.title}</MenuItem>
     );
 
-    const category = this.state.category == undefined ? "Catégorie..." : this.state.category.title;
+    const channelsMenuItems = channels.map((c, i) =>
+      <MenuItem key={i} eventKey={i}>{c.title}</MenuItem>
+    );
+
     return (
       <Form onSubmit={e => this.submitForm(e)} >
         <fieldset>
-          <legend>New Subject</legend>
+          <ControlLabel>
+            Titre
+          </ControlLabel>
           <FormControl
             value={this.state.title}
             onChange={ e => this.handleEvent(e, 'title') }
@@ -119,17 +133,38 @@ export default class ProposalForm extends Component {
             placeholder="Entrez votre description... (Markdown supporté)"
           />
           <Row>
-            <Col sm={4}>
+            <Col sm={6} md={3}>
+              <ControlLabel>
+                Categorie
+              </ControlLabel>
+              <br/>
               <DropdownButton
                 id="bg-nested-dropdown"
-                title={category}
+                title={category ? category.title : wording.noCategory}
                 onSelect={key => this.onCategoryChange(key)}
               >
-                <MenuItem eventKey="-1">Aucune</MenuItem>
+                <MenuItem eventKey="-1">{wording.noCategory}</MenuItem>
                 { categoriesMenuItems }
               </DropdownButton>
             </Col>
-            <Col sm={4}>
+            <Col sm={6} md={3}>
+              <ControlLabel>
+                Channel
+              </ControlLabel>
+              <br/>
+              <DropdownButton
+                id="bg-nested-dropdown"
+                title={channel ? channel.title : wording.defaultChannel}
+                onSelect={key => this.onChannelChange(key)}
+              >
+                <MenuItem eventKey="-1">{wording.defaultChannel}</MenuItem>
+                { channelsMenuItems }
+              </DropdownButton>
+            </Col>
+            <Col sm={6} md={3}>
+              <ControlLabel>
+                Date de fin
+              </ControlLabel>
               <Datetime
                 value={this.state.deadLine}
                 isValidDate={this.isValidDate}
@@ -138,7 +173,10 @@ export default class ProposalForm extends Component {
                 inputProps={{ placeholder: "Date de fin" }}
               />
             </Col>
-            <Col sm={4}>
+            <Col sm={6} md={3}>
+              <ControlLabel>
+                Nombre de points
+              </ControlLabel>
               <FormControl
                 value={this.state.maxPoints}
                 onChange={ e => this.handleEvent(e, 'maxPoints') }
@@ -159,9 +197,7 @@ export default class ProposalForm extends Component {
           </Button>
 
           <ButtonToolbar>
-            <LinkContainer to={ { pathname: '/' } }>
-              <Button className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
-            </LinkContainer>
+            <Button onClick={() => this.props.close()} className="new-subject-buttons"><Glyphicon glyph="remove" /> Cancel</Button>
             <Button className="new-subject-buttons" type="submit" bsStyle="success">Save</Button>
           </ButtonToolbar>
         </fieldset>

@@ -20,7 +20,6 @@ import {
 } from 'react-router';
 
 // Component
-import ZNavbar from './components/Navbar';
 import App from './components/App';
 import Home from './components/App/Home';
 import SubjectDetails from './components/App/SubjectDetails';

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
   Panel,
+  ControlLabel,
   FormControl,
   Button,
   ButtonToolbar,
@@ -18,17 +19,22 @@ export default class NewProposal extends Component {
   render() {
     const { rank } = this.props;
     return (
-      <Panel className="proposal-box">
+      <Panel className="proposal-box" header={'Proposition ' + (rank + 1) }>
         <fieldset>
-          <legend>Proposal { rank + 1 }</legend>
+          <ControlLabel>
+            Titre
+          </ControlLabel>
           <FormControl
             type="text"
             label="Titre"
             placeholder="Titre de la proposition..."
             onChange={ e => this.handleChange(e, 'title') } type="text" label="Titre" placeholder="Titre de la proposition..."
           />
-          <MarkdownTextArea onChange={ e => this.handleChange(e, 'description') }
-              label="Description" placeholder="Description de la proposition... (Markdown supporté)"/>
+          <br/>
+          <MarkdownTextArea
+            onChange={ e => this.handleChange(e, 'description') }
+            label="Description"
+            placeholder="Description de la proposition... (Markdown supporté)"/>
         </fieldset>
       </Panel>
     );

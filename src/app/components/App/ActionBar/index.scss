@@ -3,4 +3,11 @@
   padding-bottom: .5em;
   margin-bottom: 1em;
   border-bottom: 1px solid $secondary-color;
+
+  .title {
+      float: left;
+      width: 100%;
+      margin-right: -35px;
+      padding-right: 75px;
+  }
 }
