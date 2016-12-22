@@ -1,0 +1,19 @@
+# Activate Docker services
+machine:
+  services:
+    - docker
+
+# Install model and build api without tests
+compile:
+  override:
+    - ./build-client.sh
+
+# Deployment
+deployment:
+  production:
+    branch: master
+    commands:
+      - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASS"
+      - docker push zenika/agora-front
+      - ssh -o "StrictHostKeyChecking no" root@agora.zenika.com ./deploy.sh
+
