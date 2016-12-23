@@ -3,10 +3,18 @@ machine:
   services:
     - docker
 
+dependencies:
+  override:
+  - echo "skipped"
+
 # Install model and build api without tests
 compile:
   override:
     - ./build-client.sh
+    
+test:
+  override:
+  - echo "skipped"
 
 # Deployment
 deployment:
