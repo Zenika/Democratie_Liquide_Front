@@ -37,8 +37,8 @@ export default class Home extends Component {
     this.state = {
       collaborator: {},
       delegateSubject: {},
-      selectedCategory: wording.allCategories,
-      selectedChannel: wording.defaultChannel,
+      selectedCategory: { title: wording.allCategories, uuid: '' },
+      selectedChannel: { title: wording.defaultChannel, uuid: '' },
       isDataResolved: false,
       showSubjectDelegate: false,
       showCategoryDelegate: false,
@@ -150,7 +150,7 @@ export default class Home extends Component {
   }
 
   removeCategoryDelegation() {
-    powersStore.removeCategoryPower(this.state.selectedCategory).then((response)=> {
+    powersStore.removeCategoryPower(this.state.selectedCategory.uuid).then((response)=> {
       this.refreshData();
       MessageManager.displayMessage(response, "Délégation supprimée");
     });
@@ -172,12 +172,12 @@ export default class Home extends Component {
     this.setState({ showChannelsList: show }, show ? undefined : this.refreshData);
   }
 
-  selectCategory(key) {
-    this.setState({ selectedCategory: key }, this.filterSubjects);
+  selectCategory(category) {
+    this.setState({ selectedCategory: category }, this.filterSubjects);
   }
 
-  selectChannel(key) {
-    this.setState({ selectedChannel: key }, this.filterSubjects);
+  selectChannel(channel) {
+    this.setState({ selectedChannel: channel }, this.filterSubjects);
   }
 
   joinChannel(channelId) {
@@ -188,8 +188,8 @@ export default class Home extends Component {
   quitChannel(channelId) {
     channelsStore.quitChannel(channelId);
 
-    if (channelId === this.state.selectedChannel) {
-      this.setState({ selectedChannel: wording.defaultChannel });
+    if (channelId === this.state.selectedChannel.uuid) {
+      this.setState({ selectedChannel: { title: wording.defaultChannel, uuid: '' }});
     }
 
     this.refreshData();
@@ -210,19 +210,19 @@ export default class Home extends Component {
     let filteredVotedSubjects = this.state.allVotedSubjects;
 
     // Filter according to selected category
-    if (this.state.selectedCategory !== wording.allCategories) {
-      filteredNewSubjects = filteredNewSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
-      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
-      filteredMySubjects = filteredMySubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
-      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory);
+    if (this.state.selectedCategory.uuid) {
+      filteredNewSubjects = filteredNewSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory.uuid);
+      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory.uuid);
+      filteredMySubjects = filteredMySubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory.uuid);
+      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.category && s.category.uuid === this.state.selectedCategory.uuid);
     }
 
     // Filter according to selected channel
-    if (this.state.selectedChannel !== wording.defaultChannel) {
-      filteredNewSubjects = filteredNewSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
-      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
-      filteredMySubjects = filteredMySubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
-      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel);
+    if (this.state.selectedChannel.uuid) {
+      filteredNewSubjects = filteredNewSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel.uuid);
+      filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel.uuid);
+      filteredMySubjects = filteredMySubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel.uuid);
+      filteredVotedSubjects = filteredVotedSubjects.filter(s => s.channel && s.channel.uuid === this.state.selectedChannel.uuid);
     } else {
       filteredNewSubjects = filteredNewSubjects.filter(s => !s.channel);
       filteredDelegatedSubjects = filteredDelegatedSubjects.filter(s => !s.channel);
@@ -264,7 +264,7 @@ export default class Home extends Component {
       <SideBarWrapper
         unjoinedChannels = {this.state.unjoinedChannels}
         joinedChannels = {this.state.joinedChannels}
-        selectChannel = {(key) => this.selectChannel(key)}
+        selectChannel = {(channel) => this.selectChannel(channel)}
         selectedChannel = {this.state.selectedChannel}
         manageNewChannel = {(show) => this.manageNewChannel(show)}
         manageChannelsList = {(show) => this.manageChannelsList(show)}
@@ -275,7 +275,7 @@ export default class Home extends Component {
             manageNewCategory = {(show) => this.manageNewCategory(show)}
             categories = {this.state.categories}
             selectedCategory = {this.state.selectedCategory}
-            selectCategory = {(key) => this.selectCategory(key)}
+            selectCategory = {(category) => this.selectCategory(category)}
             showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)}
             onRemoveDelegation = {() => this.removeCategoryDelegation()} />
           <div>

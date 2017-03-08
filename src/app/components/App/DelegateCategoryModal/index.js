@@ -27,7 +27,7 @@ export default class DelegateCategoryModal extends Component {
 
   selectEmail(e) {
     var email = e.target.textContent;
-    powersStore.giveCategoryPower(this.props.category, email).then((response) => {
+    powersStore.giveCategoryPower(this.props.category.uuid, email).then((response) => {
         MessageManager.displayMessage(response, "Délégation effectuée à " + email);
         this.close();
     });
@@ -59,5 +59,5 @@ export default class DelegateCategoryModal extends Component {
 DelegateCategoryModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  category: PropTypes.string.isRequired,
+  category: PropTypes.object.isRequired,
 };
