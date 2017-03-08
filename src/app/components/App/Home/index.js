@@ -48,44 +48,26 @@ export default class Home extends Component {
     };
   }
 
-  getNewSubjects(subjects, collaboratorId) {
+  getNewSubjects(subjects) {
     return subjects.filter(subject => {
-      const userVotes = subject.votes.filter(vote => collaboratorId === vote.collaboratorId);
-      const userDelegations = subject.powers.filter(power => collaboratorId === power.collaboratorIdFrom);
-
-      if (userVotes.length === 0 && userDelegations.length === 0) {
-        const delegatedToMe = subject.powers.filter(power => collaboratorId === power.collaboratorIdTo);
-        if (delegatedToMe.length > 0) {
-          subject.delegatedToMe = delegatedToMe.length;
-        }
-
-        return true;
-      };
-
-      return false;
+      let { isClosed, isVoted, receivedDelegations, givenDelegation } = subject
+      return !isClosed && !isVoted && !givenDelegation
     });
   }
 
-  getDelegatedSubjects(subjects, collaboratorId) {
-    return subjects.filter(subject => {
-      const userDelegations = subject.powers.filter(power => collaboratorId === power.collaboratorIdFrom);
-      if (userDelegations.length > 0) {
-        subject.delegation = userDelegations[0].collaboratorIdTo.replace('@zenika.com', '');
-      }
-
-      return userDelegations.length > 0;
+  getDelegatedSubjects(subjects) {
+    return subjects.filter(subject => !!subject.givenDelegation).map(subject => {
+      subject.givenDelegation = subject.givenDelegation.replace('@zenika.com', '')
+      return subject;
     });
   }
 
-  getMySubjects(subjects, collaboratorId) {
-    return subjects.filter(element => element.collaboratorId === collaboratorId);
+  getMySubjects(subjects) {
+    return subjects.filter(subject => subject.isMine);
   }
 
-  getVotedSubjects(subjects, collaboratorId) {
-    return subjects.filter(subject => {
-      const userVotes = subject.votes.filter(vote => collaboratorId === vote.collaboratorId);
-      return userVotes.length > 0;
-    });
+  getVotedSubjects(subjects) {
+    return subjects.filter(subject => subject.isVoted);
   }
 
   refreshData() {
@@ -93,8 +75,6 @@ export default class Home extends Component {
     usersStore.getCurrentUser().then(user => {
       subjectStore.getSubjects()
       .then(subjects => {
-        const { opened, closed } = subjects;
-        const all = [...opened, ...closed];
 
         categoriesStore.getCategories()
           .then(categories => {
@@ -113,10 +93,10 @@ export default class Home extends Component {
           });
 
         this.setState({
-          allNewSubjects: this.getNewSubjects(opened, user.email),
-          allDelegatedSubjects: this.getDelegatedSubjects(all, user.email),
-          allMySubjects: this.getMySubjects(all, user.email),
-          allVotedSubjects: this.getVotedSubjects(all, user.email),
+          allNewSubjects: this.getNewSubjects(subjects),
+          allDelegatedSubjects: this.getDelegatedSubjects(subjects),
+          allMySubjects: this.getMySubjects(subjects),
+          allVotedSubjects: this.getVotedSubjects(subjects),
           collaborator: user,
         });
 
