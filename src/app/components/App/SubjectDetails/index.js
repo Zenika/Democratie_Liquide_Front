@@ -81,7 +81,7 @@ export default class SubjectDetails extends Component {
               Date de cloture : <DeadLine deadLine={subject.deadLine}/>
             </Col>
           </Row>
-          <ReactMarkdown source={ subject.description }/>
+          <ReactMarkdown source={ subject.description || '' }/>
           <PointsProgress propositions={ subject.propositions }
             maxPoints={subject.maxPoints}
             proposalPoints={this.state.proposalPointsArray}

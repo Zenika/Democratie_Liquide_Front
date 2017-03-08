@@ -27,7 +27,7 @@ export default class SubjectsList extends Component {
     const showSubjectDetails = subject => (
       <Popover id="subjectDescription">
           <h3>{subject.title} : </h3>
-          <ReactMarkdown source={ subject.description } />
+          <ReactMarkdown source={ subject.description || '' } />
           {subject.propositions.map(showProposalDetails)}
       </Popover>
     );
@@ -35,7 +35,7 @@ export default class SubjectsList extends Component {
     const showProposalDetails = (proposal, index) => (
         <div key={index}>
             <h3>{proposal.title} : </h3>
-            <ReactMarkdown source={ proposal.description } />
+            <ReactMarkdown source={ proposal.description || '' } />
         </div>
     );
 

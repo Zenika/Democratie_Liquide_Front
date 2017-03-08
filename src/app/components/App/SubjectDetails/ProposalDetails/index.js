@@ -51,7 +51,7 @@ export default class ProposalDetails extends Component {
                 {proposal.title}
               </h3>
             </div>
-            <ReactMarkdown source={ proposal.description }/>
+            <ReactMarkdown source={ proposal.description || '' }/>
           </Col>
           <Col md={6} className="proposalVote">
             <form className="voteBtn-group">

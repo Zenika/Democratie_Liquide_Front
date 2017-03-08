@@ -40,7 +40,7 @@ export default class MarkdownTextArea extends Component {
             <FormControl onChange={ e => this.fieldChange(e) } type="textarea" placeholder={ placeholder } />
           </Tab>
           <Tab eventKey={ MODE.preview }  title="Preview">
-            <ReactMarkdown source={ field } />
+            <ReactMarkdown source={ field || '' } />
           </Tab>
         </Tabs>
       </Panel>

@@ -46,13 +46,13 @@ export default class SubjectResult extends Component {
       <Panel key={index}>
         <h3>{proposal.title}</h3>
         <Badge>{proposal.points} points</Badge>
-        <ReactMarkdown source={ proposal.description }/>
+        <ReactMarkdown source={ proposal.description || '' }/>
       </Panel>
     );
     return (
       <Well>
         <h2>{subject.title}</h2>
-        <ReactMarkdown source={ subject.description }/>
+        <ReactMarkdown source={ subject.description || '' }/>
         {subject.propositions.map(createProposition)}
       </Well>
     );
