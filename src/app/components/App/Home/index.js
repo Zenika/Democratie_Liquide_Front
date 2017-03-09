@@ -71,7 +71,7 @@ export default class Home extends Component {
   }
 
   refreshData() {
-    console.log('app/components/App/Home@refreshData');
+    // console.log('app/components/App/Home@refreshData');
     usersStore.getCurrentUser().then(user => {
       subjectStore.getSubjects()
       .then(subjects => {
@@ -181,7 +181,7 @@ export default class Home extends Component {
   }
 
   filterSubjects() {
-    console.log('app/components/App/Home@filterSubjects');
+    // console.log('app/components/App/Home@filterSubjects');
 
     // Initialize objects
     let filteredNewSubjects = this.state.allNewSubjects;

@@ -26,7 +26,7 @@ export default class ActionBar extends Component {
   }
 
   selectCategory(category) {
-    console.log('app/components/App/ActionBar@selectCategory', category);
+    // console.log('app/components/App/ActionBar@selectCategory', category);
     this.setState({ selectedCategory: category });
     this.props.selectCategory(category);
   }
