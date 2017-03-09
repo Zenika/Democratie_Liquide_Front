@@ -36,13 +36,13 @@ export default class SideBarWrapper extends Component {
            </span>
          </div>
          <ul className="sidebar-nav">
-           <li className={this.props.selectedChannel === 'general' ? 'selected' : ''}>
-             <a onClick={() => this.props.selectChannel('general')}>general</a>
+           <li className={!this.props.selectedChannel.uuid ? 'selected' : ''}>
+             <a onClick={() => this.props.selectChannel({title: 'general', uuid: ''})}>general</a>
            </li>
            {
              this.props.joinedChannels.map((c, i) =>
-               <li key={c.uuid} title={c.description} className={this.props.selectedChannel === c.uuid ? 'selected' : ''}>
-                 <a onClick={() => this.props.selectChannel(c.uuid)}>{c.title}</a>
+               <li key={c.uuid} title={c.description} className={this.props.selectedChannel.uuid === c.uuid ? 'selected' : ''}>
+                 <a onClick={() => this.props.selectChannel(c)}>{c.title}</a>
                </li>
              )
            }

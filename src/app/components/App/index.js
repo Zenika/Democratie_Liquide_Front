@@ -7,7 +7,6 @@ import {
 } from 'react-bootstrap';
 
 import ZNavbar from '../Navbar';
-import SubjectsList from './SubjectsList';
 
 import './index.scss';
 

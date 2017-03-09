@@ -27,7 +27,7 @@ export default class SubjectsList extends Component {
     const showSubjectDetails = subject => (
       <Popover id="subjectDescription">
           <h3>{subject.title} : </h3>
-          <ReactMarkdown source={ subject.description } />
+          <ReactMarkdown source={ subject.description || '' } />
           {subject.propositions.map(showProposalDetails)}
       </Popover>
     );
@@ -35,7 +35,7 @@ export default class SubjectsList extends Component {
     const showProposalDetails = (proposal, index) => (
         <div key={index}>
             <h3>{proposal.title} : </h3>
-            <ReactMarkdown source={ proposal.description } />
+            <ReactMarkdown source={ proposal.description || '' } />
         </div>
     );
 
@@ -47,19 +47,19 @@ export default class SubjectsList extends Component {
                     <span className="pull-right"><DeadLine deadLine={subject.deadLine} /> </span>
                 </Col>
                 <Col xs={6} lg={5}>
-                    <Badge>{subject.votes.length} votes</Badge>
-                    {subject.delegation ? (
+                    <Badge>{subject.voteCount} votes</Badge>
+                    {subject.givenDelegation ? (
                         <Badge style={{ marginLeft: '10px' }}>
-                            {subject.delegation}
+                            {subject.givenDelegation}
                         </Badge>
                     ) : null}
-                    {subject.delegatedToMe ? (
+                    {subject.receivedDelegations ? (
                         <Badge style={{ marginLeft: '10px' }}>
-                            {subject.delegatedToMe} délégation{subject.delegatedToMe > 1 ? 's' : ''}
+                            {subject.receivedDelegations} délégation{subject.receivedDelegations > 1 ? 's' : ''}
                         </Badge>
                     ) : null}
                     <ButtonGroup className="pull-right">
-                        {this.props.onDelegate && !subject.delegatedToMe ? (
+                        {this.props.onDelegate && !subject.receivedDelegations ? (
                             <OverlayTrigger placement="top" overlay={<Tooltip id="Déléguer">Déléguer</Tooltip>}>
                                 <Button onClick={ e => this.delegateSubject(e, subject)} className="action-button">
                                     <Glyphicon glyph="transfer"/>

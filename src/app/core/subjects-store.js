@@ -4,7 +4,7 @@ import ReactHttp from './react-http';
 export class SubjectsStore {
 
   getSubjects() {
-    return ReactHttp.fetch(`${ApiUrl}subjects/`)
+    return ReactHttp.fetch(`${ApiUrl}subjects`)
     .then(response => response.json());
   }
 
@@ -14,8 +14,7 @@ export class SubjectsStore {
   }
 
   createSubject(subject) {
-    subject.collaboratorId = window.localStorage.getItem('user');
-    return ReactHttp.fetch(`${ApiUrl}subjects/`, {
+    return ReactHttp.fetch(`${ApiUrl}subjects`, {
       method: 'post',
       headers: {
         Accept: 'application/json',

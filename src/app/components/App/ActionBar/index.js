@@ -14,17 +14,19 @@ import {
 
 import './index.scss';
 
+const defaultCategory = { title: wording.allCategories, uuid: ''};
+
 export default class ActionBar extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      selectedCategory: undefined,
+      selectedCategory: defaultCategory,
     };
   }
 
   selectCategory(category) {
-    console.log('app/components/App/ActionBar@selectCategory', category);
+    // console.log('app/components/App/ActionBar@selectCategory', category);
     this.setState({ selectedCategory: category });
     this.props.selectCategory(category);
   }
@@ -45,11 +47,11 @@ export default class ActionBar extends Component {
 
         <Col xs={6} md={6}>
           Catégorie : &nbsp;
-          <DropdownButton title={this.state.selectedCategory || wording.allCategories} id="bg-nested-dropdown" >
-            <MenuItem onSelect={() => this.selectCategory(wording.allCategories)}>{wording.allCategories}</MenuItem>
+          <DropdownButton title={this.state.selectedCategory.title} id="bg-nested-dropdown" >
+            <MenuItem onSelect={() => this.selectCategory(defaultCategory)}>{defaultCategory.title}</MenuItem>
             {
               this.props.categories.map((c, i) =>
-                <MenuItem key={i} eventKey={c.uuid} onSelect={() => this.selectCategory(c.title)}>
+                <MenuItem key={i} eventKey={c.uuid} onSelect={() => this.selectCategory(c)}>
 
                   <span className="title">{c.title}</span>
                     <ButtonGroup className="buttons">
