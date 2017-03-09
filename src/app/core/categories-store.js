@@ -32,7 +32,7 @@ export class CategoriesStore {
       });
     }
 
-    return ReactHttp.fetch(`${ApiUrl}categories/`, {
+    return ReactHttp.fetch(`${ApiUrl}categories`, {
       method: 'post',
       headers: {
         Accept: 'application/json',
