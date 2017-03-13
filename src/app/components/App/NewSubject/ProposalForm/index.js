@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import wording from '../../../../config/wording';
+import { defaultChannel, defaultCategory } from '../../../../config/constants';
 
 import {
   Row,
@@ -27,7 +28,10 @@ export default class ProposalForm extends Component {
     super(props);
     this.state = {
       deadLine: undefined,
-      propositions: this.props.propositions
+      propositions: this.props.propositions,
+      category: defaultCategory,
+      channel: defaultChannel
+
     };
   }
 
@@ -80,11 +84,13 @@ export default class ProposalForm extends Component {
       propositions,
     } = this.state;
 
+
+
     this.props.saveSubject({
       title,
       description,
-      category,
-      channel,
+      ...(channel.uuid ? {channel} : {}),
+      ...(category.uuid ? {category} : {}),
       deadLine,
       maxPoints,
       propositions,
@@ -105,13 +111,13 @@ export default class ProposalForm extends Component {
         onChange={ (i, proposal) => this.setProposal(i, proposal) } />
     );
 
-    const categoriesMenuItems = categories.map((c, i) =>
+    const categoriesMenuItems = [<MenuItem eventKey="-1">{defaultCategory.title}</MenuItem>].concat(categories.map((c, i) =>
       <MenuItem key={i} eventKey={i}>{c.title}</MenuItem>
-    );
+    ));
 
-    const channelsMenuItems = channels.map((c, i) =>
+    const channelsMenuItems = [<MenuItem eventKey="-1">{defaultChannel.title}</MenuItem>].concat(channels.map((c, i) =>
       <MenuItem key={i} eventKey={i}>{c.title}</MenuItem>
-    );
+    ));
 
     return (
       <Form onSubmit={e => this.submitForm(e)} >
@@ -143,7 +149,6 @@ export default class ProposalForm extends Component {
                 title={category ? category.title : wording.noCategory}
                 onSelect={key => this.onCategoryChange(key)}
               >
-                <MenuItem eventKey="-1">{wording.noCategory}</MenuItem>
                 { categoriesMenuItems }
               </DropdownButton>
             </Col>
@@ -154,10 +159,9 @@ export default class ProposalForm extends Component {
               <br/>
               <DropdownButton
                 id="bg-nested-dropdown"
-                title={channel ? channel.title : wording.defaultChannel}
+                title={channel.title}
                 onSelect={key => this.onChannelChange(key)}
               >
-                <MenuItem eventKey="-1">{wording.defaultChannel}</MenuItem>
                 { channelsMenuItems }
               </DropdownButton>
             </Col>

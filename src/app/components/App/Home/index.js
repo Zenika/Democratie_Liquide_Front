@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import wording from '../../../config/wording'
+import { defaultCategory, defaultChannel } from '../../../config/constants';
 
 import {
   Panel,
@@ -7,6 +7,8 @@ import {
   Glyphicon,
   Row,
   Col,
+  Tabs, 
+  Tab
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -37,8 +39,8 @@ export default class Home extends Component {
     this.state = {
       collaborator: {},
       delegateSubject: {},
-      selectedCategory: { title: wording.allCategories, uuid: '' },
-      selectedChannel: { title: wording.defaultChannel, uuid: '' },
+      selectedCategory: defaultCategory,
+      selectedChannel: defaultChannel,
       isDataResolved: false,
       showSubjectDelegate: false,
       showCategoryDelegate: false,
@@ -169,7 +171,7 @@ export default class Home extends Component {
     channelsStore.quitChannel(channelId);
 
     if (channelId === this.state.selectedChannel.uuid) {
-      this.setState({ selectedChannel: { title: wording.defaultChannel, uuid: '' }});
+      this.setState({ selectedChannel: defaultChannel});
     }
 
     this.refreshData();
@@ -249,6 +251,18 @@ export default class Home extends Component {
         manageNewChannel = {(show) => this.manageNewChannel(show)}
         manageChannelsList = {(show) => this.manageChannelsList(show)}
       >
+        <NewChannel
+          show={this.state.showNewChannel}
+          onClose={()=> this.manageNewChannel(false)}
+        />
+        <ChannelsList
+          joinedChannels={this.state.joinedChannels}
+          unjoinedChannels={this.state.unjoinedChannels}
+          show={this.state.showChannelsList}
+          onClose={() => this.manageChannelsList(false)}
+          joinChannel={ channelId => this.joinChannel(channelId) }
+          quitChannel={ channelId => this.quitChannel(channelId) }
+        />
         <Panel>
           <ActionBar
             manageNewSubject = {(show) => this.manageNewSubject(show)}
@@ -258,7 +272,6 @@ export default class Home extends Component {
             selectCategory = {(category) => this.selectCategory(category)}
             showCategoryDelegate = {(v) => this.manageCategoryDelegate(v)}
             onRemoveDelegation = {() => this.removeCategoryDelegation()} />
-          <div>
             <DelegateSubjectModal
               subject={this.state.delegateSubject}
               show={this.state.showSubjectDelegate}
@@ -282,62 +295,42 @@ export default class Home extends Component {
               show={this.state.showNewCategory}
               onClose={()=> this.manageNewCategory(false)}
             />
-            <NewChannel
-              show={this.state.showNewChannel}
-              onClose={()=> this.manageNewChannel(false)}
-            />
-            <ChannelsList
-              joinedChannels={this.state.joinedChannels}
-              unjoinedChannels={this.state.unjoinedChannels}
-              show={this.state.showChannelsList}
-              onClose={() => this.manageChannelsList(false)}
-              joinChannel={ channelId => this.joinChannel(channelId) }
-              quitChannel={ channelId => this.quitChannel(channelId) }
-            />
-            <Row>
-              <Col md={6}>
-                <Panel header="A traiter">
-                  <SubjectsList
+          </Panel>
+          <Panel>
+            <Tabs bsStyle="pills">
+              <br/>
+              <Tab eventKey={1} title="Sujets à traiter">
+                <SubjectsList
                     emptyMessage="Rien à traiter"
                     subjects={ filteredNewSubjects }
                     onDelegate={ subject => this.openSubjectDelegate(subject) }
                     onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}`) }
                   />
-                </Panel>
-              </Col>
-              <Col md={6}>
-                <Panel header="Voté" >
-                  <SubjectsList
+              </Tab>
+              <Tab eventKey={2} title="Sujets déjà votés">
+                <SubjectsList
                     emptyMessage="Vous n'avez pas encore voté sur un sujet"
                     subjects={ filteredVotedSubjects }
                     onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }
                   />
-                </Panel>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <Panel header="Délégué" >
-                  <SubjectsList
+              </Tab>
+              <Tab eventKey={3} title="Sujets délégués">
+                <SubjectsList
                     emptyMessage="Vous n'avez pas encore délégué de sujet"
                     subjects={ filteredDelegatedSubjects }
                     onRemoveDelegation={subject => this.removeDelegation(subject)}
                     collaborator={this.state.collaborator}
                     onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }
                   />
-                </Panel>
-              </Col>
-              <Col md={6}>
-                <Panel header="Vos sujets" >
-                  <SubjectsList
+              </Tab>
+              <Tab eventKey={4} title="Mes sujets">
+                <SubjectsList
                     emptyMessage="Vous n'avez pas encore créé de sujet"
                     subjects={ filteredMySubjects }
                     onSelect={ subject => this.context.router.push(`/subjects/${subject.uuid}/results`) }
                   />
-                </Panel>
-              </Col>
-            </Row>
-          </div>
+              </Tab>
+            </Tabs>
         </Panel>
       </SideBarWrapper>
     );
