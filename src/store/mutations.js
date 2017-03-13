@@ -1,0 +1,19 @@
+import * as types from './types'
+
+export const initialState = {
+  subjects: [],
+  categories: [],
+  channels: [],
+  collaborator: {},
+  filter: {}
+}
+
+export default {
+  [types.REFRESH_COLLABORATOR] (state, collaborator) {
+    state.collaborator = collaborator
+  },
+
+  [types.REFRESH_SUBJECTS] (state, subjects) {
+    state.subjects = subjects
+  }
+}

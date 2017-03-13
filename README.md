@@ -1,37 +1,27 @@
-# Democratie_Liquide_Front
-Client web de l'application de Democratie Liquide
+# democratie-liquide-vue
 
-![](/src/images/vote.png?raw=true)
+> A Vue.js project
 
->Créez des sujets que vous voulez soumettre au vote et ...  
->**More will come soon**
+## Build Setup
 
-Ce front n'est rien sans son api. Elle se trouve ici -> [liquid-democracy-api](https://github.com/ZenikaOuest/Democratie_Liquide)
+``` bash
+# install dependencies
+npm install
 
-## Démarrer l'application
+# serve with hot reload at localhost:8080
+npm run dev
 
-Comme pour n'importe quel projet Javascript : Installer le projet avec `npm install`
+# build for production with minification
+npm run build
 
-Il faut ensuite builder le projet : `npm run build`
-Pour builder un code optimisé (pas de sourcemap, source minifiées) ajouter l'argument `release` : `npm run build release`.
+# build for production and view the bundle analyzer report
+npm run build --report
 
-Une fois celà effectué, le résultat du build se trouve dans le dossier `build/`.
+# run unit tests
+npm run unit
 
-Il suffit maintenant de servir l'application avec votre serveur web préféré. **Ne pas oublier de configurer le revers-proxy vers l'api afin de gérer le CORS**
-
-Avec [http-server](https://github.com/indexzero/http-server):
-```sh 
-http-server build -P http://your_api_location
+# run all tests
+npm test
 ```
 
-## Développer sur l'application
-
-Cette application est construite en [React](https://github.com/facebook/react) grace au librairies :
- - [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap)
- - [react-router](https://github.com/reactjs/react-router)
- - [react-markdown](https://github.com/rexxars/react-markdown)
-
-Codé en ES2015 la transpilation est transpilé par [babel](https://github.com/babel/babel) et le bundle est généré par [webpack](https://github.com/webpack)
-La build est configuré par quelques scripts js qui sont dans le répertoire `tools/`
-
-Pour démarer l'application en mode dev exécuter la commande `npm start`
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
