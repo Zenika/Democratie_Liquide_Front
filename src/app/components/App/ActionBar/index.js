@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import wording from '../../../config/wording';
+import { defaultCategory } from '../../../config/constants';
 import {
   DropdownButton,
   MenuItem,
@@ -13,8 +13,6 @@ import {
 } from 'react-bootstrap';
 
 import './index.scss';
-
-const defaultCategory = { title: wording.allCategories, uuid: ''};
 
 export default class ActionBar extends Component {
 

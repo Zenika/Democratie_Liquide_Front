@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import wording from '../../../config/wording'
+import { defaultCategory, defaultChannel } from '../../../config/constants';
 
 import {
   Panel,
@@ -37,8 +37,8 @@ export default class Home extends Component {
     this.state = {
       collaborator: {},
       delegateSubject: {},
-      selectedCategory: { title: wording.allCategories, uuid: '' },
-      selectedChannel: { title: wording.defaultChannel, uuid: '' },
+      selectedCategory: defaultCategory,
+      selectedChannel: defaultChannel,
       isDataResolved: false,
       showSubjectDelegate: false,
       showCategoryDelegate: false,
@@ -169,7 +169,7 @@ export default class Home extends Component {
     channelsStore.quitChannel(channelId);
 
     if (channelId === this.state.selectedChannel.uuid) {
-      this.setState({ selectedChannel: { title: wording.defaultChannel, uuid: '' }});
+      this.setState({ selectedChannel: defaultChannel});
     }
 
     this.refreshData();
