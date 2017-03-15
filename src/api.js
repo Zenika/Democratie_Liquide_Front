@@ -1,24 +1,23 @@
 import axios from 'axios'
 import router from './router'
 
-export const signin = axios.create({
-  baseURL: 'http://localhost:8080/signin'
-})
+const api = axios.create()
 
-export const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
-  withCredentials: true
-})
+api.defaults.headers.credentials = 'include'
 
 api.interceptors.response.use(
   response => {
+    // console.log('RESPONSE', response)
     return response
   },
 
   error => {
+    // console.log('ERROR', error)
     if (error.response.status === 403) {
       router.push('/login')
     }
     return error
   }
 )
+
+export default api
