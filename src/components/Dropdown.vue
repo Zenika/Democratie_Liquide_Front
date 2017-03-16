@@ -1,9 +1,13 @@
 <template>
-  <span class="dropdown">
-    <span class="title" @click="show" :class="{ opened: visible }">{{ title }}</span>
-    <div class="content" v-show="visible">
-      <slot/>
-    </div>
+  <span class="dropdown" @mouseover="show" @mouseleave="hide">
+    <span class="title" @click.stop="show" :class="{ opened: opened }">{{ title }}</span>
+    <transition name="fade">
+
+      <div class="content" v-show="opened">
+        <div class="transparent-block"/>
+        <slot/>
+      </div>
+    </transition>
   </span>
 </template>
 
@@ -16,13 +20,19 @@ export default {
 
   data () {
     return {
-      visible: false
+      opened: false
     }
   },
 
   methods: {
     show () {
-      this.visible = !this.visible
+      this.opened = true
+      setTimeout(() => document.addEventListener('click', this.hide), 0)
+    },
+
+    hide () {
+      this.opened = false
+      document.removeEventListener('click', this.hide)
     }
   }
 }
@@ -31,6 +41,7 @@ export default {
 <style lang="scss" scoped>
 
 @import '../assets/style';
+@import '../assets/transitions';
 
 .dropdown {
   position: relative;
@@ -57,6 +68,13 @@ export default {
     }
   }
 
+.transparent-block {
+  height: 12px;
+  width: 100%;
+  position: absolute;
+  bottom: 100%;
+  background: transparent;
+}
 
 .content {
   position: absolute;
@@ -64,10 +82,10 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 5px;
-  padding: 5px 0px;
   border: 1px solid lightgray;
   background: white;
   z-index: 5;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 
   &::before {
     position: absolute;

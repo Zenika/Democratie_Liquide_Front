@@ -4,12 +4,14 @@
     <dropdown :title="filter.channel.title">
       <ul>
         <li v-for="channel in channels" @click="filterChannel(channel)">{{ channel.title }}</li>
+        <li> ... </li>
       </ul>
     </dropdown>
     <span>et de la categorie</span>
     <dropdown :title="filter.category.title">
       <ul>
         <li v-for="category in categories" @click="filterCategory(category)">{{ category.title }}</li>
+        <li> ... </li>
       </ul>
     </dropdown>
     <span> : </span>
