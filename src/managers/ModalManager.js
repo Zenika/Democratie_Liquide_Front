@@ -3,39 +3,28 @@ import Vue from 'vue'
 
 let modal = new Vue({
   el: '#modal',
+
   data () {
     return {
       visible: false,
-      title: '',
       renderContent: createElement => createElement('div')
     }
   },
 
-  methods: {
-    show () {
-      this.visible = true
-    },
-
-    hide () {
-      this.visible = false
-    }
-  },
-
   render: function (createElement, context) {
-    let props = { title: this.title }
-    let style = this.visible ? {} : { display: 'none' }
-    let on = { close: this.hide }
-    let domProps = this.html ? { innerHTML: this.html } : {}
+    let props = { visible: this.visible }
+    let on = { close: () => { this.visible = false } }
 
-    return createElement(Modal, { props, style, on, domProps }, [ this.renderContent(createElement) ])
+    return createElement(Modal, { props, on }, [
+      this.renderContent(createElement)
+    ])
   }
 })
 
 export default {
 
-  display (title, renderContent) {
-    modal.title = title
+  display (renderContent) {
     modal.renderContent = renderContent
-    modal.show()
+    modal.visible = true
   }
 }

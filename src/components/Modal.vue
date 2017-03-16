@@ -1,27 +1,24 @@
 <template>
-  <transition name="modal">
-    <div class="modal-container">
+  <transition name="fade">
+    <div v-show="visible" class="modal-container">
       <div class="overlay" @click="close"></div>
       <div class="modal-box">
-        <div class="header">
-          <div :title="title" class="title">{{ title }}</div>
-          <div class="close" @click="close"><i class="fa fa-times"/></div>
-        </div>
+        <div class="close" @click="close"><i class="fa fa-times"/></div>
         <div class="modal-content">
           <slot></slot>
         </div>
       </div>
-
     </div>
   </transition>
 </template>
 
 <script>
 export default {
+
   props: {
-    title: {
-      type: String,
-      default: 'Lorem ipsum coucou coucou'
+    visible: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -34,6 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+@import '../assets/transitions';
 
 .modal-container {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -66,60 +65,23 @@ export default {
     min-width: 200px;
     min-height: 200px;
     z-index: 20;
-
-    .header {
-      position: absolute;
-      border-bottom: solid 1px lightgray;
-      color: darkgray;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 35px;
-
-      .title {
-        margin-top: 8px;
-        margin-left: 10px;
-        margin-right: 35px;
-        text-shadow: 0px 1px 0px white;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
+    box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.25);
 
       .close {
         position: absolute;
         color: darkgrey;
-        right: 10px;
-        top: 10px;
-        * {
-          vertical-align: top;
-        }
-      }
+        right: 5px;
+        top: 1px;
     }
 
     .modal-content {
       position: relative;
-      margin-top: 40px;
+      margin-top: 5px;
       margin-bottom: 5px;
       margin-left: 5px;
       margin-right: 5px;
     }
   }
 }
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
 
 </style>
