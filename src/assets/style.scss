@@ -2,6 +2,47 @@ $colors: (
     lightest: #ffa6b7,
     light: #e0546f,
     base: #af1e3a,
-    dark: #6d061a, 
+    dark: #6d061a,
     darkest: #2b0008
-)
+);
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid lightgray;
+    background: white;
+    border-radius: 200px;
+    outline: none;
+
+    &::before {
+      content: attr(title);
+      padding-right: 5px;
+    }
+
+    &.big {
+        font-size: 20px;
+        vertical-align: center;
+    }
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.center-columns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.center-rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
