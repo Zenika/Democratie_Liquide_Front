@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <form ref="form" :model="form" label-width="120px">
+        <form ref="form" v-model="form" label-width="120px">
             <div label="Email">
                 <input v-model="form.email" placeholder="Entrez votre email"></input>
             </div>
@@ -11,7 +11,7 @@
                 <button type="primary" @click="login(form)">Login</button>
                 <button type="danger" @click="loginWithGoogle()">Login with Google</button>
             </div>
-        </form>       
+        </form>
     </div>
 </template>
 
