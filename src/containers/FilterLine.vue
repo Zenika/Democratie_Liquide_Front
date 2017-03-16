@@ -14,7 +14,6 @@
         <li> ... </li>
       </ul>
     </dropdown>
-    <span> : </span>
   </div>
 </template>
 

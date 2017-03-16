@@ -13,8 +13,6 @@
     <span class="actions">
       <button title="Supprimer" v-if="subject.isMine && !subject.voteCount"><i class="fa fa-times"/></button>
       <button title="Déléguer" v-if="!subject.isVoted && !subject.isClosed"><i class="fa fa-users"/></button>
-      <button title="Voter" v-if="!subject.isClosed && !subject.isVoted"><i class="fa fa-check-circle-o"/></button>
-      <button title="Résultats" v-if="subject.isVoted"><i class="fa fa-list"/></button>
     </span>
 
   </div>
@@ -81,7 +79,7 @@ export default {
       padding: 2px 10px;
       border-radius: 50px;
       font-size: 12px;
-      white-space: nowrap;
+      white-space: pre;
     }
   }
 

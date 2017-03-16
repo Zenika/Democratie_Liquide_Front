@@ -1,7 +1,7 @@
 <template>
   <div class="subject-list">
     <ul v-if="subjects.length">
-      <li v-for="subject in subjects">
+      <li v-for="subject in subjects" @click="handleSubjectClick(subject)">
         <subject-line :subject="subject"/>
       </li>
     </ul>
@@ -10,7 +10,10 @@
 </template>
 
 <script>
-import SubjectLine from './SubjectLine'
+import SubjectLine from '@/components/SubjectLine'
+import ModalManager from '@/managers/ModalManager'
+import SubjectVoteForm from '@/components/SubjectVoteForm'
+import SubjectVoteResults from '@/components/SubjectVoteResults'
 
 export default {
   name: 'subject-list',
@@ -25,8 +28,21 @@ export default {
     }
   },
 
+  methods: {
+    handleSubjectClick (subject) {
+      let props = { subject }
+      if (!subject.isClosed && !subject.isVoted) {
+        ModalManager.display(createElement => createElement(SubjectVoteForm, { props }))
+      } else {
+        ModalManager.display(createElement => createElement(SubjectVoteResults, { props }))
+      }
+    }
+  },
+
   components: {
-    SubjectLine
+    SubjectLine,
+    SubjectVoteForm,
+    SubjectVoteResults
   }
 
 }
@@ -35,9 +51,14 @@ export default {
 <style lang="scss" scoped>
 
 li {
-  padding: 10px 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+
   &:nth-child(2n+1) {
     background: rgba(0,0,0,0.05);
+  }
+  &:hover {
+    background: rgba(0,0,0,0.1);
   }
 }
 

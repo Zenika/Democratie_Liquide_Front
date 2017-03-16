@@ -8,8 +8,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import SubjectsView from './SubjectsView'
-import FilterLine from './FilterLine'
+import SubjectsView from '@/containers/SubjectsView'
+import FilterLine from '@/containers/FilterLine'
 
 export default {
   created () {
