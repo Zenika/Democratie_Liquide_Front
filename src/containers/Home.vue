@@ -1,25 +1,42 @@
 <template>
     <div class="home">
-      <subject-view></subject-view>
+
+      <filter-line></filter-line>
+      <subjects-view></subjects-view>
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import SubjectView from './SubjectView'
+import SubjectsView from './SubjectsView'
+import FilterLine from './FilterLine'
 
 export default {
   created () {
     this.refreshSubjects()
+    this.refreshCategories()
+    this.refreshChannels()
+    this.refreshCollaborator()
   },
   methods: {
-    ...mapActions(['refreshSubjects'])
+    ...mapActions([
+      'refreshCollaborator',
+      'refreshSubjects',
+      'refreshCategories',
+      'refreshChannels'
+    ])
   },
   components: {
-    SubjectView
+    SubjectsView,
+    FilterLine
   }
 }
 </script>
 
 <style>
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
 </style>
