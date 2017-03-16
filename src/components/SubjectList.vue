@@ -34,14 +34,10 @@ export default {
 
 <style lang="scss" scoped>
 
-ul {
-  list-style-type: none;
-}
-
 li {
   padding: 10px 5px;
-  &:nth-child(2n) {
-    background: rgba(0,0,0,0.05);  
+  &:nth-child(2n+1) {
+    background: rgba(0,0,0,0.05);
   }
 }
 

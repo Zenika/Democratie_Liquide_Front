@@ -1,7 +1,13 @@
 <template>
-  <div class="subject-view">
-    <button v-for="(tab, index) in tabs" class="tab" :class="{selected: activeTab === index}" @click="switchTab(index)"> {{ tab.label }} </button>
+  <div class="subjects-view">
+
+    <div class="tabs">
+      <div v-for="(tab, index) in tabs" :class="{selected: activeTab === index}" @click="switchTab(index)">{{ tab.label }}</div>
+    </div>
+
     <subject-list :emptyText="tabs[activeTab].emptyText" :subjects="tabs[activeTab].subjects()"/>
+    <!--<button class="big" title="Créer un sujet"><i class="fa fa-plus"/></button>-->
+
   </div>
 </template>
 
@@ -10,7 +16,7 @@ import SubjectList from '../components/SubjectList'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'subject-view',
+  name: 'subjects-view',
   data () {
     return {
       activeTab: 0,
@@ -38,12 +44,6 @@ export default {
     }
   },
 
-  created () {
-    this.refreshSubjects()
-    this.refreshCategories()
-    this.refreshChannels()
-  },
-
   computed: {
     ...mapGetters([
       'mySubjects',
@@ -55,11 +55,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'refreshSubjects',
-      'refreshCategories',
-      'refreshChannels'
-    ]),
+    ...mapActions([]),
 
     switchTab (index) {
       this.activeTab = index
@@ -74,29 +70,45 @@ export default {
 
 <style lang="scss" scoped>
 
-  $button-color: #af1e3a;
+  @import '../assets/style';
 
-  button {
-    cursor: pointer;
-    outline: none;
-    padding: 10px 20px;
-    border: none;
-    background: transparent;
-    transition: color 0.3s ease;
+  .subjects-view {
+    text-align: center;
+  }
+
+  .tabs {
     border-bottom: 1px solid rgba(0,0,0,0.1);
-    font-size: 16px;
+    * {
+      display: inline-block;
+      cursor: pointer;
+      outline: none;
+      padding: 10px 20px;
+      margin: 0;
+      border: none;
+      background: transparent;
+      transition: color 0.3s ease;
+      font-size: 16px;
+      position: relative;
 
-    &:hover {
-      color: $button-color;
-    }
+      &:hover {
+        color: map-get($colors, 'base');
+      }
 
-    &:active, &:focus, &.selected {
-      color: $button-color;
-    }
+      &:active, &:focus, &.selected {
+        color: map-get($colors, 'base');
+      }
 
-    &.selected {
-      color: $button-color;
-      border-bottom: 2px solid $button-color;
+      &.selected {
+        color: map-get($colors, 'base');
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100%;
+          border-bottom: 2px solid map-get($colors, 'base');
+        }
+      }
     }
   }
 </style>
