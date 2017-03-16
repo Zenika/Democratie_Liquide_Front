@@ -26,11 +26,17 @@ export default {
   },
 
   [types.FILTER_CATEGORY] (state, category) {
-    state.filter.category = category
+    state.filter = {
+      ...state.filter,
+      category
+    }
   },
 
   [types.FILTER_CHANNEL] (state, channel) {
-    state.filter.channel = channel
+    state.filter = {
+      ...state.filter,
+      channel
+    }
   }
 
 }
