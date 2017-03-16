@@ -1,15 +1,24 @@
 <template>
   <div class="filter-line">
     <span>J'observe les sujets du channel</span>
-    <span class="field">{{ filter.channel.title }}</span>
+    <dropdown :title="filter.channel.title">
+      <ul>
+        <li v-for="channel in channels" @click="filterChannel(channel)">{{ channel.title }}</li>
+      </ul>
+    </dropdown>
     <span>et de la categorie</span>
-    <span class="field">{{ filter.category.title }}</span>
+    <dropdown :title="filter.category.title">
+      <ul>
+        <li v-for="category in categories" @click="filterCategory(category)">{{ category.title }}</li>
+      </ul>
+    </dropdown>
     <span> : </span>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Dropdown from '@/components/Dropdown'
 
 export default {
   name: 'filter-line',
@@ -21,13 +30,21 @@ export default {
 
   computed: {
     ...mapGetters([
+      'channels',
+      'categories',
       'filter'
     ])
   },
 
   methods: {
-    ...mapActions([])
+    ...mapActions([
+      'filterChannel',
+      'filterCategory'
+    ])
+  },
 
+  components: {
+    Dropdown
   }
 }
 </script>
@@ -42,23 +59,18 @@ export default {
     // background-color: map-get($colors, 'lightest');
   }
 
-  .field {
+  li {
+    padding: 5px 20px;
     cursor: pointer;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-bottom: solid 1px lightgray;
-    position: relative;
-
-    &:focus, &:active {
-      border-bottom: solid 2px map-get($colors, 'base');
+    user-select: none;
+    &:nth-child(2n) {
+      background: rgba(0,0,0,0.05);
     }
 
-    &::after {
-      content: '\25bc';
-      display: inline-block;
-      transform: scale(0.75, 0.5) translateY(3px);
-      padding-left: 5px;
+    &:hover {
+      background: rgba(0,0,0,0.1);
     }
+
   }
 
 
