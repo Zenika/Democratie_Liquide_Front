@@ -1,6 +1,6 @@
-import api from '../api'
+import api from '../config/api'
 import * as types from './types'
-import router from '../router'
+import router from '../config/router'
 
 export function refreshCollaborator ({commit}) {
   return api.get('api/collaborator/me').then(({data}) => {
