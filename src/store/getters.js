@@ -25,9 +25,9 @@ export const filter = (state, getters) => {
   }
 }
 
-export const filteredSubjects = ({ filter }, getters) => getters.subjects.filter(subject =>
-    (!filter.category || !!subject.category && filter.category.uuid === subject.category.uuid) &&
-    (!filter.channel && !subject.channel || subject.channel && filter.channel && filter.channel.uuid === subject.channel.uuid)
+export const filteredSubjects = (state, getters) => getters.subjects.filter(subject =>
+    (!getters.filter.category.uuid || !!subject.category && getters.filter.category.uuid === subject.category.uuid) &&
+    (!getters.filter.channel.uuid && !subject.channel || subject.channel && getters.filter.channel && getters.filter.channel.uuid === subject.channel.uuid)
 )
 
 export const mySubjects = (state, getters) => getters.filteredSubjects.filter(subject => subject.isMine)
