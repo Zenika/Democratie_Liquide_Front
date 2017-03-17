@@ -21,8 +21,7 @@
 import { mapGetters } from 'vuex'
 import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
-import SubjectVoteForm from '@/components/SubjectVoteForm'
-import SubjectVoteResults from '@/components/SubjectVoteResults'
+import SubjectView from '@/containers/SubjectView'
 
 export default {
   name: 'subject-list',
@@ -39,12 +38,8 @@ export default {
   methods: {
 
     selectSubject (subject) {
-      let props = { subject }
-      if (!subject.isClosed && !subject.isVoted) {
-        ModalManager.display('Vote en cours', createElement => createElement(SubjectVoteForm, { props }))
-      } else {
-        ModalManager.display('Résultats du vote', createElement => createElement(SubjectVoteResults, { props }))
-      }
+      let props = { subjectId: subject.uuid }
+      ModalManager.display('Vote ', createElement => createElement(SubjectView, { props }))
     },
 
     removeSubject (subject) {

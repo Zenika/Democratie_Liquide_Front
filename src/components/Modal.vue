@@ -131,7 +131,7 @@ export default {
 
     .modal-content {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       padding-top: 5px;
