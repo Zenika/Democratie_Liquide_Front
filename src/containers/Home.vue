@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 .home {
   display: flex;
@@ -40,5 +40,9 @@ export default {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+
+  .filter-line {
+    margin: 25px 0 10px 0;
+  }
 }
 </style>

@@ -1,34 +1,24 @@
 <template>
   <div class="subject-list">
 
-    <div class="tabs">
-      <div
-        v-for="tab in tabs"
-        :class="{selected: filter.tab === tab}"
-        @click="filterTab(tab)"
-      >{{ tab.label }}</div>
-    </div>
-
-    <div class="subjects" v-show="filteredSubjects.length">
-      <template v-for="subject in subjects">
-        <keep-alive>
-          <subject-line v-if="globalFilterCheck(subject)"
-            :subject="subject"
-            :key="subject.uuid"
-            @removeSubject="removeSubject(subject)"
-            @delegateSubject="delegateSubject(subject)"
-            @selectSubject="selectSubject(subject)"
-        />
-        </keep-alive>
-      </template>
-    </div>
+    <template v-for="subject in subjects" v-show="filteredSubjects.length">
+      <keep-alive>
+        <subject-line class="subject-line" v-if="globalFilterCheck(subject)"
+          :subject="subject"
+          :key="subject.uuid"
+          @removeSubject="removeSubject(subject)"
+          @delegateSubject="delegateSubject(subject)"
+          @selectSubject="selectSubject(subject)"
+      />
+      </keep-alive>
+    </template>
     <span v-show="!filteredSubjects.length">{{ filter.tab.empty }}</span>
 
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectVoteForm from '@/components/SubjectVoteForm'
@@ -51,7 +41,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['filterTab']),
 
     selectSubject (subject) {
       let props = { subject }
@@ -123,9 +112,7 @@ export default {
     }
   }
 
-  .subjects {
-    *:not(:hover):nth-child(2n+1) {
-        background: rgba(0,0,0,0.05);
-      }
+  .subject-line:not(:hover):nth-child(2n) {
+    background: rgba(0,0,0,0.05);
   }
 </style>
