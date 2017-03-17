@@ -39,10 +39,10 @@ export default {
     }
   },
 
-  [types.FILTER_TAB] (state, tab) {
+  [types.FILTER_SUBJECT_TYPE] (state, subjectType) {
     state.filter = {
       ...state.filter,
-      tab
+      subjectType
     }
   }
 

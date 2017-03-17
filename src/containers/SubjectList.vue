@@ -3,7 +3,7 @@
 
     <template v-for="subject in subjects" v-show="filteredSubjects.length">
       <keep-alive>
-        <subject-line class="subject-line" v-if="globalFilterCheck(subject)"
+        <subject-line class="subject-line" v-if="globalCheck(subject)"
           :subject="subject"
           :key="subject.uuid"
           @removeSubject="removeSubject(subject)"
@@ -12,7 +12,7 @@
       />
       </keep-alive>
     </template>
-    <span v-show="!filteredSubjects.length">{{ filter.tab.empty }}</span>
+    <span v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</span>
 
   </div>
 </template>
@@ -23,7 +23,6 @@ import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectVoteForm from '@/components/SubjectVoteForm'
 import SubjectVoteResults from '@/components/SubjectVoteResults'
-import { tabs } from '@/config/constants'
 
 export default {
   name: 'subject-list',
@@ -32,12 +31,9 @@ export default {
     ...mapGetters([
       'subjects',
       'filteredSubjects',
-      'globalFilterCheck',
+      'globalCheck',
       'filter'
-    ]),
-    tabs () {
-      return tabs
-    }
+    ])
   },
 
   methods: {

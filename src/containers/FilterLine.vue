@@ -1,19 +1,19 @@
 <template>
   <div class="filter-line">
     <span>J'observe</span>
-    <dropdown :title="filter.tab.title">
+    <dropdown :title="filter.subjectType.title">
       <ul>
-        <li v-for="tab in tabs" @click="filterTab(tab)">{{ tab.title }}</li>
+        <li v-for="subjectType in subjectTypes" @click="filterSubjectType(subjectType)">{{ subjectType.title }}</li>
       </ul>
     </dropdown>
-    <span>du channel</span>
+    <span>dans le channel</span>
     <dropdown :title="filter.channel.title">
       <ul>
         <li v-for="channel in channels" @click="filterChannel(channel)">{{ channel.title }}</li>
         <li> ... </li>
       </ul>
     </dropdown>
-    <span>et de la categorie</span>
+    <span>et la categorie</span>
     <dropdown :title="filter.category.title">
       <ul>
         <li v-for="category in categories" @click="filterCategory(category)">{{ category.title }}</li>
@@ -26,7 +26,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
-import { tabs } from '@/config/constants'
+import { subjectTypes } from '@/config/constants'
 
 export default {
   name: 'filter-line',
@@ -38,14 +38,14 @@ export default {
       'filter'
     ]),
 
-    tabs () {
-      return tabs
+    subjectTypes () {
+      return subjectTypes
     }
   },
 
   methods: {
     ...mapActions([
-      'filterTab',
+      'filterSubjectType',
       'filterChannel',
       'filterCategory'
     ])

@@ -1,4 +1,4 @@
-export const tabs = [{
+export const subjectTypes = [{
   title: 'les sujets à traiter',
   empty: 'Rien à traiter',
   test: subject => !subject.isClosed && !subject.givenDelegation
@@ -7,7 +7,7 @@ export const tabs = [{
   empty: 'Vous n\'avez pas encore voté sur un sujet',
   test: subject => subject.isVoted
 }, {
-  title: 'mes sujets délégués',
+  title: 'mes délégations',
   empty: 'Vous n\'avez pas encore délégué de sujet',
   test: subject => !!subject.givenDelegation
 }, {

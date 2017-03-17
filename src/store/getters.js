@@ -1,5 +1,5 @@
 import wording from '@/config/wording'
-import { tabs } from '@/config/constants'
+import { subjectTypes } from '@/config/constants'
 
 export const subjects = state => state.subjects.map(subject => {
   // if (Math.round(Math.random())) subject.isMine = true
@@ -22,20 +22,20 @@ export const filter = (state, getters) => {
   return {
     channel: state.filter.channel || getters.defaultChannel,
     category: state.filter.category || getters.defaultCategory,
-    tab: state.filter.tab || tabs[0]
+    subjectType: state.filter.subjectType || subjectTypes[0]
   }
 }
 
-export const categoryFilterCheck = (state, getters) => subject =>
+export const categoryCheck = (state, getters) => subject =>
   (!getters.filter.category.uuid || !!subject.category && getters.filter.category.uuid === subject.category.uuid)
 
-export const channelFilterCheck = (state, getters) => subject =>
+export const channelCheck = (state, getters) => subject =>
   (!getters.filter.channel.uuid && !subject.channel || subject.channel && getters.filter.channel && getters.filter.channel.uuid === subject.channel.uuid)
 
-export const tabFilterCheck = (state, getters) => subject =>
-  getters.filter.tab.test(subject)
+export const subjectTypeCheck = (state, getters) => subject =>
+  getters.filter.subjectType.test(subject)
 
-export const globalFilterCheck = (state, getters) => subject =>
-  getters.categoryFilterCheck(subject) && getters.channelFilterCheck(subject) && getters.tabFilterCheck(subject)
+export const globalCheck = (state, getters) => subject =>
+  getters.categoryCheck(subject) && getters.channelCheck(subject) && getters.subjectTypeCheck(subject)
 
-export const filteredSubjects = (state, getters) => getters.subjects.filter(subject => getters.globalFilterCheck(subject))
+export const filteredSubjects = (state, getters) => getters.subjects.filter(subject => getters.globalCheck(subject))
