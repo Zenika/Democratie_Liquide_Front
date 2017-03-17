@@ -34,6 +34,10 @@ export function filterChannel ({commit}, channel) {
   commit(types.FILTER_CHANNEL, channel)
 }
 
+export function filterTab ({commit}, tab) {
+  commit(types.FILTER_TAB, tab)
+}
+
 export function login ({dispatch}, form) {
   let formData = new FormData()
   formData.append('email', form.email)

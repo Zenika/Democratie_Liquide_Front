@@ -1,14 +1,13 @@
 <template>
-    <div class="home">
-
-      <filter-line></filter-line>
-      <subjects-view></subjects-view>
-    </div>
+  <div class="home">
+    <filter-line></filter-line>
+    <subject-list></subject-list>
+  </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import SubjectsView from '@/containers/SubjectsView'
+import SubjectList from '@/containers/SubjectList'
 import FilterLine from '@/containers/FilterLine'
 
 export default {
@@ -27,7 +26,7 @@ export default {
     ])
   },
   components: {
-    SubjectsView,
+    SubjectList,
     FilterLine
   }
 }
@@ -38,5 +37,8 @@ export default {
 .home {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 </style>

@@ -37,6 +37,13 @@ export default {
       ...state.filter,
       channel
     }
+  },
+
+  [types.FILTER_TAB] (state, tab) {
+    state.filter = {
+      ...state.filter,
+      tab
+    }
   }
 
 }

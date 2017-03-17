@@ -1,5 +1,5 @@
 <template>
-  <div class="subject-line">
+  <div class="subject-line" @click="$emit('selectSubject')">
 
     <span class="title">{{ subject.title }}</span>
 
@@ -11,8 +11,8 @@
     </span>
 
     <span class="actions">
-      <button title="Supprimer" v-if="subject.isMine && !subject.voteCount"><i class="fa fa-times"/></button>
-      <button title="Déléguer" v-if="!subject.isVoted && !subject.isClosed"><i class="fa fa-users"/></button>
+      <button title="Supprimer" v-if="subject.isMine && !subject.voteCount" @click.stop="$emit('removeSubject')"><i class="fa fa-times"/></button>
+      <button title="Déléguer" v-if="!subject.isVoted && !subject.isClosed" @click.stop="$emit('delegateSubject')"><i class="fa fa-users"/></button>
     </span>
 
   </div>
@@ -37,9 +37,6 @@ export default {
       let hours = Math.ceil((deadline - now) / 1000 / 3600)
       return hours
     }
-  },
-
-  methods: {
   },
 
   filters: {
@@ -70,6 +67,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(0,0,0,0.1);
+    }
   }
 
   .tags {
