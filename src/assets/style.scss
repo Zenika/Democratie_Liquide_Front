@@ -1,6 +1,6 @@
 $colors: (
-    lightest: #ffa6b7,
-    light: #e0546f,
+    lightest: #ffe2e2,
+    light: #e68b96,
     base: #af1e3a,
     dark: #6d061a,
     darkest: #2b0008
@@ -17,6 +17,7 @@ button {
     background: white;
     border-radius: 200px;
     outline: none;
+    user-select: none;
 
     &::before {
       content: attr(title);
@@ -26,6 +27,17 @@ button {
     &.big {
         font-size: 20px;
         vertical-align: center;
+    }
+
+    &:hover, &:focus {
+      color: map-get($colors, 'base');
+      border: 1px solid map-get($colors, 'lightest');
+    }
+
+    &:active {
+      background-color: map-get($colors, 'base');
+      border: 1px solid map-get($colors, 'base');
+      color: white;
     }
 }
 

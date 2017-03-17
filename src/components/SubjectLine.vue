@@ -69,9 +69,6 @@ export default {
     align-items: center;
     padding: 10px 10px;
     cursor: pointer;
-    &:hover {
-      background: rgba(0,0,0,0.1);
-    }
   }
 
   .tags {
@@ -82,27 +79,6 @@ export default {
       border-radius: 50px;
       font-size: 12px;
       white-space: pre;
-    }
-  }
-
-  .actions {
-
-    button {
-      cursor: pointer;
-      border: 1px solid lightgray;
-      background: white;
-      height: 100%;
-      border-radius: 50px;
-      outline: none;
-
-      &:hover, &:active, &:focus {
-        color: map-get($colors, 'base');
-      }
-
-      &::before {
-        content: attr(title);
-        padding-right: 5px;
-      }
     }
   }
 

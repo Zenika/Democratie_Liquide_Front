@@ -112,7 +112,15 @@ export default {
     }
   }
 
-  .subject-line:not(:hover):nth-child(2n) {
-    background: rgba(0,0,0,0.05);
+  .subject-line {
+    transition: all 100ms linear;
+    &:nth-child(2n) {
+      background: rgba(0,0,0,0.05);
+    }
+    &:hover {
+      background: map-get($colors, 'lightest');
+      color: map-get($colors, 'base');
+      border-left: 5px solid map-get($colors, 'base');
+    }
   }
 </style>

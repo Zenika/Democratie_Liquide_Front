@@ -4,8 +4,7 @@
     <transition name="fade">
 
       <div class="content" v-show="opened">
-        <div class="transparent-block"/>
-        <slot/>
+        <slot></slot>
       </div>
     </transition>
   </span>
@@ -66,19 +65,22 @@ export default {
       transform: scale(0.75, 0.5) translateY(3px);
       padding-left: 5px;
     }
-  }
 
-.transparent-block {
-  height: 12px;
-  width: 100%;
-  position: absolute;
-  bottom: 100%;
-  background: transparent;
-}
+    &::before {
+      height: 15px;
+      left: 0;
+      right: 0;
+      position: absolute;
+      top: 100%;
+      background: transparent;
+      content: '';
+    }
+  }
 
 .content {
   position: absolute;
-  top: calc(100% + 12px);
+  top: 100%;
+  margin-top: 10px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 5px;

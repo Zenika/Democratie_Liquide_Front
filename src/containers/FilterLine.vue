@@ -77,14 +77,16 @@ export default {
     text-shadow: none;
     white-space: nowrap;
     user-select: none;
+    transition: all 100ms linear;
+
     &:nth-child(2n) {
       background: rgba(0,0,0,0.05);
     }
 
     &:hover {
-      background: rgba(0,0,0,0.1);
+      background: map-get($colors, 'lightest');
+      color: map-get($colors, 'base');
     }
-
   }
 
 
