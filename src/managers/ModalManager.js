@@ -7,12 +7,13 @@ let modal = new Vue({
   data () {
     return {
       visible: false,
+      title: '',
       renderContent: createElement => createElement('div')
     }
   },
 
   render: function (createElement, context) {
-    let props = { visible: this.visible }
+    let props = { visible: this.visible, title: this.title }
     let on = { close: () => { this.visible = false } }
 
     return createElement(Modal, { props, on }, [
@@ -23,7 +24,8 @@ let modal = new Vue({
 
 export default {
 
-  display (renderContent) {
+  display (title, renderContent) {
+    modal.title = title
     modal.renderContent = renderContent
     modal.visible = true
   }
