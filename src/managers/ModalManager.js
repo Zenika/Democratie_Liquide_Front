@@ -1,4 +1,4 @@
-import Modal from '../components/modal'
+import Modal from '@/components/modal'
 import Vue from 'vue'
 
 let modal = new Vue({
@@ -8,25 +8,31 @@ let modal = new Vue({
     return {
       visible: false,
       title: '',
-      renderContent: createElement => createElement('div')
+      renderContent: null,
+      onClose: null
     }
   },
 
   render: function (createElement, context) {
     let props = { visible: this.visible, title: this.title }
-    let on = { close: () => { this.visible = false } }
+    let on = { close: () => {
+      this.visible = false
+      this.onClose && this.onClose()
+      this.renderContent = null
+    } }
 
     return createElement(Modal, { props, on }, [
-      this.renderContent(createElement)
+      this.renderContent && this.renderContent(createElement)
     ])
   }
 })
 
 export default {
 
-  display (title, renderContent) {
+  display (title, renderContent, onClose) {
     modal.title = title
     modal.renderContent = renderContent
+    modal.onClose = onClose
     modal.visible = true
   }
 }
