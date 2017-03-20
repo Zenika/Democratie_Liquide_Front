@@ -58,18 +58,42 @@ export default {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding: 5px;
+
 
     .header {
       border-bottom: solid 1px lightgray;
+      padding-bottom: 10px;
 
       .title {
         font-weight: bold;
+        padding-right: 10px;
         font-size: 1.5em;
       }
+
+      .actions {
+        margin-top: 5px;
+      }
+
     }
 
     .proposals {
       overflow: auto;
+
+      * {
+        padding: 10px;
+        position: relative;
+        &:not(:last-child):after {
+          content: '';
+          height: 1px;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          transform: scaleX(0.5);
+          background: lightgray;
+          position: absolute;
+        }
+      }
     }
   }
 

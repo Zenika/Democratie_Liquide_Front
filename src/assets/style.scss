@@ -13,15 +13,18 @@ html, body {
 
 button {
     cursor: pointer;
-    border: 1px solid lightgray;
-    background: white;
-    border-radius: 200px;
     outline: none;
     user-select: none;
 
-    &::before {
-      content: attr(title);
-      padding-right: 5px;
+    &.small, &.big {
+      background: white;
+      border: 1px solid lightgray;
+      border-radius: 200px;
+
+      &::before {
+        content: attr(title);
+        padding-right: 5px;
+      }
     }
 
     &.big {

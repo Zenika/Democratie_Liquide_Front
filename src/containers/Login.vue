@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="login">
         <form ref="form" v-model="form" label-width="120px">
             <div label="Email">
                 <input v-model="form.email" placeholder="Entrez votre email"></input>
@@ -8,8 +8,8 @@
                 <input v-model="form.password" placeholder="Entrez votre mot de passe"></input>
             </div>
             <div>
-                <button type="primary" @click="login(form)">Login</button>
-                <button type="danger" @click="loginWithGoogle()">Login with Google</button>
+                <button class="small" type="primary" @click="login(form)">Login</button>
+                <button class="small" type="danger" @click="loginWithGoogle()">Login with Google</button>
             </div>
         </form>
     </div>

@@ -11,8 +11,8 @@
     </span>
 
     <span class="actions">
-      <button title="Supprimer" v-if="subject.isMine && !subject.voteCount" @click.stop="$emit('removeSubject')"><i class="fa fa-times"/></button>
-      <button title="Déléguer" v-if="!subject.isVoted && !subject.isClosed" @click.stop="$emit('delegateSubject')"><i class="fa fa-users"/></button>
+      <button class="small" title="Supprimer" v-if="subject.isMine && !subject.voteCount" @click.stop="$emit('removeSubject')"><i class="fa fa-times"/></button>
+      <button class="small" title="Déléguer" v-if="!subject.isVoted && !subject.isClosed" @click.stop="$emit('delegateSubject')"><i class="fa fa-users"/></button>
     </span>
 
   </div>

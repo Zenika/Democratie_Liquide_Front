@@ -80,6 +80,8 @@ export default {
 .content {
   position: absolute;
   top: 100%;
+  min-height: 50px;
+  min-width: 50px;
   margin-top: 10px;
   left: 50%;
   transform: translateX(-50%);

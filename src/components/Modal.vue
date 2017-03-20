@@ -100,7 +100,6 @@ export default {
       .header {
         display: flex;
         justify-content: center;
-        // background: #af1e3a;
 
         .title {
           text-shadow: 0px 1px 0px white;
