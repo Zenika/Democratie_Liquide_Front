@@ -4,9 +4,19 @@
         <div class="header">
           <div class="title">{{ subject.title }}</div>
           <div class="description">{{ subject.description }}</div>
+          <div class="actions" v-if="voteView">
+            <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+          </div>
         </div>
         <div class="proposals">
-          <proposal :key="proposal.uuid" v-for="proposal in subject.propositions" :proposal="proposal"/>
+          <proposal v-for="proposal in subject.propositions"
+            :key="proposal.uuid"
+            :maxPoints="subject.maxPoints"
+            :totalPoints="totalPoints"
+            :proposal="proposal"
+            :mode="mode"
+          />
         </div>
       </div>
       <div v-else>
@@ -17,11 +27,15 @@
 
 <script>
 import Proposal from '@/components/Proposal'
-import api from '@/config/api'
+import { getSubject, submitVote } from '@/api/subject-api'
 
 export default {
   props: {
-    subjectId: String
+    subjectId: String,
+    mode: {
+      type: String,
+      validator: value => ['create', 'vote', 'result'].indexOf(value) !== -1
+    }
   },
 
   data () {
@@ -30,11 +44,60 @@ export default {
     }
   },
 
+  computed: {
+
+    totalPoints () {
+      return this.subject.propositions.reduce((sum, proposal) => sum + proposal.points || 0, 0)
+    },
+
+    createView () {
+      return !this.subject
+    },
+
+    resultView () {
+      return this.subject.isVoted || this.subject.isClosed
+    },
+
+    voteView () {
+      return !this.resultView
+    }
+  },
+
+  methods: {
+    reinitialize () {
+      this.subject.propositions.map(proposal => { proposal.points = 0 })
+    },
+
+    fetch () {
+      getSubject(this.subjectId).then(({data}) => {
+        this.subject = data
+        // this.subject.maxPoints = 27
+      })
+    },
+
+    send () {
+      let choices = []
+      this.subject.propositions.forEach(proposal => {
+        choices.push({
+          propositionId: proposal.id,
+          points: proposal.points
+        })
+      })
+      submitVote(this.subjectId, choices).then(
+
+        () => {
+          this.fetch()
+        },
+
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  },
+
   created () {
-    console.log(this.subjectId)
-    api.get('api/subjects/' + this.subjectId).then(({data}) => {
-      this.subject = data
-    })
+    this.fetch()
   },
 
   components: {

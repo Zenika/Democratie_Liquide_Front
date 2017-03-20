@@ -1,7 +1,7 @@
 export const subjectTypes = [{
   title: 'les sujets à traiter',
   empty: 'Rien à traiter',
-  test: subject => !subject.isClosed && !subject.givenDelegation
+  test: subject => !subject.isVoted && !subject.isClosed && !subject.givenDelegation
 }, {
   title: 'les sujets déjà votés',
   empty: 'Vous n\'avez pas encore voté sur un sujet',
