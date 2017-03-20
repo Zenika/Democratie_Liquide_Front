@@ -1,27 +1,31 @@
-import api from '../config/api'
+import { getCollaborator } from '@/api/collaborator-api'
+import { getSubjects } from '@/api/subject-api'
+import { getChannels } from '@/api/channel-api'
+import { getCategories } from '@/api/category-api'
+import { authenticate, authenticateWithGoogle } from '@/api/auth-api'
+import { goHome } from '@/config/router'
 import * as types from './types'
-import router from '../config/router'
 
 export function refreshCollaborator ({commit}) {
-  return api.get('api/collaborator/me').then(({data}) => {
+  return getCollaborator().then(({data}) => {
     commit(types.REFRESH_COLLABORATOR, data)
   })
 }
 
 export function refreshSubjects ({commit}) {
-  return api.get('api/subjects').then(({data}) => {
+  return getSubjects().then(({data}) => {
     commit(types.REFRESH_SUBJECTS, data)
   })
 }
 
 export function refreshCategories ({commit}) {
-  return api.get('api/categories').then(({data}) => {
+  return getCategories().then(({data}) => {
     commit(types.REFRESH_CATEGORIES, data)
   })
 }
 
 export function refreshChannels ({commit}) {
-  return api.get('api/channels').then(({data}) => {
+  return getChannels().then(({data}) => {
     commit(types.REFRESH_CHANNELS, data)
   })
 }
@@ -39,20 +43,17 @@ export function filterSubjectType ({commit}, subjectType) {
 }
 
 export function login ({dispatch}, form) {
-  let formData = new FormData()
-  formData.append('email', form.email)
-  formData.append('password', form.password)
-  return api.post('signin/form', formData).then(() => {
+  authenticate(form).then(() => {
     return dispatch('refreshCollaborator')
   }).then(() => {
-    router.push('/')
+    goHome()
   })
 }
 
 export function loginWithGoogle ({dispatch}) {
-  return api.post('signin/google').then(() => {
+  authenticateWithGoogle().then(() => {
     return dispatch('refreshCollaborator')
   }).then(() => {
-    router.push('/')
+    goHome()
   })
 }

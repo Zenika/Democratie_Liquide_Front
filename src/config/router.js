@@ -6,7 +6,7 @@ import Login from '@/containers/Login'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -27,3 +27,8 @@ export default new Router({
     }
   ]
 })
+
+export default router
+
+export const goHome = () => router.push('/')
+export const goToLogin = () => router.push('/login')
