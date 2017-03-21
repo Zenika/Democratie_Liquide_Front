@@ -3,21 +3,22 @@
     <div class="wrapper"
       :class="{
         selected: this.proposal.points > 0,
-        vote: isVote
+        vote: mouseEnabled
       }"
-      @click.stop="isVote && onClick($event)"
-      @mousemove.stop="isVote && onHover($event)"
-      @mouseleave.stop="isVote && onLeave()"
+      @click.stop="mouseEnabled && onClick($event)"
+      @mousemove.stop="mouseEnabled && onHover($event)"
+      @mouseleave.stop="mouseEnabled && onLeave()"
     >
       <div class="line-hover"
-        v-if="isVote"
+        v-if="mouseEnabled"
         :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
       ></div>
       <div class="line-selected"
+        v-if="!isDelegated"
         :style="{ transform: 'scaleX(' + this.proposal.points / maxPoints + ')' }"
       ></div>
 
-      <span class="points">{{ mouseIsOver && isVote ? hoverPoints : proposal.points }}</span>
+      <span v-if="!isDelegated" class="points">{{ mouseIsOver && mouseEnabled ? hoverPoints : proposal.points }}</span>
 
       <span>
         <div class="title"> {{ proposal.title }}</div>
@@ -39,6 +40,7 @@ export default {
     },
 
     isVote: Boolean,
+    isDelegated: Boolean,
 
     maxPoints: Number,
     totalPoints: Number
@@ -58,6 +60,10 @@ export default {
 
     remainingPoints () {
       return this.maxPoints - this.totalPoints + this.proposal.points
+    },
+
+    mouseEnabled () {
+      return this.isVote && !this.isDelegated
     }
   },
 
@@ -105,7 +111,7 @@ export default {
       background: map-get($reds, 'lightest');
       border-bottom-width: 4px;
       .points {
-        color: map-get($reds, 'medium');        
+        color: map-get($reds, 'medium');
       }
     }
 
@@ -118,7 +124,7 @@ export default {
 
 
     &.vote {
-      cursor: pointer;      
+      cursor: pointer;
       &:hover {
         background: map-get($reds, 'lightest');
         .line-hover {
@@ -131,7 +137,7 @@ export default {
           color: map-get($reds, 'medium');
         }
       }
-      
+
     }
   }
 

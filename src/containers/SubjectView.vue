@@ -5,16 +5,17 @@
           <div class="title">{{ subject.title }}</div>
           <div class="description">{{ subject.description }}</div>
           <div class="remaining-points"
-            v-if="isVote"
-            :class="{ empty: subject.maxPoints === totalPoints }"
+            :class="{ green: (subject.maxPoints === totalPoints) || !isVote }"
           >
-            {{ subject.maxPoints - totalPoints | pluralize('point') }} à distribuer
-            
-            <div class="line"
+            <span v-if="!isVote">Résultats du vote</span>
+            <span v-else-if="isVote && !delegation">{{ subject.maxPoints - totalPoints | pluralize('point') }} à distribuer</span>
+            <span v-else>Vote délégué à {{ delegation | mailToName }}</span>
+
+            <div v-if="isVote" class="line"
               :style="{ transform: 'scaleX(' + (subject.maxPoints - totalPoints) / subject.maxPoints + ')' }"
             />
           </div>
-          
+
         </div>
         <div class="proposals" ref="proposals">
           <proposal v-for="proposal in subject.propositions"
@@ -23,10 +24,11 @@
             :totalPoints="totalPoints"
             :proposal="proposal"
             :isVote="isVote"
+            :isDelegated="!!delegation"
           />
         </div>
         <div class="footer">
-          <span class="actions" v-if="isVote">
+          <span class="actions" v-if="isVote && !delegation">
             <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
             <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           </span>
@@ -65,6 +67,10 @@ export default {
 
     isVote () {
       return !this.subject.isVoted && !this.subject.isClosed
+    },
+
+    delegation () {
+      return this.subject.givenDelegation
     }
   },
 
@@ -81,7 +87,7 @@ export default {
           this.subject.propositions.forEach(proposal => { proposal.points = 0 })
         } else {
           this.subject.propositions.sort((proposalA, proposalB) => proposalB.points - proposalA.points)
-          this.subject.maxPoints = this.totalPoints
+          this.subject.maxPoints = this.totalPoints || 1
         }
       })
     },
@@ -142,7 +148,7 @@ export default {
     }
 
     .remaining-points {
-      transition: all 500ms ease;      
+      transition: all 500ms ease;
       font-weight: bold;
       color: darkgray;
       position: relative;
@@ -155,10 +161,10 @@ export default {
       z-index: 0;
       background-color: map-get($blues, 'light');
 
-      &.empty {
+      &.green {
         background-color: map-get($greens, 'medium');
       }
-      
+
 
       .line {
         transform-origin: left;
