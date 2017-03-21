@@ -22,6 +22,7 @@ import { mapGetters } from 'vuex'
 import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectView from '@/containers/SubjectView'
+import DelegationView from '@/containers/DelegationView'
 
 export default {
   name: 'subject-list',
@@ -47,7 +48,8 @@ export default {
     },
 
     delegateSubject (subject) {
-      ModalManager.display('Choix d\'un délégataire', createElement => createElement('div', 'Delegation de ' + subject.title))
+      let props = { subjectId: subject.uuid }
+      ModalManager.display('Choix d\'un délégataire', createElement => createElement(DelegationView, { props }))
     }
 
   },
@@ -65,42 +67,6 @@ export default {
 
   .subject-list {
     text-align: center;
-  }
-
-  .tabs {
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    * {
-      display: inline-block;
-      cursor: pointer;
-      outline: none;
-      padding: 10px 20px;
-      margin: 0;
-      border: none;
-      background: transparent;
-      transition: color 0.3s ease;
-      font-size: 16px;
-      position: relative;
-
-      &:hover {
-        color: map-get($reds, 'medium');
-      }
-
-      &:active, &:focus, &.selected {
-        color: map-get($reds, 'medium');
-      }
-
-      &.selected {
-        color: map-get($reds, 'medium');
-        &::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 100%;
-          border-bottom: 2px solid map-get($reds, 'medium');
-        }
-      }
-    }
   }
 
   .subject-line {

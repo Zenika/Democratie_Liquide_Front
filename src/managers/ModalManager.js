@@ -1,8 +1,10 @@
 import Modal from '@/components/modal'
 import Vue from 'vue'
+import store from '@/store/index'
 
 let modal = new Vue({
   el: '#modal',
+  store,
 
   data () {
     return {

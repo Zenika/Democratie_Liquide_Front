@@ -17,3 +17,5 @@ new Vue({
 })
 
 Vue.filter('pluralize', (value, label) => value + ' ' + (value <= 1 ? label : label.split(' ').map(word => word + 's').join(' ')))
+
+Vue.filter('mailToName', value => value.split('@zenika.com')[0].split('.').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))

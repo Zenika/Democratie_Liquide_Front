@@ -4,10 +4,10 @@
     <span class="title">{{ subject.title }}</span>
 
     <span class="tags">
-      <span v-if="subject.category"><i class="fa fa-tag"/> {{ subject.category.title }}</span>
-      <span v-if="remainingHours"><i class="fa fa-clock-o"/> {{ remainingHours | remainingHoursLabel('heure restante', 'jour restant', 'sujet clos')}}</span>
-      <span><i class="fa fa-check-circle-o"/> {{ subject.voteCount | pluralize('vote')}}</span>
-      <span v-if="subject.givenDelegation"><i class="fa fa-user"/> {{ subject.givenDelegation.split('@zenika.com')[0].replace('.', ' ') }}</span>
+      <span class="tag" v-if="subject.category"><i class="fa fa-tag"/> {{ subject.category.title }}</span>
+      <span class="tag" v-if="remainingHours"><i class="fa fa-clock-o"/> {{ remainingHours | remainingHoursLabel('heure restante', 'jour restant', 'sujet clos')}}</span>
+      <span class="tag"><i class="fa fa-check-circle-o"/> {{ subject.voteCount | pluralize('vote')}}</span>
+      <span class="tag" v-if="subject.givenDelegation"><i class="fa fa-user"/> {{ subject.givenDelegation | mailToName }}</span>
     </span>
 
     <span class="actions">
@@ -65,17 +65,6 @@ export default {
     align-items: center;
     padding: 10px 10px;
     cursor: pointer;
-  }
-
-  .tags {
-    span {
-      background-color: map-get($blues, 'medium');
-      color: white;
-      padding: 2px 10px;
-      border-radius: 50px;
-      font-size: 12px;
-      white-space: pre;
-    }
   }
 
 
