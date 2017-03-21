@@ -1,19 +1,24 @@
 <template>
-  <div class="proposal"
-    @click.stop="onClick($event)"
-    @mousemove.stop="onHover($event)"
-  >
-    <div class="line-hover"
-      :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
-    ></div>
-    <div class="line-selected"
-      :style="{ transform: 'scaleX(' + this.proposal.points / maxPoints + ')' }"
-    ></div>
-    <span class="title">
-      <span class="tag"><i class="fa fa-star" aria-hidden="true"></i> {{ proposal.points | pluralize('point')}}</span>
-      {{ proposal.title }}
-    </span>
-    <div class="description">{{ proposal.description }}</div>
+  <div class="proposal">
+    <div class="wrapper"
+      :class="{ selected: this.proposal.points > 0 }"
+      @click.stop="onClick($event)"
+      @mousemove.stop="onHover($event)"
+      @mouseleave.stop="onLeave()"
+    >
+      <div class="line-hover"
+        :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
+      ></div>
+      <div class="line-selected"
+        :style="{ transform: 'scaleX(' + this.proposal.points / maxPoints + ')' }"
+      ></div>
+
+      <span class="points">{{ mouseIsOver ? hoverPoints : proposal.points }}</span>
+
+      <span>
+        <div class="title"> {{ proposal.title }}</div>
+        <div class="description">{{ proposal.description }}</div>
+      </span>
     </div>
   </div>
 </template>
@@ -35,7 +40,8 @@ export default {
 
   data () {
     return {
-      hoverPoints: 0
+      hoverPoints: 0,
+      mouseIsOver: false
     }
   },
 
@@ -63,6 +69,11 @@ export default {
     onHover (e) {
       let points = this.getPointsFromMousePosition(e)
       this.hoverPoints = points <= this.remainingPoints ? points : this.remainingPoints
+      this.mouseIsOver = true
+    },
+
+    onLeave () {
+      this.mouseIsOver = false
     }
 
   }
@@ -72,12 +83,29 @@ export default {
 <style lang="scss" scoped>
   @import '../assets/style';
 
-  .proposal {
-    margin: 5px;
+  .wrapper {
+    margin: 10px 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
     cursor: pointer;
     overflow: hidden;
     border-radius: 15px;
     z-index: 0;
+    transition: all 100ms linear;
+    border: 0px solid map-get($reds, 'light');
+
+    &.selected {
+      background: map-get($reds, 'lightest');
+      border-bottom-width: 4px;
+    }
+
+    &:not(.selected):not(:hover) {
+      .points {
+        color: map-get($blues, 'medium');
+      }
+    }
 
     &:not(:hover) {
       .line-hover {
@@ -87,7 +115,7 @@ export default {
 
 
     &:hover {
-      background: map-get($colors, 'lightest');
+      background: map-get($reds, 'lightest');
       .line-hover {
         opacity: 0.5;
       }
@@ -97,7 +125,6 @@ export default {
   .title {
     font-weight: bold;
     font-size: 1em;
-    padding-right: 15px;
   }
 
   .description {
@@ -111,32 +138,31 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: map-get($colors, 'light');
+    background: map-get($reds, 'light');
     z-index: -1;
     overflow: hidden;
   }
 
   .line-selected {
-    opacity: 0.75;
-    border-bottom: 5px solid map-get($colors, 'base');
+    opacity: 0.5;
     transition: all 500ms ease;
   }
 
   .line-hover {
     transition: all 200ms ease;
+    background: map-get($reds, 'light');
     opacity: 0;
   }
 
-
-  .tag {
-      background-color: #2196bd;
-      color: white;
-      padding: 2px 10px;
-      border-radius: 50px;
-      font-size: 12px;
-      font-weight: bold;
-      white-space: pre;
-      float: right;
+  .points {
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 3px;
+    transition: all 200ms ease;
+    text-shadow: 0 1px 0 white;
+    font-weight: bold;
+    font-size: 2em;
+    color: map-get($reds, 'medium');
   }
 
   input {

@@ -69,7 +69,7 @@ export default {
 
   .tags {
     span {
-      background-color: #2196bd;
+      background-color: map-get($blues, 'medium');
       color: white;
       padding: 2px 10px;
       border-radius: 50px;

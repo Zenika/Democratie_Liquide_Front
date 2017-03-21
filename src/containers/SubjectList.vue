@@ -82,22 +82,22 @@ export default {
       position: relative;
 
       &:hover {
-        color: map-get($colors, 'base');
+        color: map-get($reds, 'medium');
       }
 
       &:active, &:focus, &.selected {
-        color: map-get($colors, 'base');
+        color: map-get($reds, 'medium');
       }
 
       &.selected {
-        color: map-get($colors, 'base');
+        color: map-get($reds, 'medium');
         &::after {
           content: '';
           position: absolute;
           left: 0;
           right: 0;
           top: 100%;
-          border-bottom: 2px solid map-get($colors, 'base');
+          border-bottom: 2px solid map-get($reds, 'medium');
         }
       }
     }
@@ -105,14 +105,14 @@ export default {
 
   .subject-line {
     transition: all 100ms linear;
-    border-left: 0px solid map-get($colors, 'base');
+    border-left: 0px solid map-get($reds, 'medium');
 
     &:nth-child(2n) {
       background: rgba(0,0,0,0.05);
     }
     &:hover {
-      background: map-get($colors, 'lightest');
-      color: map-get($colors, 'base');
+      background: map-get($reds, 'lightest');
+      color: map-get($reds, 'medium');
       border-left-width: 5px;
     }
   }

@@ -1,9 +1,25 @@
-$colors: (
+$reds: (
     lightest: #f7d7db,
     light: #e68b96,
-    base: #af1e3a,
+    medium: #af1e3a,
     dark: #6d061a,
     darkest: #2b0008
+);
+
+$blues: (
+    lightest: #a3daec,
+    light: #64bcda,
+    medium: #2196bd,
+    dark: #0d779a,
+    darkest: #025571
+);
+
+$greens: (
+    lightest: #bfecd3,
+    light: #86dcac,
+    medium: #3cb371,
+    dark: #178a4a,
+    darkest: #024821
 );
 
 html, body {
@@ -33,13 +49,13 @@ button {
     }
 
     &:hover, &:focus {
-      color: map-get($colors, 'base');
-      border: 1px solid map-get($colors, 'lightest');
+      color: map-get($reds, 'medium');
+      border: 1px solid map-get($reds, 'lightest');
     }
 
     &:active {
-      background-color: map-get($colors, 'base');
-      border: 1px solid map-get($colors, 'base');
+      background-color: map-get($reds, 'medium');
+      border: 1px solid map-get($reds, 'medium');
       color: white;
     }
 }

@@ -84,8 +84,8 @@ export default {
     }
 
     &:hover {
-      background: map-get($colors, 'lightest');
-      color: map-get($colors, 'base');
+      background: map-get($reds, 'lightest');
+      color: map-get($reds, 'medium');
     }
   }
 

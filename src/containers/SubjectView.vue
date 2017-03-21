@@ -4,6 +4,16 @@
         <div class="header">
           <div class="title">{{ subject.title }}</div>
           <div class="description">{{ subject.description }}</div>
+          <div class="remaining-points"
+            :class="{ empty: subject.maxPoints === totalPoints }"
+          >
+            {{ subject.maxPoints - totalPoints | pluralize('point') }} à distribuer
+            
+            <div class="line"
+              :style="{ transform: 'scaleX(' + (subject.maxPoints - totalPoints) / subject.maxPoints + ')' }"
+            />
+          </div>
+          
         </div>
         <div class="proposals">
           <proposal v-for="proposal in subject.propositions"
@@ -15,10 +25,10 @@
           />
         </div>
         <div class="footer">
-          <div class="actions" v-if="voteView">
+          <span class="actions" v-if="voteView">
             <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
             <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-          </div>
+          </span>
         </div>
       </div>
       <div v-else>
@@ -129,7 +139,6 @@ export default {
 
 
     .header {
-      padding-bottom: 10px;
 
       .title {
         font-weight: bold;
@@ -137,6 +146,38 @@ export default {
         font-size: 1.5em;
       }
 
+    }
+
+    .remaining-points {
+      transition: all 500ms ease;      
+      font-weight: bold;
+      color: darkgray;
+      position: relative;
+      color: white;
+      text-align: center;
+      border-radius: 200px;
+      overflow: hidden;
+      padding: 0 20px;
+      margin: 5px 0;
+      z-index: 0;
+      background-color: map-get($blues, 'light');
+
+      &.empty {
+        background-color: map-get($greens, 'medium');
+      }
+      
+
+      .line {
+        transform-origin: left;
+        transition: all 500ms ease;
+        background-color: map-get($blues, 'medium');
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+      }
     }
 
     .actions {
@@ -151,14 +192,22 @@ export default {
 
     .proposals {
       overflow: auto;
-      border: 1px solid lightgrey; //map-get($colors, 'light');
+      border: 1px solid lightgrey;
       border-left-width: 0;
       border-right-width: 0;
 
-      * {
-        padding: 10px;
+      :not(:last-child) {
         position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 10%;
+          margin-top: -5px;
+          right: 10%;
+          border-bottom: 1px solid lightgray;
+        }
       }
+
     }
   }
 

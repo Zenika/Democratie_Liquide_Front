@@ -56,7 +56,7 @@ export default {
     user-select: none;
 
     &.opened {
-      border-bottom: solid 2px map-get($colors, 'base');
+      border-bottom: solid 2px map-get($reds, 'medium');
     }
 
     &::after {
