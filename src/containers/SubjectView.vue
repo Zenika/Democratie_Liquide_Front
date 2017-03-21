@@ -4,10 +4,6 @@
         <div class="header">
           <div class="title">{{ subject.title }}</div>
           <div class="description">{{ subject.description }}</div>
-          <div class="actions" v-if="voteView">
-            <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-            <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-          </div>
         </div>
         <div class="proposals">
           <proposal v-for="proposal in subject.propositions"
@@ -17,6 +13,12 @@
             :proposal="proposal"
             :mode="mode"
           />
+        </div>
+        <div class="footer">
+          <div class="actions" v-if="voteView">
+            <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
       <div v-else>
@@ -47,7 +49,7 @@ export default {
   computed: {
 
     totalPoints () {
-      return this.subject.propositions.reduce((sum, proposal) => sum + proposal.points || 0, 0)
+      return this.subject.propositions.reduce((sum, proposal) => 0 + sum + proposal.points || 0, 0)
     },
 
     createView () {
@@ -109,6 +111,8 @@ export default {
 
 <style lang="scss" scoped>
 
+@import '../assets/style';
+
 .subject-view {
   display: flex;
   flex-direction: column;
@@ -125,7 +129,6 @@ export default {
 
 
     .header {
-      border-bottom: solid 1px lightgray;
       padding-bottom: 10px;
 
       .title {
@@ -134,28 +137,27 @@ export default {
         font-size: 1.5em;
       }
 
-      .actions {
-        margin-top: 5px;
-      }
+    }
 
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+
+      button {
+        margin-left: 10px;
+      }
     }
 
     .proposals {
       overflow: auto;
+      border: 1px solid lightgrey; //map-get($colors, 'light');
+      border-left-width: 0;
+      border-right-width: 0;
 
       * {
         padding: 10px;
         position: relative;
-        &:not(:last-child):after {
-          content: '';
-          height: 1px;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          transform: scaleX(0.5);
-          background: lightgray;
-          position: absolute;
-        }
       }
     }
   }

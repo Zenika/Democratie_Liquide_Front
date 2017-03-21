@@ -1,22 +1,19 @@
 <template>
-  <div class="proposal">
-    <span class="title">{{ proposal.title }}</span>
-    <span class="description">{{ proposal.description }}</span>
-    <div class="points-line">
-      <div class="bar"
-        :style="{ transform: 'scaleX(' + barLength + ')' }"
-      />
-      <div class="points">
-        <button class="point"
-          :class="{ selected: isSelected(0) }"
-          @click="proposal.points = 0"
-        >0</button>
-        <button class="point"
-          v-for="i in maxPoints"
-          :class="{ disabled: isDisabled(i), selected: isSelected(i) }"
-          @click="proposal.points = isDisabled(i) ? proposal.points : i"
-        >{{ i }}</button>
-      </div>
+  <div class="proposal"
+    @click.stop="onClick($event)"
+    @mousemove.stop="onHover($event)"
+  >
+    <div class="line-hover"
+      :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
+    ></div>
+    <div class="line-selected"
+      :style="{ transform: 'scaleX(' + this.proposal.points / maxPoints + ')' }"
+    ></div>
+    <span class="title">
+      <span class="tag"><i class="fa fa-star" aria-hidden="true"></i> {{ proposal.points | pluralize('point')}}</span>
+      {{ proposal.title }}
+    </span>
+    <div class="description">{{ proposal.description }}</div>
     </div>
   </div>
 </template>
@@ -32,25 +29,42 @@ export default {
       required: true
     },
 
-    isVote: Boolean,
     maxPoints: Number,
     totalPoints: Number
   },
 
+  data () {
+    return {
+      hoverPoints: 0
+    }
+  },
+
   computed: {
     barLength () {
-      return (this.proposal.points + 1) / (this.maxPoints + 1)
+      return this.proposal.points / this.maxPoints
+    },
+
+    remainingPoints () {
+      return this.maxPoints - this.totalPoints + this.proposal.points
     }
   },
 
   methods: {
-    isDisabled (value) {
-      return this.totalPoints + value > this.maxPoints + this.proposal.points
+
+    getPointsFromMousePosition (e) {
+      return Math.round(e.layerX / e.currentTarget.clientWidth * this.maxPoints)
     },
 
-    isSelected (value) {
-      return this.proposal.points === value
+    onClick (e) {
+      let points = this.getPointsFromMousePosition(e)
+      this.proposal.points = points <= this.remainingPoints ? points : this.remainingPoints
+    },
+
+    onHover (e) {
+      let points = this.getPointsFromMousePosition(e)
+      this.hoverPoints = points <= this.remainingPoints ? points : this.remainingPoints
     }
+
   }
 }
 </script>
@@ -58,88 +72,76 @@ export default {
 <style lang="scss" scoped>
   @import '../assets/style';
 
-  $bar-radius: 0px;
-
   .proposal {
-    padding: 5px 0;
+    margin: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 15px;
+    z-index: 0;
+
+    &:not(:hover) {
+      .line-hover {
+        transform: scaleX(0) !important;
+      }
+    }
+
+
+    &:hover {
+      background: map-get($colors, 'lightest');
+      .line-hover {
+        opacity: 0.5;
+      }
+    }
   }
 
   .title {
     font-weight: bold;
     font-size: 1em;
-    padding: 0 5px;
+    padding-right: 15px;
   }
 
   .description {
     font-size: 0.8em;
   }
 
-  .points-line {
-    position: relative;
-    margin: 5px;
-    border-radius: $bar-radius;
-    border: transparent;
-    overflow: hidden;
-    z-index: 1;
-  }
-
-  .bar {
+  .line-selected, .line-hover {
     transform-origin: left;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     width: 100%;
-    transition: all 500ms ease;
     background: map-get($colors, 'light');
     z-index: -1;
     overflow: hidden;
   }
 
-  .points {
-    display: flex;
-    justify-content: space-around;
-    background: rgba(255,255,255,0.5);
-    opacity: 0.5;
+  .line-selected {
+    opacity: 0.75;
+    border-bottom: 5px solid map-get($colors, 'base');
+    transition: all 500ms ease;
+  }
 
-    .point {
-      transition: all 250ms ease;
-      border: 2px solid rgba(0,0,0,0.2);
-      background: transparent;
-      border-left-width: 0px;
-      border-right-width: 2px;
-      width: 50px;
-      font-size: 2em;
-      height: 50px;
-      text-align: center;
-      color: rgba(0,0,0,0.2);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  .line-hover {
+    transition: all 200ms ease;
+    opacity: 0;
+  }
+
+
+  .tag {
+      background-color: #2196bd;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 12px;
       font-weight: bold;
+      white-space: pre;
+      float: right;
+  }
 
-      &:first-child {
-        border-left-width: 2px;
-        border-bottom-left-radius: $bar-radius;
-        border-top-left-radius: $bar-radius;
-      }
-
-      &:not(.disabled):hover {
-        background: rgba(0,0,0,0.1)
-      }
-
-      &:last-child {
-        border-bottom-right-radius: $bar-radius;
-        border-top-right-radius: $bar-radius;
-      }
-
-      &.disabled {
-        cursor: default;
-        opacity: 0.25
-      }
-
-      &.selected {
-        color: map-get($colors, 'base');
-      }
-    }
+  input {
+    display: none;
+    width: 100%;
   }
 
 </style>
