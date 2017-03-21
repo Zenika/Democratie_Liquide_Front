@@ -5,6 +5,7 @@
           <div class="title">{{ subject.title }}</div>
           <div class="description">{{ subject.description }}</div>
           <div class="remaining-points"
+            v-if="isVote"
             :class="{ empty: subject.maxPoints === totalPoints }"
           >
             {{ subject.maxPoints - totalPoints | pluralize('point') }} à distribuer
@@ -15,17 +16,17 @@
           </div>
           
         </div>
-        <div class="proposals">
+        <div class="proposals" ref="proposals">
           <proposal v-for="proposal in subject.propositions"
             :key="proposal.uuid"
             :maxPoints="subject.maxPoints"
             :totalPoints="totalPoints"
             :proposal="proposal"
-            :mode="mode"
+            :isVote="isVote"
           />
         </div>
         <div class="footer">
-          <span class="actions" v-if="voteView">
+          <span class="actions" v-if="isVote">
             <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
             <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           </span>
@@ -62,16 +63,8 @@ export default {
       return this.subject.propositions.reduce((sum, proposal) => 0 + sum + proposal.points || 0, 0)
     },
 
-    createView () {
-      return !this.subject
-    },
-
-    resultView () {
-      return this.subject.isVoted || this.subject.isClosed
-    },
-
-    voteView () {
-      return !this.resultView
+    isVote () {
+      return !this.subject.isVoted && !this.subject.isClosed
     }
   },
 
@@ -83,7 +76,13 @@ export default {
     fetch () {
       getSubject(this.subjectId).then(({data}) => {
         this.subject = data
-        // this.subject.maxPoints = 27
+
+        if (this.isVote) {
+          this.subject.propositions.forEach(proposal => { proposal.points = 0 })
+        } else {
+          this.subject.propositions.sort((proposalA, proposalB) => proposalB.points - proposalA.points)
+          this.subject.maxPoints = this.totalPoints
+        }
       })
     },
 
@@ -95,16 +94,10 @@ export default {
           points: proposal.points
         })
       })
-      submitVote(this.subjectId, choices).then(
-
-        () => {
-          this.fetch()
-        },
-
-        error => {
-          console.log(error)
-        }
-      )
+      submitVote(this.subjectId, choices).then(() => {
+        this.fetch()
+        this.$refs.proposals.scrollTop = 0
+      })
     }
   },
 

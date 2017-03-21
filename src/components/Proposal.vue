@@ -1,19 +1,23 @@
 <template>
   <div class="proposal">
     <div class="wrapper"
-      :class="{ selected: this.proposal.points > 0 }"
-      @click.stop="onClick($event)"
-      @mousemove.stop="onHover($event)"
-      @mouseleave.stop="onLeave()"
+      :class="{
+        selected: this.proposal.points > 0,
+        vote: isVote
+      }"
+      @click.stop="isVote && onClick($event)"
+      @mousemove.stop="isVote && onHover($event)"
+      @mouseleave.stop="isVote && onLeave()"
     >
       <div class="line-hover"
+        v-if="isVote"
         :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
       ></div>
       <div class="line-selected"
         :style="{ transform: 'scaleX(' + this.proposal.points / maxPoints + ')' }"
       ></div>
 
-      <span class="points">{{ mouseIsOver ? hoverPoints : proposal.points }}</span>
+      <span class="points">{{ mouseIsOver && isVote ? hoverPoints : proposal.points }}</span>
 
       <span>
         <div class="title"> {{ proposal.title }}</div>
@@ -33,6 +37,8 @@ export default {
       type: Object,
       required: true
     },
+
+    isVote: Boolean,
 
     maxPoints: Number,
     totalPoints: Number
@@ -89,7 +95,6 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
-    cursor: pointer;
     overflow: hidden;
     border-radius: 15px;
     z-index: 0;
@@ -99,13 +104,11 @@ export default {
     &.selected {
       background: map-get($reds, 'lightest');
       border-bottom-width: 4px;
-    }
-
-    &:not(.selected):not(:hover) {
       .points {
-        color: map-get($blues, 'medium');
+        color: map-get($reds, 'medium');        
       }
     }
+
 
     &:not(:hover) {
       .line-hover {
@@ -114,11 +117,21 @@ export default {
     }
 
 
-    &:hover {
-      background: map-get($reds, 'lightest');
-      .line-hover {
-        opacity: 0.5;
+    &.vote {
+      cursor: pointer;      
+      &:hover {
+        background: map-get($reds, 'lightest');
+        .line-hover {
+          opacity: 0.5;
+        }
       }
+
+      &:not(.selected):hover {
+        .points {
+          color: map-get($reds, 'medium');
+        }
+      }
+      
     }
   }
 
@@ -162,7 +175,7 @@ export default {
     text-shadow: 0 1px 0 white;
     font-weight: bold;
     font-size: 2em;
-    color: map-get($reds, 'medium');
+    color: map-get($blues, 'medium');
   }
 
   input {
