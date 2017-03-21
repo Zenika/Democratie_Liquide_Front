@@ -16,3 +16,4 @@ new Vue({
   components: { App }
 })
 
+Vue.filter('pluralize', (value, label) => value + ' ' + (value <= 1 ? label : label.split(' ').map(word => word + 's').join(' ')))

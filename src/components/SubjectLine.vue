@@ -49,10 +49,6 @@ export default {
         return endLabel
       }
       return value + ' ' + (value <= 1 ? label : label.split(' ').map(word => word + 's').join(' '))
-    },
-
-    pluralize (value, label) {
-      return value + ' ' + (value <= 1 ? label : label.split(' ').map(word => word + 's').join(' '))
     }
   }
 
