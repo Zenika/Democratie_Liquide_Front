@@ -3,13 +3,17 @@
     <span>J'observe</span>
     <dropdown :title="filter.subjectType.title">
       <ul>
-        <li v-for="subjectType in subjectTypes" @click="filterSubjectType(subjectType)">{{ subjectType.title }}</li>
+        <li v-for="subjectType in subjectTypes" @click="filterSubjectType(subjectType)">
+          <span :class="{ selected: subjectType === filter.subjectType }">{{ subjectType.title }}</span>
+        </li>
       </ul>
     </dropdown>
     <span>dans le channel</span>
     <dropdown :title="filter.channel.title">
       <ul>
-        <li v-for="channel in channels" @click="filterChannel(channel)">{{ channel.title }}</li>
+        <li v-for="channel in channels" @click="filterChannel(channel)">
+          <span :class="{ selected: channel === filter.channel }">{{ channel.title }}</span>
+        </li>
         <li> ... </li>
       </ul>
     </dropdown>
@@ -17,7 +21,7 @@
     <dropdown :title="filter.category.title">
       <ul>
         <li v-for="category in categories" @click="filterCategory(category)">
-          {{ category.title }}
+          <span :class="{ selected: category === filter.category }">{{ category.title }}</span>
           <button v-if="category.uuid" class="small" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
         </li>
         <li> ... </li>
@@ -98,6 +102,10 @@ export default {
     &:hover {
       background: map-get($reds, 'lightest');
       color: map-get($reds, 'medium');
+    }
+
+    .selected {
+      font-weight: bold;
     }
 
     button {
