@@ -18,7 +18,7 @@
       <ul>
         <li v-for="category in categories" @click="filterCategory(category)">
           {{ category.title }}
-          <button class="small" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
+          <button v-if="category.uuid" class="small" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
         </li>
         <li> ... </li>
       </ul>
@@ -73,7 +73,7 @@ export default {
 
   .filter-line {
     text-align: center;
-    padding: 15px 25px;
+    padding: 15px 60px;
     background: #fcfcfc;
     line-height: 2em;
     border-top: 1px solid #eee;
