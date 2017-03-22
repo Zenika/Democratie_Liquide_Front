@@ -1,6 +1,6 @@
 <template>
-  <span class="dropdown" @mouseover="show" @mouseleave="hide">
-    <span class="title" @click.stop="show" :class="{ opened: opened }">{{ title }}</span>
+  <span class="dropdown" @mouseenter="show" @mouseleave="hide">
+    <span class="title" @click="!opened && show()" :class="{ opened: opened }">{{ title }}</span>
     <transition name="fade">
 
       <div class="content" v-show="opened">
