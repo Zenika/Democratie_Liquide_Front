@@ -16,7 +16,10 @@
     <span>et la categorie</span>
     <dropdown :title="filter.category.title">
       <ul>
-        <li v-for="category in categories" @click="filterCategory(category)">{{ category.title }}</li>
+        <li v-for="category in categories" @click="filterCategory(category)">
+          {{ category.title }}
+          <button class="small" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
+        </li>
         <li> ... </li>
       </ul>
     </dropdown>
@@ -26,6 +29,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
+import DelegationView from '@/containers/DelegationView'
+import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
 
 export default {
@@ -48,7 +53,12 @@ export default {
       'filterSubjectType',
       'filterChannel',
       'filterCategory'
-    ])
+    ]),
+
+    delegateCategory (category) {
+      let props = { dataId: category.uuid, isCategory: true }
+      ModalManager.display('Délégation d\'une catégorie', createElement => createElement(DelegationView, { props }))
+    }
   },
 
   components: {
@@ -71,13 +81,15 @@ export default {
   }
 
   li {
-    padding: 5px 20px;
+    padding: 5px 10px;
     line-height: 1.5em;
     cursor: pointer;
     text-shadow: none;
     white-space: nowrap;
     user-select: none;
     transition: all 100ms linear;
+    display: flex;
+    justify-content: space-between;
 
     &:nth-child(2n) {
       background: rgba(0,0,0,0.05);
@@ -86,6 +98,10 @@ export default {
     &:hover {
       background: map-get($reds, 'lightest');
       color: map-get($reds, 'medium');
+    }
+
+    button {
+      margin-left:10px;
     }
   }
 

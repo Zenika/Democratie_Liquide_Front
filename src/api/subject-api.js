@@ -12,13 +12,13 @@ export const getSubject = (subjectId) => api.get('api/subjects/' + subjectId)
 
 export const getSubjects = () => api.get('api/subjects')
 
-export const delegate = (subjectId, delegation) => api.put('api/powers/subjects/' + subjectId, { collaboratorIdTo: delegation }).then(
+export const delegateSubject = (subjectId, delegation) => api.put('api/powers/subjects/' + subjectId, { collaboratorIdTo: delegation }).then(
   (response) => {
     return response
   }
 )
 
-export const removeDelegation = subjectId => api.delete('api/powers/subjects/' + subjectId).then(
+export const removeSubjectDelegation = subjectId => api.delete('api/powers/subjects/' + subjectId).then(
   (response) => {
     return response
   }

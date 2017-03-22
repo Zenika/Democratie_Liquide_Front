@@ -1,15 +1,23 @@
 <template>
   <div class="delegation-view">
-    <span class="current" v-if="selected">
-      Délégataire actuel :
-      <span title="Supprimer" @click="remove" class="tag">{{ selected | mailToName }}  <i class="fa fa-times"/></span>
+
+    <span v-if="data" class="title">
+      {{ data.title }}
     </span>
-    <span class="current" v-else>Aucun délégataire choisi</span>
+
+    <span v-if="selected" class="subtitle">
+      Délégation attribuée à
+      <span title="Supprimer" @click="!fetching && remove()" class="tag">{{ selected | mailToName }}  <i class="fa fa-times"/></span>
+    </span>
+    <span v-else class="subtitle">
+      Aucun délégataire
+    </span>
+
     <input placeholder="Filtre" v-model="filter"/>
     <ul>
       <li v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
-        @click="select(collaborator)"
+        @click="!fetching && select(collaborator)"
       >
         {{ collaborator | mailToName }}
         <i v-if="isSelected(collaborator)" class="fa fa-user" aria-hidden="true"></i>
@@ -22,19 +30,22 @@
 import { collaborators } from '@/config/constants'
 import { mapGetters } from 'vuex'
 import store from '@/store/index'
-import { getSubject, delegate, removeDelegation } from '@/api/subject-api'
+import { getSubject, delegateSubject, removeSubjectDelegation } from '@/api/subject-api'
+import { getCategory, delegateCategory, removeCategoryDelegation } from '@/api/category-api'
 
 export default {
   name: 'delegation-view',
 
   props: {
-    subjectId: String
+    dataId: String,
+    isCategory: Boolean
   },
 
   data () {
     return {
       filter: '',
-      subject: {}
+      data: null,
+      fetching: false
     }
   },
 
@@ -46,14 +57,34 @@ export default {
     },
 
     selected () {
-      return this.subject && this.subject.givenDelegation
+      return this.data && this.data.givenDelegation
+    },
+
+    removeDelegation () {
+      return this.isCategory ? removeCategoryDelegation : removeSubjectDelegation
+    },
+
+    delegate () {
+      return this.isCategory ? delegateCategory : delegateSubject
+    },
+
+    fetch () {
+      return this.isCategory ? getCategory : getSubject
     }
   },
 
   methods: {
-    fetch () {
-      getSubject(this.subjectId).then(({data}) => {
-        this.subject = data
+    refresh () {
+      this.fetching = true
+      return this.fetch(this.dataId).then(({data}) => {
+        this.fetching = false
+        this.data = data
+      })
+    },
+
+    afterAction () {
+      return this.refresh().then(() => {
+        return this.isCategory ? store.dispatch('refreshCategories') : store.dispatch('refreshSubjects')
       })
     },
 
@@ -62,28 +93,24 @@ export default {
     },
 
     remove () {
-      removeDelegation(this.subjectId).then(() => {
-        this.fetch()
-        store.dispatch('refreshSubjects')
-      })
+      this.fetching = true
+      return this.removeDelegation(this.dataId).then(this.afterAction)
     },
 
     select (collaborator) {
       let promise
+      this.fetching = true
       if (this.isSelected(collaborator)) {
-        promise = removeDelegation(this.subjectId)
+        promise = this.removeDelegation(this.dataId)
       } else {
-        promise = this.selected ? removeDelegation(this.subjectId).then(() => delegate(this.subjectId, collaborator)) : delegate(this.subjectId, collaborator)
+        promise = this.selected ? this.removeDelegation(this.dataId).then(() => this.delegate(this.dataId, collaborator)) : this.delegate(this.dataId, collaborator)
       }
-      promise.then(() => {
-        this.fetch()
-        store.dispatch('refreshSubjects')
-      })
+      return promise.then(this.afterAction)
     }
   },
 
   created () {
-    this.fetch()
+    this.refresh()
   }
 }
 </script>
@@ -99,9 +126,17 @@ export default {
     margin-bottom: 5px;
   }
 
-  .current {
-    padding: 10px 20px;
+  .title {
+    text-align: center;
+    padding: 10px 20px 0px 20px;
     font-weight: bold;
+    color: grey;
+  }
+
+  .subtitle {
+    text-align: center;
+    padding: 10px 10px;
+    font-size:0.8em;
     color: grey;
   }
 

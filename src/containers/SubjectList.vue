@@ -48,8 +48,8 @@ export default {
     },
 
     delegateSubject (subject) {
-      let props = { subjectId: subject.uuid }
-      ModalManager.display('Choix d\'un délégataire', createElement => createElement(DelegationView, { props }))
+      let props = { dataId: subject.uuid }
+      ModalManager.display('Délégation d\'un sujet', createElement => createElement(DelegationView, { props }))
     }
 
   },
