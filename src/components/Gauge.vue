@@ -139,7 +139,7 @@ export default {
   }
 
   .points {
-    margin-left: 5px;
+    margin-left: 10px;
     // margin-bottom: 5px;
     margin-top: 3px;
     transition: all 200ms ease;
@@ -162,7 +162,7 @@ export default {
   }
 
   .content {
-    margin-left: 10px;
+    margin-left: 15px;
   }
 
 </style>
