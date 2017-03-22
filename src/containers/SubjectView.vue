@@ -201,7 +201,8 @@ export default {
           content: '';
           position: absolute;
           left: 10%;
-          margin-top: -5px;
+          margin-bottom: -5px;
+          bottom: 0;
           right: 10%;
           border-bottom: 1px solid lightgray;
         }
