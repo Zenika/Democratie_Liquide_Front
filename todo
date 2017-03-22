@@ -1,2 +1,2 @@
 * Donner la possibilité à un créateur de sujet de clore celui-ci
-* Afficher la délégation actuellement donnée sur la SubjectView
+* Mettre les sujets, categories, channels en cours de création dans le store

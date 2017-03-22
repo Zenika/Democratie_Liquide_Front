@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: 'modal',
 
   props: {
     visible: {
@@ -134,7 +135,6 @@ export default {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding-top: 5px;
       padding-bottom: 5px;
       padding-left: 5px;
       padding-right: 5px;

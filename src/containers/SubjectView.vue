@@ -45,6 +45,8 @@ import Proposal from '@/components/Proposal'
 import { getSubject, submitVote } from '@/api/subject-api'
 
 export default {
+  name: 'subject-view',
+
   props: {
     subjectId: String,
     mode: {

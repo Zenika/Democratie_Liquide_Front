@@ -12,7 +12,9 @@
       />
       </keep-alive>
     </template>
-    <span v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</span>
+    <div class="empty" v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</div>
+    <button class="simple create" title="Créer un sujet" @click="createSubject"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
 
   </div>
 </template>
@@ -23,16 +25,25 @@ import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectView from '@/containers/SubjectView'
 import DelegationView from '@/containers/DelegationView'
+import SubjectCreation from '@/containers/SubjectCreation'
 
 export default {
   name: 'subject-list',
+
+  data () {
+    return {
+      newSubject: {}
+    }
+  },
 
   computed: {
     ...mapGetters([
       'subjects',
       'filteredSubjects',
       'globalCheck',
-      'filter'
+      'filter',
+      'defaultCategory',
+      'defaultChannel'
     ])
   },
 
@@ -50,8 +61,28 @@ export default {
     delegateSubject (subject) {
       let props = { dataId: subject.uuid }
       ModalManager.display('Délégation d\'un sujet', createElement => createElement(DelegationView, { props }))
-    }
+    },
 
+    createSubject () {
+      let props = { subject: this.newSubject }
+      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation, { props }))
+    },
+
+    initNewSubject () {
+      this.newSubject = {
+        title: '',
+        description: '',
+        maxPoints: 10,
+        propositions: [{}, {}],
+        category: this.defaultCategory,
+        channel: this.defaultChannel,
+        deadLine: null
+      }
+    }
+  },
+
+  mounted () {
+    this.initNewSubject()
   },
 
   components: {
@@ -69,6 +100,13 @@ export default {
     text-align: center;
   }
 
+  .empty {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: lightgray;
+  }
+
   .subject-line {
     transition: all 100ms linear;
     border-left: 0px solid map-get($reds, 'medium');
@@ -81,5 +119,12 @@ export default {
       color: map-get($reds, 'medium');
       border-left-width: 5px;
     }
+  }
+
+  .create {
+    width: 96%;
+    height: 100px;
+    font-size: 3em;
+    margin: 20px 2%;
   }
 </style>

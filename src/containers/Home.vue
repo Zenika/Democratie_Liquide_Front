@@ -11,6 +11,8 @@ import SubjectList from '@/containers/SubjectList'
 import FilterLine from '@/containers/FilterLine'
 
 export default {
+  name: 'home',
+
   created () {
     this.refreshSubjects()
     this.refreshCategories()
