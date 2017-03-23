@@ -1,4 +1,5 @@
 import api from '@/config/api'
+import store from '@/store/index'
 
 export const getCategories = () => api.get('api/categories')
 
@@ -12,6 +13,13 @@ export const delegateCategory = (categoryId, delegation) => api.put('api/powers/
 
 export const removeCategoryDelegation = categoryId => api.delete('api/powers/categories/' + categoryId).then(
   (response) => {
+    return response
+  }
+)
+
+export const createCategory = category => api.post('api/categories', category).then(
+  (response) => {
+    store.dispatch('refreshCategories')
     return response
   }
 )

@@ -22,7 +22,7 @@
           <button v-if="category.uuid" class="small delegate" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
         </dropdown-element>
         <dropdown-element>
-          <button class="simple create" title="Créer une catégorie" @click=""><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button class="simple create" title="Créer une catégorie" @click="createCategory"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </dropdown-element>
     </dropdown>
   </div>
@@ -33,6 +33,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import DelegationView from '@/containers/DelegationView'
+import CategoryCreation from '@/containers/CategoryCreation'
 import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
 
@@ -61,6 +62,10 @@ export default {
     delegateCategory (category) {
       let props = { dataId: category.uuid, isCategory: true }
       ModalManager.display('Délégation d\'une catégorie', createElement => createElement(DelegationView, { props }))
+    },
+
+    createCategory () {
+      ModalManager.display('Création d\'une catégorie', createElement => createElement(CategoryCreation))
     }
   },
 
