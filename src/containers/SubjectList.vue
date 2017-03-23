@@ -23,6 +23,8 @@ import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectView from '@/containers/SubjectView'
 import DelegationView from '@/containers/DelegationView'
+import Confirmation from '@/components/Confirmation'
+import { deleteSubject } from '@/api/subject-api'
 
 export default {
   name: 'subject-list',
@@ -52,7 +54,21 @@ export default {
     },
 
     removeSubject (subject) {
-      ModalManager.display('Supprimer un sujet', createElement => createElement('div', 'Suppression de ' + subject.title))
+      let props = {
+        message: 'Voulez vous vraiment supprimer le sujet ' + subject.title + ' ?',
+        actions: [{
+          label: 'Oui',
+          callback: () => {
+            deleteSubject(subject.uuid)
+            ModalManager.hide()
+          }
+        }, {
+          label: 'Non',
+          callback: () => ModalManager.hide()
+        }]
+      }
+
+      ModalManager.display('Supprimer un sujet', createElement => createElement(Confirmation, { props }))
     },
 
     delegateSubject (subject) {

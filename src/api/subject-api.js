@@ -30,3 +30,10 @@ export const createSubject = subject => api.post('api/subjects', subject).then(
     return response
   }
 )
+
+export const deleteSubject = subjectId => api.delete('api/subjects/' + subjectId).then(
+  (response) => {
+    store.dispatch('refreshSubjects')
+    return response
+  }
+)

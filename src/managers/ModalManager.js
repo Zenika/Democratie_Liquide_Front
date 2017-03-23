@@ -36,5 +36,9 @@ export default {
     modal.renderContent = renderContent
     modal.onClose = onClose
     modal.visible = true
+  },
+
+  hide () {
+    modal.visible = false
   }
 }
