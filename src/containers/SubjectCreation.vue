@@ -12,7 +12,7 @@
             @click.native="subject.maxPoints = i"
           >{{ i | pluralize('point') }}</dropdown-element>
         </dropdown>
-        se cloturera dans
+        , se cloturera dans
         <dropdown maxHeight="200px" :title="subject.deadLine || 'une infinité de' | pluralize('jour')">
           <dropdown-element :selected="subject.deadLine === null" @click.native="subject.deadLine = null">
             une infinité de jours

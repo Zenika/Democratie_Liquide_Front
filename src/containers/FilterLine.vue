@@ -12,7 +12,7 @@
           {{ channel.title }}
         </dropdown-element>
         <dropdown-element>
-          <button class="simple create" title="Rejoindre, quitter ou créer un channel" @click=""><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button class="simple create" title="Créer un channel" @click="createChannel"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </dropdown-element>
     </dropdown>
     <span>et la categorie</span>
@@ -34,6 +34,7 @@ import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import DelegationView from '@/containers/DelegationView'
 import CategoryCreation from '@/containers/CategoryCreation'
+import ChannelCreation from '@/containers/ChannelCreation'
 import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
 
@@ -66,6 +67,10 @@ export default {
 
     createCategory () {
       ModalManager.display('Création d\'une catégorie', createElement => createElement(CategoryCreation))
+    },
+
+    createChannel () {
+      ModalManager.display('Création d\'un channel', createElement => createElement(ChannelCreation))
     }
   },
 
