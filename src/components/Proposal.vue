@@ -71,6 +71,10 @@ export default {
     margin: 10px 0px;
     border-radius: 15px;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     &.padded {
       padding: 5px;
     }

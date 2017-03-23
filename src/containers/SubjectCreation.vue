@@ -4,7 +4,7 @@
     <textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
     <div class="line">
-        Comportant
+        Comportera
         <dropdown maxHeight="200px" :title="subject.maxPoints | pluralize('point')">
           <dropdown-element v-for="i in 100"
             :key="i"
@@ -12,8 +12,11 @@
             @click.native="subject.maxPoints = i"
           >{{ i | pluralize('point') }}</dropdown-element>
         </dropdown>
-        à distribuer dans un délai de
-        <dropdown maxHeight="200px" :title="subject.deadLine | pluralize('jour')">
+        se cloturera dans
+        <dropdown maxHeight="200px" :title="subject.deadLine || 'une infinité de' | pluralize('jour')">
+          <dropdown-element :selected="subject.deadLine === null" @click.native="subject.deadLine = null">
+            une infinité de jours
+          </dropdown-element>
           <dropdown-element v-for="i in 31"
             :key="i"
             :selected="subject.deadLine === i"
@@ -30,7 +33,7 @@
           >{{ category.title }}</dropdown-element>
         </dropdown>
 
-        et le channel
+        et dans le channel
         <dropdown :title="subject.channel && subject.channel.title">
           <dropdown-element v-for="channel in channels"
             :key="channel.uuid"
@@ -40,10 +43,8 @@
         </dropdown>
 
         avec les propositions suivantes :
-
     </div>
 
-    <!--<span class="label">Propositions :</span>-->
     <div class="proposals" ref="proposals">
       <proposal-creation v-for="(proposal, index) in subject.propositions"
         :key="'proposal-' + index"
@@ -54,6 +55,13 @@
       />
       <button @click="addProposal"class="new-proposal simple"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
+
+    <div class="footer">
+      <span class="actions">
+        <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -62,12 +70,25 @@ import { mapActions, mapGetters } from 'vuex'
 import ProposalCreation from '@/components/ProposalCreation'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
+import { createSubject } from '@/api/subject-api'
+
+const daysToDate = days => {
+  let deadLine = new Date()
+  deadLine.setDate(deadLine.getDate() + days)
+  deadLine.setHours(24)
+  deadLine.setMinutes(0)
+  deadLine.setSeconds(0)
+  deadLine.setMilliseconds(0)
+  return deadLine
+}
 
 export default {
   name: 'subject-creation',
 
-  props: {
-    subject: Object
+  data () {
+    return {
+      subject: {}
+    }
   },
 
   computed: {
@@ -92,7 +113,32 @@ export default {
 
     removeProposal (index) {
       this.subject.propositions.splice(index, 1)
+    },
+
+    init () {
+      this.subject = {
+        title: '',
+        description: '',
+        maxPoints: 10,
+        propositions: [{}, {}],
+        deadLine: 3,
+        channel: this.defaultChannel,
+        category: this.defaultCategory
+      }
+    },
+
+    send () {
+      createSubject({
+        ...this.subject,
+        deadLine: this.subject.deadLine ? daysToDate(this.subject.deadLine).toISOString() : null,
+        channel: this.subject.channel === this.defaultChannel ? null : this.subject.channel,
+        category: this.subject.category === this.defaultCategory ? null : this.subject.category
+      })
     }
+  },
+
+  created () {
+    this.init()
   },
 
   components: {
@@ -163,16 +209,33 @@ export default {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
     *:not(:first-child):not(:last-child) {
-      margin: 20px 0;
+      margin: 10px 0;
       position: relative;
     }
     .new-proposal {
       font-size: 2em;
-      width: 100%;
+      margin: 0 50px;
+      flex-shrink: 0;
     }
+  }
 
+  .footer {
+    margin-top: 10px;
+    border-top: 1px solid lightgrey;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    button {
+      margin-left: 10px;
+    }
   }
 
 </style>

@@ -1,14 +1,11 @@
 <template>
-  <span class="dropdown" @mouseenter="show" @mouseleave="hide">
-    <span class="title" @click="!opened && show()" :class="{ opened: opened }">{{ title }}</span>
-    <transition name="fade">
-
-      <div class="content" v-show="opened">
-        <div class="wrapper" :style="{ maxHeight: maxHeight }">
-          <slot></slot>
-        </div>
+  <span class="dropdown" :class="{ opened: opened }" @mouseenter="show" @mouseleave="hide">
+    <span class="title" @click="!opened && show()">{{ title }}</span>
+    <div class="content">
+      <div class="wrapper" :style="{ maxHeight: maxHeight }">
+        <slot></slot>
       </div>
-    </transition>
+    </div>
   </span>
 </template>
 
@@ -52,34 +49,30 @@ export default {
 }
 
 .title {
-    cursor: pointer;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-bottom: solid 1px lightgray;
-    position: relative;
-    user-select: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-bottom: solid 1px lightgray;
+  position: relative;
+  user-select: none;
 
-    &.opened {
-      border-bottom: solid 2px map-get($reds, 'medium');
-    }
-
-    &::after {
-      content: '\25bc';
-      display: inline-block;
-      transform: scale(0.75, 0.5) translateY(3px);
-      padding-left: 5px;
-    }
-
-    &::before {
-      height: 15px;
-      left: 0;
-      right: 0;
-      position: absolute;
-      top: 100%;
-      background: transparent;
-      content: '';
-    }
+  &::after {
+    content: '\25bc';
+    display: inline-block;
+    transform: scale(0.75, 0.5) translateY(3px);
+    padding-left: 5px;
   }
+
+  &::before {
+    height: 15px;
+    left: 0;
+    right: 0;
+    position: absolute;
+    top: 100%;
+    background: transparent;
+    content: '';
+  }
+}
 
 .content {
   position: absolute;
@@ -94,6 +87,9 @@ export default {
   background: white;
   z-index: 5;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 200ms ease;
 
   .wrapper {
     overflow-y: auto;
@@ -123,6 +119,19 @@ export default {
     border-bottom: 6px solid white;
     border-left: 6px solid transparent;
     content: '';
+  }
+}
+
+
+.opened {
+
+  .title {
+    border-bottom: solid 2px map-get($reds, 'medium');
+  }
+
+  .content {
+    opacity: 1;
+    visibility: visible;
   }
 }
 

@@ -29,6 +29,8 @@ export default {
     display: flex;
     position: relative;
     align-items: center;
+    flex-shrink: 0;
+    justify-content: space-around;
   }
 
   input, textarea {
@@ -43,7 +45,10 @@ export default {
     font-weight: bold;
     font-size: 2em;
     color: grey;
-    padding-right: 15px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    width: 30px;
   }
 
   .content {
@@ -63,12 +68,12 @@ export default {
   .remove {
     width: 30px;
     height: 30px;
-    margin-left: 10px;
+    margin-left: 20px;
   }
 
   .void {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-left: 10px;
   }
 </style>

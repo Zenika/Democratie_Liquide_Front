@@ -27,8 +27,8 @@
             :isDelegated="!!delegation"
           />
         </div>
-        <div class="footer">
-          <span class="actions" v-if="isVote && !delegation">
+        <div class="footer" v-if="isVote && !delegation">
+          <span class="actions">
             <button @click="reinitialize" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
             <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           </span>
@@ -137,9 +137,11 @@ export default {
     flex-direction: column;
     overflow: hidden;
     padding: 5px;
+    padding-top: 0;
 
 
     .header {
+      border-bottom: 1px solid lightgrey;
 
       .title {
         font-weight: bold;
@@ -181,6 +183,11 @@ export default {
       }
     }
 
+    .footer {
+      margin-top: 10px;
+      border-top: 1px solid lightgrey;
+    }
+
     .actions {
       display: flex;
       justify-content: flex-end;
@@ -193,9 +200,6 @@ export default {
 
     .proposals {
       overflow: auto;
-      border: 1px solid lightgrey;
-      border-left-width: 0;
-      border-right-width: 0;
 
       :not(:last-child) {
         position: relative;

@@ -23,3 +23,10 @@ export const removeSubjectDelegation = subjectId => api.delete('api/powers/subje
     return response
   }
 )
+
+export const createSubject = subject => api.post('api/subjects', subject).then(
+  (response) => {
+    store.dispatch('refreshSubjects')
+    return response
+  }
+)

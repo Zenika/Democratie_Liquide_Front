@@ -64,25 +64,8 @@ export default {
     },
 
     createSubject () {
-      let props = { subject: this.newSubject }
-      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation, { props }))
-    },
-
-    initNewSubject () {
-      this.newSubject = {
-        title: '',
-        description: '',
-        maxPoints: 10,
-        propositions: [{}, {}],
-        category: this.defaultCategory,
-        channel: this.defaultChannel,
-        deadLine: 3
-      }
+      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation))
     }
-  },
-
-  mounted () {
-    this.initNewSubject()
   },
 
   components: {
