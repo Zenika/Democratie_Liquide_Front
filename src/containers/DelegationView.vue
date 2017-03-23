@@ -84,7 +84,7 @@ export default {
 
     afterAction () {
       return this.refresh().then(() => {
-        return this.isCategory ? store.dispatch('refreshCategories') : store.dispatch('refreshSubjects')
+        store.dispatch('refreshSubjects')
       })
     },
 
