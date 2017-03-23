@@ -8,11 +8,12 @@
     </dropdown>
     <span>dans le channel</span>
     <dropdown :title="filter.channel.title">
-        <dropdown-element v-for="channel in channels" :selected="channel === filter.channel" :key="channel.uuid" @click.native="filterChannel(channel)">
+        <dropdown-element v-for="channel in joinedChannels" :selected="channel === filter.channel" :key="channel.uuid" @click.native="filterChannel(channel)">
           {{ channel.title }}
         </dropdown-element>
         <dropdown-element>
-          <button class="simple create" title="Créer un channel" @click="createChannel"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button class="simple" title="Créer un channel" @click="createChannel"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button class="simple" title="Rejoindre ou quitter un channel" @click="displayChannelsView"><i class="fa fa-exchange" aria-hidden="true"></i></button>
         </dropdown-element>
     </dropdown>
     <span>et la categorie</span>
@@ -22,7 +23,7 @@
           <button v-if="category.uuid" class="small delegate" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
         </dropdown-element>
         <dropdown-element>
-          <button class="simple create" title="Créer une catégorie" @click="createCategory"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <button class="simple" title="Créer une catégorie" @click="createCategory"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </dropdown-element>
     </dropdown>
   </div>
@@ -35,6 +36,7 @@ import DropdownElement from '@/components/DropdownElement'
 import DelegationView from '@/containers/DelegationView'
 import CategoryCreation from '@/containers/CategoryCreation'
 import ChannelCreation from '@/containers/ChannelCreation'
+import ChannelsView from '@/containers/ChannelsView'
 import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
 
@@ -43,7 +45,7 @@ export default {
 
   computed: {
     ...mapGetters([
-      'channels',
+      'joinedChannels',
       'categories',
       'filter'
     ]),
@@ -71,6 +73,10 @@ export default {
 
     createChannel () {
       ModalManager.display('Création d\'un channel', createElement => createElement(ChannelCreation))
+    },
+
+    displayChannelsView () {
+      ModalManager.display('Rejoindre ou quitter un channel', createElement => createElement(ChannelsView))
     }
   },
 
@@ -102,12 +108,16 @@ export default {
     margin-left:10px;
   }
 
-  .create {
+  .simple {
     width: 100%;
     height: 30px;
+    min-width: 50px;
     margin: 5px 0;
     font-size: 1.1em;
     padding-top: 5px;
+    &:not(:first-child) {
+      margin-left: 5px;
+    }
   }
 
 

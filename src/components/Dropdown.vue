@@ -1,5 +1,5 @@
 <template>
-  <span class="dropdown" :class="{ opened: opened }" @mouseenter="show" @mouseleave="hide">
+  <span class="dropdown" :class="{ opened }" @mouseenter="show" @mouseleave="hide">
     <span class="title" @click="!opened && show()">{{ title }}</span>
     <div class="content">
       <div class="wrapper" :style="{ maxHeight: maxHeight }">
@@ -77,7 +77,7 @@ export default {
 .content {
   position: absolute;
   top: 100%;
-  min-height: 50px;
+  min-height: 20px;
   min-width: 50px;
   margin-top: 10px;
   left: 50%;

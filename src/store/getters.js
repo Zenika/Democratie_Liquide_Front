@@ -39,3 +39,6 @@ export const globalCheck = (state, getters) => subject =>
   getters.categoryCheck(subject) && getters.channelCheck(subject) && getters.subjectTypeCheck(subject)
 
 export const filteredSubjects = (state, getters) => getters.subjects.filter(subject => getters.globalCheck(subject))
+
+export const joinedChannels = (state, getters) => getters.channels.filter(channel => !!channel.collaborators.find(collaborator => collaborator.email === state.collaborator.email))
+export const unjoinedChannels = (state, getters) => getters.channels.filter(channel => !channel.collaborators.find(collaborator => collaborator.email === state.collaborator.email))

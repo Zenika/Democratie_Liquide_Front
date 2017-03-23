@@ -1,2 +1,3 @@
 * Donner la possibilité à un créateur de sujet de clore celui-ci
 * Mettre les sujets, categories, channels en cours de création dans le store
+* Compte admin qui peut supprimer les categories, channels et sujets, sans restriction

@@ -35,7 +35,7 @@
 
         et dans le channel
         <dropdown :title="subject.channel && subject.channel.title">
-          <dropdown-element v-for="channel in channels"
+          <dropdown-element v-for="channel in joinedChannels"
             :key="channel.uuid"
             :selected="channel === subject.channel"
             @click.native="subject.channel = channel"
@@ -94,7 +94,7 @@ export default {
   computed: {
     ...mapGetters([
       'filter',
-      'channels',
+      'joinedChannels',
       'categories',
       'defaultChannel',
       'defaultCategory'
