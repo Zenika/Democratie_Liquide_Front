@@ -106,8 +106,8 @@ export default {
         .title {
           text-shadow: 0px 1px 0px white;
           color: darkgray;
-          padding-right: 20px;
-          padding-left: 20px;
+          padding-right: 50px;
+          padding-left: 50px;
           padding-top: 3px;
           padding-bottom: 3px;
           font-size: 0.8em;
