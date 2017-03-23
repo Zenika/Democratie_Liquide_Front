@@ -2,6 +2,8 @@
   <div class="home">
     <filter-line></filter-line>
     <subject-list></subject-list>
+    <button class="simple create" title="Créer un sujet" @click="createSubject"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
   </div>
 </template>
 
@@ -9,6 +11,8 @@
 import { mapActions } from 'vuex'
 import SubjectList from '@/containers/SubjectList'
 import FilterLine from '@/containers/FilterLine'
+import SubjectCreation from '@/containers/SubjectCreation'
+import ModalManager from '@/managers/ModalManager'
 
 export default {
   name: 'home',
@@ -25,7 +29,11 @@ export default {
       'refreshSubjects',
       'refreshCategories',
       'refreshChannels'
-    ])
+    ]),
+
+    createSubject () {
+      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation))
+    }
   },
   components: {
     SubjectList,
@@ -47,4 +55,12 @@ export default {
     margin: 25px 0 10px 0;
   }
 }
+
+.create {
+    width: 96%;
+    height: 50px;
+    font-size: 2.5em;
+    margin: 20px 2%;
+    flex-shrink: 0;
+  }
 </style>

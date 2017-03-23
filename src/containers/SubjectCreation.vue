@@ -128,12 +128,16 @@ export default {
     },
 
     send () {
-      createSubject({
+      // format subject
+      let formattedSubject = {
         ...this.subject,
         deadLine: this.subject.deadLine ? daysToDate(this.subject.deadLine).toISOString() : null,
-        channel: this.subject.channel === this.defaultChannel ? null : this.subject.channel,
-        category: this.subject.category === this.defaultCategory ? null : this.subject.category
-      })
+        channel: this.subject.channel === this.defaultChannel ? null : { uuid: this.subject.channel.uuid },
+        category: this.subject.category === this.defaultCategory ? null : { uuid: this.subject.category.uuid }
+      }
+
+      // send to backend
+      createSubject(formattedSubject)
     }
   },
 
@@ -170,15 +174,18 @@ export default {
   .title {
     font-weight: bold;
     font-size: 1.5em;
+    flex-shrink: 0;
   }
 
   .description {
     font-size: 1em;
+    flex-shrink: 0;
   }
 
 
   .line {
     display: block;
+    flex-shrink: 0;
 
      text-align: center;
     padding: 10px 30px;

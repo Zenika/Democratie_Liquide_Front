@@ -13,8 +13,6 @@
       </keep-alive>
     </template>
     <div class="empty" v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</div>
-    <button class="simple create" title="Créer un sujet" @click="createSubject"><i class="fa fa-plus" aria-hidden="true"></i></button>
-
 
   </div>
 </template>
@@ -25,7 +23,6 @@ import SubjectLine from '../components/SubjectLine'
 import ModalManager from '@/managers/ModalManager'
 import SubjectView from '@/containers/SubjectView'
 import DelegationView from '@/containers/DelegationView'
-import SubjectCreation from '@/containers/SubjectCreation'
 
 export default {
   name: 'subject-list',
@@ -61,10 +58,6 @@ export default {
     delegateSubject (subject) {
       let props = { dataId: subject.uuid }
       ModalManager.display('Délégation d\'un sujet', createElement => createElement(DelegationView, { props }))
-    },
-
-    createSubject () {
-      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation))
     }
   },
 
@@ -81,6 +74,7 @@ export default {
 
   .subject-list {
     text-align: center;
+    overflow-y: auto;
   }
 
   .empty {
@@ -102,12 +96,5 @@ export default {
       color: map-get($reds, 'medium');
       border-left-width: 5px;
     }
-  }
-
-  .create {
-    width: 96%;
-    height: 50px;
-    font-size: 2.5em;
-    margin: 20px 2%;
   }
 </style>
