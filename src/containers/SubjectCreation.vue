@@ -4,30 +4,42 @@
     <textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
     <div class="line">
-        Dans la catégorie
-        <dropdown :title="subject.category === defaultCategory ? 'Aucune' : subject.category && subject.category.title">
-          <div v-for="category in categories"
-            class="list-element"
-            :class="{ selected: category === subject.category }"
-            @click="subject.category = category"
-          >{{ category === defaultCategory ? "Aucune" : category.title }}</div>
+        Comportant
+        <dropdown maxHeight="200px" :title="subject.maxPoints | pluralize('point')">
+          <dropdown-element v-for="i in 100"
+            :key="i"
+            :selected="subject.maxPoints === i"
+            @click.native="subject.maxPoints = i"
+          >{{ i | pluralize('point') }}</dropdown-element>
+        </dropdown>
+        à distribuer dans un délai de
+        <dropdown maxHeight="200px" :title="subject.deadLine | pluralize('jour')">
+          <dropdown-element v-for="i in 31"
+            :key="i"
+            :selected="subject.deadLine === i"
+            @click.native="subject.deadLine = i"
+          >{{ i | pluralize('jour') }}</dropdown-element>
+        </dropdown>
+
+        , sera posté dans la catégorie
+        <dropdown :title="subject.category && subject.category.title">
+          <dropdown-element v-for="category in categories"
+            :key="category.uuid"
+            :selected="category === subject.category"
+            @click.native="subject.category = category"
+          >{{ category.title }}</dropdown-element>
         </dropdown>
 
         et le channel
         <dropdown :title="subject.channel && subject.channel.title">
-          <div v-for="channel in channels"
-            class="list-element"
-            :class="{ selected: channel === subject.channel }"
-            @click="subject.channel = channel"
-          >{{ channel.title }}</div>
+          <dropdown-element v-for="channel in channels"
+            :key="channel.uuid"
+            :selected="channel === subject.channel"
+            @click.native="subject.channel = channel"
+          >{{ channel.title }}</dropdown-element>
         </dropdown>
 
-        avec
-        <input class="simple points" type="number" min="1" max="99" placeholder="" v-model="subject.maxPoints"/>
-        points à distribuer
-
-        et se cloturant le
-        <input class="simple date" type="date" placeholder="" v-model="subject.deadLine"/>
+        avec les propositions suivantes :
 
     </div>
 
@@ -49,6 +61,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import ProposalCreation from '@/components/ProposalCreation'
 import Dropdown from '@/components/Dropdown'
+import DropdownElement from '@/components/DropdownElement'
 
 export default {
   name: 'subject-creation',
@@ -84,7 +97,8 @@ export default {
 
   components: {
     ProposalCreation,
-    Dropdown
+    Dropdown,
+    DropdownElement
   }
 }
 </script>
@@ -96,7 +110,6 @@ export default {
   .subject-creation {
     display: flex;
     flex-direction: column;
-    min-width: 75vw;
     overflow: hidden;
     padding: 5px;
   }
@@ -120,27 +133,16 @@ export default {
 
   .line {
     display: block;
-    margin: 10px 25px;
-    text-align: center;
+
+     text-align: center;
+    padding: 10px 30px;
+    margin: 5px 30px;
+    background: rgba(0,0,0,0.025);
     line-height: 2em;
-  }
+    font-size: 0.8em;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 
-  .list-element {
-    padding: 5px 10px;
-    cursor: pointer;
-
-    &:nth-child(2n) {
-      background: rgba(0,0,0,0.05);
-    }
-
-    &:hover {
-      background: map-get($reds, 'lightest');
-      color: map-get($reds, 'medium');
-    }
-
-    &.selected {
-      font-weight: bold;
-    }
   }
 
   .points {
@@ -156,25 +158,15 @@ export default {
   }
 
   .proposals {
-    // background: rgba(0,0,0,0.05);
     border-radius: 5px;
     padding: 0 10px 5px 10px;
+    margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
 
     *:not(:first-child):not(:last-child) {
       margin: 20px 0;
       position: relative;
-      // &::after {
-      //   content: '';
-      //   position: absolute;
-      //   top: 0;
-      //   margin-top: -10px;
-      //   left: 0;
-      //   transform: scaleX(0.75);
-      //   width: 100%;
-      //   border-bottom: 1px solid rgba(0,0,0,0.2);
-      // }
     }
     .new-proposal {
       font-size: 2em;

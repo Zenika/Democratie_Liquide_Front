@@ -4,7 +4,9 @@
     <transition name="fade">
 
       <div class="content" v-show="opened">
-        <slot></slot>
+        <div class="wrapper" :style="{ maxHeight: maxHeight }">
+          <slot></slot>
+        </div>
       </div>
     </transition>
   </span>
@@ -15,7 +17,8 @@ export default {
   name: 'dropdown',
 
   props: {
-    title: String
+    title: String,
+    maxHeight: String
   },
 
   data () {
@@ -91,6 +94,11 @@ export default {
   background: white;
   z-index: 5;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+
+  .wrapper {
+    overflow-y: auto;
+    max-height: 500px;
+  }
 
   &::before {
     position: absolute;

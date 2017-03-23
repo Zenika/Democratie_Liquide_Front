@@ -76,7 +76,7 @@ export default {
         propositions: [{}, {}],
         category: this.defaultCategory,
         channel: this.defaultChannel,
-        deadLine: null
+        deadLine: 3
       }
     }
   },
@@ -123,8 +123,8 @@ export default {
 
   .create {
     width: 96%;
-    height: 100px;
-    font-size: 3em;
+    height: 50px;
+    font-size: 2.5em;
     margin: 20px 2%;
   }
 </style>

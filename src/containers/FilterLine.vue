@@ -2,30 +2,28 @@
   <div class="filter-line">
     <span>J'observe</span>
     <dropdown :title="filter.subjectType.title">
-      <ul>
-        <li v-for="subjectType in subjectTypes" @click="filterSubjectType(subjectType)">
-          <span :class="{ selected: subjectType === filter.subjectType }">{{ subjectType.title }}</span>
-        </li>
-      </ul>
+      <dropdown-element v-for="subjectType in subjectTypes" :key="subjectType.title" :selected="subjectType === filter.subjectType" @click.native="filterSubjectType(subjectType)">
+        {{ subjectType.title }}
+      </dropdown-element>
     </dropdown>
     <span>dans le channel</span>
     <dropdown :title="filter.channel.title">
-      <ul>
-        <li v-for="channel in channels" @click="filterChannel(channel)">
-          <span :class="{ selected: channel === filter.channel }">{{ channel.title }}</span>
-        </li>
-        <li> ... </li>
-      </ul>
+        <dropdown-element v-for="channel in channels" :selected="channel === filter.channel" :key="channel.uuid" @click.native="filterChannel(channel)">
+          {{ channel.title }}
+        </dropdown-element>
+        <dropdown-element>
+          <button class="simple create" title="Rejoindre, quitter ou créer un channel" @click=""><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </dropdown-element>
     </dropdown>
     <span>et la categorie</span>
     <dropdown :title="filter.category.title">
-      <ul>
-        <li v-for="category in categories" @click="filterCategory(category)">
-          <span :class="{ selected: category === filter.category }">{{ category.title }}</span>
-          <button v-if="category.uuid" class="small" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
-        </li>
-        <li> ... </li>
-      </ul>
+        <dropdown-element v-for="category in categories" :selected="category === filter.category" :key="category.uuid" @click.native="filterCategory(category)">
+          <span class="label">{{ category.title }}</span>
+          <button v-if="category.uuid" class="small delegate" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
+        </dropdown-element>
+        <dropdown-element>
+          <button class="simple create" title="Créer une catégorie" @click=""><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </dropdown-element>
     </dropdown>
   </div>
 </template>
@@ -33,6 +31,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
+import DropdownElement from '@/components/DropdownElement'
 import DelegationView from '@/containers/DelegationView'
 import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
@@ -66,7 +65,8 @@ export default {
   },
 
   components: {
-    Dropdown
+    Dropdown,
+    DropdownElement
   }
 }
 </script>
@@ -84,33 +84,20 @@ export default {
     border-bottom: 1px solid #eee;
   }
 
-  li {
-    padding: 5px 10px;
-    line-height: 1.5em;
-    cursor: pointer;
-    text-shadow: none;
-    white-space: nowrap;
-    user-select: none;
-    transition: all 100ms linear;
-    display: flex;
-    justify-content: space-between;
+  .label {
+    flex-grow: 1;
+  }
 
-    &:nth-child(2n) {
-      background: rgba(0,0,0,0.05);
-    }
+  .delegate {
+    margin-left:10px;
+  }
 
-    &:hover {
-      background: map-get($reds, 'lightest');
-      color: map-get($reds, 'medium');
-    }
-
-    .selected {
-      font-weight: bold;
-    }
-
-    button {
-      margin-left:10px;
-    }
+  .create {
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
+    font-size: 1.1em;
+    padding-top: 5px;
   }
 
 
