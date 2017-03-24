@@ -1,11 +1,26 @@
 import * as types from './types'
 
 export const initialState = {
+  // list of all available subjects
   subjects: [],
+
+  // list of all available categories
   categories: [],
+
+  // list of all available channels
   channels: [],
+
+  // current user data
   collaborator: {},
-  filter: {}
+
+  // current selected filter
+  filter: {},
+
+  // last fetched subject
+  currentSubject: {},
+
+  // last fetched category
+  currentCategory: {}
 }
 
 export default {
@@ -15,6 +30,14 @@ export default {
 
   [types.REFRESH_SUBJECTS] (state, subjects) {
     state.subjects = subjects
+  },
+
+  [types.REFRESH_CURRENT_SUBJECT] (state, subject) {
+    state.currentSubject = subject
+  },
+
+  [types.REFRESH_CURRENT_CATEGORY] (state, category) {
+    state.currentCategory = category
   },
 
   [types.REFRESH_CATEGORIES] (state, categories) {

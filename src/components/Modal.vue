@@ -1,18 +1,16 @@
 <template>
-  <transition name="modal">
-    <div v-show="visible" class="modal-container">
-      <div class="overlay" @click="close"></div>
-      <div class="modal-box">
-        <div class="header">
-          <div class="title">{{ title }}</div>
-          <div class="close" @click="close"><i class="fa fa-times"/></div>
-        </div>
-        <div class="modal-content">
-          <slot></slot>
-        </div>
+  <div class="modal-container">
+    <div class="overlay" @click="close"></div>
+    <div class="modal-box">
+      <div class="header">
+        <div class="title">{{ title }}</div>
+        <div class="close" @click="close"><i class="fa fa-times"/></div>
+      </div>
+      <div class="modal-content">
+        <slot></slot>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -20,10 +18,6 @@ export default {
   name: 'modal',
 
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String,
       default: ''
@@ -39,23 +33,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-@import '../assets/transitions';
-
-
-.modal-enter, .modal-leave-to {
-  opacity: 0;
-  transform: scale(1.1);
-}
-
-.modal-enter-active, .modal-leave-active {
-  transition: all 250ms
-}
-
-.modal-enter-to, .modal-leave {
-  opacity: 1;
-}
-
 
 .modal-container {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

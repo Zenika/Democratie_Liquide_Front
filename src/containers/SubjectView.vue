@@ -41,19 +41,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Proposal from '@/components/Proposal'
-import { getSubject, submitVote } from '@/api/subject-api'
+import { submitVote } from '@/api/subject-api'
+import { cloneDeep } from 'lodash'
 
 export default {
   name: 'subject-view',
-
-  props: {
-    subjectId: String,
-    mode: {
-      type: String,
-      validator: value => ['create', 'vote', 'result'].indexOf(value) !== -1
-    }
-  },
 
   data () {
     return {
@@ -62,6 +56,8 @@ export default {
   },
 
   computed: {
+
+    ...mapGetters(['currentSubject']),
 
     totalPoints () {
       return this.subject.propositions.reduce((sum, proposal) => 0 + sum + proposal.points || 0, 0)
@@ -77,21 +73,12 @@ export default {
   },
 
   methods: {
-    reinitialize () {
-      this.subject.propositions.map(proposal => { proposal.points = 0 })
+    initialize () {
+      this.subject = cloneDeep(this.currentSubject)
     },
 
-    fetch () {
-      getSubject(this.subjectId).then(({data}) => {
-        this.subject = data
-
-        if (this.isVote) {
-          this.subject.propositions.forEach(proposal => { proposal.points = 0 })
-        } else {
-          this.subject.propositions.sort((proposalA, proposalB) => proposalB.points - proposalA.points)
-          this.subject.maxPoints = this.totalPoints || 1
-        }
-      })
+    reinitialize () {
+      this.subject.propositions.map(proposal => { proposal.points = 0 })
     },
 
     send () {
@@ -102,15 +89,18 @@ export default {
           points: proposal.points
         })
       })
-      submitVote(this.subjectId, choices).then(() => {
-        this.fetch()
+      submitVote(this.subject.uuid, choices).then(() => {
+        // deep clone new updated subject
+        this.initialize()
+
+        // and go back to top to see the top voted results
         this.$refs.proposals.scrollTop = 0
       })
     }
   },
 
   created () {
-    this.fetch()
+    this.initialize()
   },
 
   components: {

@@ -13,6 +13,7 @@
 
 <script>
 import { createChannel } from '@/api/channel-api'
+import { goHome } from '@/config/router'
 
 export default {
   name: 'channel-creation',
@@ -33,7 +34,7 @@ export default {
     },
 
     send () {
-      createChannel(this.channel)
+      createChannel(this.channel).then(goHome)
     }
   },
 

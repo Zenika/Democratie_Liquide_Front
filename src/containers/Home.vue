@@ -1,8 +1,15 @@
 <template>
   <div class="home">
+
     <filter-line></filter-line>
     <subject-list></subject-list>
-    <button class="simple create" title="Créer un sujet" @click="createSubject"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <router-link tag="button" to="/subject/create" class="simple create" title="Créer un sujet"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
+
+    <transition name="zoom">
+      <modal v-if="modal && modal.component" :title="modal.title" @close="closeModal">
+        <component :is="modal.component" v-bind="modal.props"/>
+      </modal>
+    </transition>
 
   </div>
 </template>
@@ -11,11 +18,15 @@
 import { mapActions } from 'vuex'
 import SubjectList from '@/containers/SubjectList'
 import FilterLine from '@/containers/FilterLine'
-import SubjectCreation from '@/containers/SubjectCreation'
-import ModalManager from '@/managers/ModalManager'
+import Modal from '@/components/Modal'
+import { goHome } from '@/config/router'
 
 export default {
   name: 'home',
+
+  props: {
+    modal: Object
+  },
 
   created () {
     this.refreshSubjects()
@@ -31,18 +42,32 @@ export default {
       'refreshChannels'
     ]),
 
-    createSubject () {
-      ModalManager.display('Création d\'un sujet', createElement => createElement(SubjectCreation))
+    closeModal () {
+      goHome()
     }
   },
   components: {
     SubjectList,
-    FilterLine
+    FilterLine,
+    Modal
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.zoom-enter, .zoom-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.zoom-enter-active, .zoom-leave-active {
+  transition: all 250ms
+}
+
+.zoom-enter-to, .zoom-leave {
+  opacity: 1;
+}
 
 .home {
   display: flex;

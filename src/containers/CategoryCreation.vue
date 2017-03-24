@@ -13,6 +13,7 @@
 
 <script>
 import { createCategory } from '@/api/category-api'
+import { goHome } from '@/config/router'
 
 export default {
   name: 'category-creation',
@@ -33,7 +34,7 @@ export default {
     },
 
     send () {
-      createCategory(this.category)
+      createCategory(this.category).then(goHome)
     }
   },
 

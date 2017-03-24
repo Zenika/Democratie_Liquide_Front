@@ -6,20 +6,27 @@ export const getCategories = () => api.get('api/categories')
 export const getCategory = (categoryId) => api.get('api/categories/' + categoryId)
 
 export const delegateCategory = (categoryId, delegation) => api.put('api/powers/categories/' + categoryId, { collaboratorIdTo: delegation }).then(
-  (response) => {
-    return response
-  }
+  response => Promise.all([
+    store.dispatch('refreshCategories'),
+    store.dispatch('refreshCurrentCategory', categoryId)
+  ]).then(() => response)
 )
 
 export const removeCategoryDelegation = categoryId => api.delete('api/powers/categories/' + categoryId).then(
-  (response) => {
-    return response
-  }
+  response => Promise.all([
+    store.dispatch('refreshCategories'),
+    store.dispatch('refreshCurrentCategory', categoryId)
+  ]).then(() => response)
+)
+
+export const replaceCategoryDelegation = (categoryId, delegation) => api.delete('api/powers/categories/' + categoryId).then(response =>
+    api.put('api/powers/categories/' + categoryId, { collaboratorIdTo: delegation })
+  ).then(response => Promise.all([
+    store.dispatch('refreshCategories'),
+    store.dispatch('refreshCurrentCategory', categoryId)
+  ]).then(() => response)
 )
 
 export const createCategory = category => api.post('api/categories', category).then(
-  (response) => {
-    store.dispatch('refreshCategories')
-    return response
-  }
+  response => store.dispatch('refreshCategories').then(() => response)
 )

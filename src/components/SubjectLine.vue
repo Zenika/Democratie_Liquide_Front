@@ -1,5 +1,5 @@
 <template>
-  <div class="subject-line" @click="$emit('selectSubject')">
+  <router-link tag="div" :to="'/subject/view/' + subject.uuid" class="subject-line">
 
     <span class="title">{{ subject.title }}</span>
 
@@ -11,11 +11,11 @@
     </span>
 
     <span class="actions">
-      <button class="small" title="Supprimer" v-if="subject.isMine && !subject.voteCount" @click.stop="$emit('removeSubject')"><i class="fa fa-times"/></button>
-      <button class="small" title="Déléguer" v-if="!subject.isVoted && !subject.isClosed" @click.stop="$emit('delegateSubject')"><i class="fa fa-users"/></button>
+      <router-link tag="button" :to="'/subject/delete/' + subject.uuid" class="small" title="Supprimer" v-if="subject.isMine && !subject.voteCount"><i class="fa fa-times"/></router-link>
+      <router-link tag="button" :to="'/subject/delegate/' + subject.uuid" class="small" title="Déléguer" v-if="!subject.isVoted && !subject.isClosed"><i class="fa fa-users"/></router-link>
     </span>
 
-  </div>
+  </router-link>
 </template>
 
 <script>

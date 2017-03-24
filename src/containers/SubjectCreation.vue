@@ -12,7 +12,7 @@
             @click.native="subject.maxPoints = i"
           >{{ i | pluralize('point') }}</dropdown-element>
         </dropdown>
-        , se cloturera dans
+        se cloturera dans
         <dropdown maxHeight="200px" :title="subject.deadLine || 'une infinité de' | pluralize('jour')">
           <dropdown-element :selected="subject.deadLine === null" @click.native="subject.deadLine = null">
             une infinité de jours
@@ -24,7 +24,7 @@
           >{{ i | pluralize('jour') }}</dropdown-element>
         </dropdown>
 
-        , sera posté dans la catégorie
+        sera posté dans la catégorie
         <dropdown :title="subject.category && subject.category.title">
           <dropdown-element v-for="category in categories"
             :key="category.uuid"
@@ -58,8 +58,8 @@
 
     <div class="footer">
       <span class="actions">
-        <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-        <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        <button @click="reinit" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        <button @click="submit" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
       </span>
     </div>
   </div>
@@ -71,6 +71,7 @@ import ProposalCreation from '@/components/ProposalCreation'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import { createSubject } from '@/api/subject-api'
+import { goToSubject } from '@/config/router'
 
 const daysToDate = days => {
   let deadLine = new Date()
@@ -115,7 +116,7 @@ export default {
       this.subject.propositions.splice(index, 1)
     },
 
-    init () {
+    reinit () {
       this.subject = {
         title: '',
         description: '',
@@ -127,22 +128,24 @@ export default {
       }
     },
 
-    send () {
+    submit () {
       // format subject
       let formattedSubject = {
         ...this.subject,
         deadLine: this.subject.deadLine ? daysToDate(this.subject.deadLine).toISOString() : null,
-        channel: this.subject.channel === this.defaultChannel ? null : { uuid: this.subject.channel.uuid },
-        category: this.subject.category === this.defaultCategory ? null : { uuid: this.subject.category.uuid }
+        channel: !this.subject.channel.uuid ? null : { uuid: this.subject.channel.uuid },
+        category: !this.subject.category.uuid ? null : { uuid: this.subject.category.uuid }
       }
 
       // send to backend
-      createSubject(formattedSubject)
+      createSubject(formattedSubject).then(response => {
+        goToSubject(response.subjectId)
+      })
     }
   },
 
   created () {
-    this.init()
+    this.reinit()
   },
 
   components: {

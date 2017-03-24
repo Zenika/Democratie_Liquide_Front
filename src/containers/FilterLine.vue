@@ -12,18 +12,18 @@
           {{ channel.title }}
         </dropdown-element>
         <dropdown-element>
-          <button class="simple" title="Créer un channel" @click="createChannel"><i class="fa fa-plus" aria-hidden="true"></i></button>
-          <button class="simple" title="Rejoindre ou quitter un channel" @click="displayChannelsView"><i class="fa fa-exchange" aria-hidden="true"></i></button>
+          <router-link to="/channel/create" tag="button" class="simple" title="Créer un channel"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
+          <router-link to="/channel/list" tag="button" class="simple" title="Rejoindre ou quitter un channel" ><i class="fa fa-exchange" aria-hidden="true"></i></router-link>
         </dropdown-element>
     </dropdown>
     <span>et la categorie</span>
     <dropdown :title="filter.category.title">
         <dropdown-element v-for="category in categories" :selected="category === filter.category" :key="category.uuid" @click.native="filterCategory(category)">
           <span class="label">{{ category.title }}</span>
-          <button v-if="category.uuid" class="small delegate" title="Déléguer" @click.stop="delegateCategory(category)"><i class="fa fa-users"/></button>
+          <router-link :to="'/category/delegate/' + category.uuid" tag="button" v-if="category.uuid" class="small delegate" title="Déléguer"><i class="fa fa-users"/></router-link>
         </dropdown-element>
         <dropdown-element>
-          <button class="simple" title="Créer une catégorie" @click="createCategory"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          <router-link to="/category/create" tag="button" class="simple" title="Créer une catégorie"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
         </dropdown-element>
     </dropdown>
   </div>
@@ -33,11 +33,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
-import DelegationView from '@/containers/DelegationView'
-import CategoryCreation from '@/containers/CategoryCreation'
-import ChannelCreation from '@/containers/ChannelCreation'
-import ChannelsView from '@/containers/ChannelsView'
-import ModalManager from '@/managers/ModalManager'
 import { subjectTypes } from '@/config/constants'
 
 export default {
@@ -60,24 +55,7 @@ export default {
       'filterSubjectType',
       'filterChannel',
       'filterCategory'
-    ]),
-
-    delegateCategory (category) {
-      let props = { dataId: category.uuid, isCategory: true }
-      ModalManager.display('Délégation d\'une catégorie', createElement => createElement(DelegationView, { props }))
-    },
-
-    createCategory () {
-      ModalManager.display('Création d\'une catégorie', createElement => createElement(CategoryCreation))
-    },
-
-    createChannel () {
-      ModalManager.display('Création d\'un channel', createElement => createElement(ChannelCreation))
-    },
-
-    displayChannelsView () {
-      ModalManager.display('Rejoindre ou quitter un channel', createElement => createElement(ChannelsView))
-    }
+    ])
   },
 
   components: {

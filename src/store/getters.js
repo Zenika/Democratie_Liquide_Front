@@ -11,6 +11,9 @@ export const subjects = state => state.subjects.map(subject => {
   return subject
 }) // .concat(state.subjects)
 
+export const currentSubject = state => state.currentSubject
+export const currentCategory = state => state.currentCategory
+
 export const defaultCategory = state => { return { title: wording.defaultCategory } }
 export const defaultChannel = (state, getters) => { return { title: wording.defaultChannel, collaborators: [getters.collaborator] } }
 
@@ -20,7 +23,7 @@ export const collaborator = state => state.collaborator
 
 export const filter = (state, getters) => {
   return {
-    channel: state.filter.channel || getters.defaultChannel,
+    channel: getters.joinedChannels.find(channel => channel === state.filter.channel) || getters.defaultChannel,
     category: state.filter.category || getters.defaultCategory,
     subjectType: state.filter.subjectType || subjectTypes[0]
   }

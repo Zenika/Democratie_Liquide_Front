@@ -7,8 +7,6 @@
           :subject="subject"
           :key="subject.uuid"
           @removeSubject="removeSubject(subject)"
-          @delegateSubject="delegateSubject(subject)"
-          @selectSubject="selectSubject(subject)"
       />
       </keep-alive>
     </template>
@@ -20,61 +18,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import SubjectLine from '../components/SubjectLine'
-import ModalManager from '@/managers/ModalManager'
-import SubjectView from '@/containers/SubjectView'
-import DelegationView from '@/containers/DelegationView'
-import Confirmation from '@/components/Confirmation'
-import { deleteSubject } from '@/api/subject-api'
 
 export default {
   name: 'subject-list',
-
-  data () {
-    return {
-      newSubject: {}
-    }
-  },
 
   computed: {
     ...mapGetters([
       'subjects',
       'filteredSubjects',
       'globalCheck',
-      'filter',
-      'defaultCategory',
-      'defaultChannel'
+      'filter'
     ])
-  },
-
-  methods: {
-
-    selectSubject (subject) {
-      let props = { subjectId: subject.uuid }
-      ModalManager.display('Vote ', createElement => createElement(SubjectView, { props }))
-    },
-
-    removeSubject (subject) {
-      let props = {
-        message: 'Voulez vous vraiment supprimer le sujet ' + subject.title + ' ?',
-        actions: [{
-          label: 'Oui',
-          callback: () => {
-            deleteSubject(subject.uuid)
-            ModalManager.hide()
-          }
-        }, {
-          label: 'Non',
-          callback: () => ModalManager.hide()
-        }]
-      }
-
-      ModalManager.display('Supprimer un sujet', createElement => createElement(Confirmation, { props }))
-    },
-
-    delegateSubject (subject) {
-      let props = { dataId: subject.uuid }
-      ModalManager.display('Délégation d\'un sujet', createElement => createElement(DelegationView, { props }))
-    }
   },
 
   components: {

@@ -5,9 +5,9 @@
       {{ data.title }}
     </span>
 
-    <span v-if="selected" class="subtitle">
+    <span v-if="currentDelegation" class="subtitle">
       Délégation attribuée à
-      <span title="Supprimer" @click="!fetching && remove()" class="tag">{{ selected | mailToName }}  <i class="fa fa-times"/></span>
+      <span title="Supprimer" @click="!fetching && remove()" class="tag">{{ currentDelegation | mailToName }}  <i class="fa fa-times"/></span>
     </span>
     <span v-else class="subtitle">
       Aucun délégataire
@@ -29,9 +29,8 @@
 <script>
 import { collaborators } from '@/config/constants'
 import { mapGetters } from 'vuex'
-import store from '@/store/index'
-import { getSubject, delegateSubject, removeSubjectDelegation } from '@/api/subject-api'
-import { getCategory, delegateCategory, removeCategoryDelegation } from '@/api/category-api'
+import { delegateSubject, removeSubjectDelegation, replaceSubjectDelegation } from '@/api/subject-api'
+import { delegateCategory, removeCategoryDelegation, replaceCategoryDelegation } from '@/api/category-api'
 
 export default {
   name: 'delegation-view',
@@ -44,73 +43,64 @@ export default {
   data () {
     return {
       filter: '',
-      data: null,
       fetching: false
     }
   },
 
   computed: {
-    ...mapGetters(['collaborator']),
+    ...mapGetters([
+      'collaborator',
+      'currentSubject',
+      'currentCategory'
+    ]),
+
+    data () {
+      return this.isCategory ? this.currentCategory : this.currentSubject
+    },
 
     sorted () {
       return collaborators.sort().filter(collaborator => collaborator.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1 && collaborator !== this.collaborator.email)
     },
 
-    selected () {
+    currentDelegation () {
       return this.data && this.data.givenDelegation
     },
 
-    removeDelegation () {
-      return this.isCategory ? removeCategoryDelegation : removeSubjectDelegation
-    },
-
     delegate () {
-      return this.isCategory ? delegateCategory : delegateSubject
+      return this.isCategory ? collaborator => delegateCategory(this.currentCategory.uuid, collaborator) : collaborator => delegateSubject(this.currentSubject.uuid, collaborator)
     },
 
-    fetch () {
-      return this.isCategory ? getCategory : getSubject
+    removeDelegation () {
+      return this.isCategory ? () => removeCategoryDelegation(this.currentCategory.uuid) : () => removeSubjectDelegation(this.currentSubject.uuid)
+    },
+
+    replaceDelegation () {
+      return this.isCategory ? collaborator => replaceCategoryDelegation(this.currentCategory.uuid, collaborator) : collaborator => replaceSubjectDelegation(this.currentSubject.uuid, collaborator)
     }
   },
 
   methods: {
-    refresh () {
-      this.fetching = true
-      return this.fetch(this.dataId).then(({data}) => {
-        this.fetching = false
-        this.data = data
-      })
-    },
-
-    afterAction () {
-      return this.refresh().then(() => {
-        store.dispatch('refreshSubjects')
-      })
-    },
-
     isSelected (collaborator) {
-      return this.selected === collaborator
+      return this.currentDelegation === collaborator
     },
 
     remove () {
       this.fetching = true
-      return this.removeDelegation(this.dataId).then(this.afterAction)
+      return this.removeDelegation(this.dataId).then(() => { this.fetching = false })
     },
 
     select (collaborator) {
-      let promise
       this.fetching = true
+      let promise
       if (this.isSelected(collaborator)) {
-        promise = this.removeDelegation(this.dataId)
+        promise = this.removeDelegation()
+      } else if (this.currentDelegation) {
+        promise = this.replaceDelegation(collaborator)
       } else {
-        promise = this.selected ? this.removeDelegation(this.dataId).then(() => this.delegate(this.dataId, collaborator)) : this.delegate(this.dataId, collaborator)
+        promise = this.delegate(collaborator)
       }
-      return promise.then(this.afterAction)
+      return promise.then(() => { this.fetching = false })
     }
-  },
-
-  created () {
-    this.refresh()
   }
 }
 </script>
