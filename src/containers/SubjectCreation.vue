@@ -58,8 +58,8 @@
 
     <div class="footer">
       <span class="actions">
-        <button @click="reinit" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-        <button @click="submit" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        <button @click="reinit" title="Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        <button @click="!posting && submit()" title="Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
       </span>
     </div>
   </div>
@@ -88,7 +88,8 @@ export default {
 
   data () {
     return {
-      subject: {}
+      subject: {},
+      posting: false
     }
   },
 
@@ -127,6 +128,9 @@ export default {
     },
 
     submit () {
+      // prevent multiple click
+      this.posting = true
+
       // format subject
       let formattedSubject = {
         ...this.subject,
@@ -138,6 +142,9 @@ export default {
       // send to backend
       createSubject(formattedSubject).then(response => {
         goToSubject(response.subjectId)
+      }, error => {
+        console.log('ERROR', error)
+        this.posting = false
       })
     }
   },

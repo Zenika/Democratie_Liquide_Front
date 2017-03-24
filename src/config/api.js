@@ -17,7 +17,7 @@ api.interceptors.response.use(
     if (error.response.status === 403) {
       goToLogin()
     }
-    return error
+    return Promise.reject(error)
   }
 )
 
