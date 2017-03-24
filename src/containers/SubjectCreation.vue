@@ -96,9 +96,7 @@ export default {
     ...mapGetters([
       'filter',
       'joinedChannels',
-      'categories',
-      'defaultChannel',
-      'defaultCategory'
+      'categories'
     ])
   },
 
@@ -123,8 +121,8 @@ export default {
         maxPoints: 10,
         propositions: [{}, {}],
         deadLine: 3,
-        channel: this.defaultChannel,
-        category: this.defaultCategory
+        channel: this.filter.channel,
+        category: this.filter.category
       }
     },
 

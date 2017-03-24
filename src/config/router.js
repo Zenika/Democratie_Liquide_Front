@@ -130,8 +130,8 @@ router.beforeEach((to, from, next) => to.params.subjectId ? store.dispatch('refr
 // refresh current category before each route containing 'categoryId' param
 router.beforeEach((to, from, next) => to.params.categoryId ? store.dispatch('refreshCurrentCategory', to.params.categoryId).then(next) : next())
 
-export default router
-
 export const goHome = () => router.push('/')
 export const goToLogin = () => router.push('/login')
 export const goToSubject = subjectId => router.push('/subject/view/' + subjectId)
+
+export default router
