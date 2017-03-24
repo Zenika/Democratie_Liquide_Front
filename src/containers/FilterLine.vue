@@ -26,6 +26,7 @@
           <router-link to="/category/create" tag="button" class="simple" title="Créer une catégorie"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
         </dropdown-element>
     </dropdown>
+    <button @click="removeFilter" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
   </div>
 </template>
 
@@ -54,7 +55,8 @@ export default {
     ...mapActions([
       'filterSubjectType',
       'filterChannel',
-      'filterCategory'
+      'filterCategory',
+      'removeFilter'
     ])
   },
 
@@ -84,6 +86,10 @@ export default {
 
   .delegate {
     margin-left:10px;
+  }
+
+  .small {
+    margin-left: 10px;
   }
 
   .simple {

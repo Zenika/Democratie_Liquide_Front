@@ -56,6 +56,10 @@ export function filterSubjectType ({commit}, subjectType) {
   return subjectType ? commit(types.FILTER_SUBJECT_TYPE, subjectType) : null
 }
 
+export function removeFilter ({commit}) {
+  return commit(types.REMOVE_FILTER)
+}
+
 export function login ({dispatch}, form) {
   return authenticate(form)
     .then(() => dispatch('refreshCollaborator'))

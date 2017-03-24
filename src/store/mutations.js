@@ -67,6 +67,10 @@ export default {
       ...state.filter,
       subjectType
     }
+  },
+
+  [types.REMOVE_FILTER] (state) {
+    state.filter = {}
   }
 
 }
