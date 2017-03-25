@@ -9,14 +9,28 @@ export const delegateCategory = (categoryId, delegation) => api.put('api/powers/
   response => Promise.all([
     store.dispatch('refreshCategories'),
     store.dispatch('refreshCurrentCategory', categoryId)
-  ]).then(() => response)
+  ]).then(() => {
+    store.dispatch('notify', {
+      title: 'Nouvelle délégation !',
+      message: delegation + ' votera à votre place.',
+      type: 'info'
+    })
+    return response
+  })
 )
 
 export const removeCategoryDelegation = categoryId => api.delete('api/powers/categories/' + categoryId).then(
   response => Promise.all([
     store.dispatch('refreshCategories'),
     store.dispatch('refreshCurrentCategory', categoryId)
-  ]).then(() => response)
+  ]).then(() => {
+    store.dispatch('notify', {
+      title: 'Délégation supprimée !',
+      message: 'Vous pouvez de nouveau voter !',
+      type: 'info'
+    })
+    return response
+  })
 )
 
 export const replaceCategoryDelegation = (categoryId, delegation) => api.delete('api/powers/categories/' + categoryId).then(response =>
@@ -24,9 +38,23 @@ export const replaceCategoryDelegation = (categoryId, delegation) => api.delete(
   ).then(response => Promise.all([
     store.dispatch('refreshCategories'),
     store.dispatch('refreshCurrentCategory', categoryId)
-  ]).then(() => response)
+  ]).then(() => {
+    store.dispatch('notify', {
+      title: 'Nouvelle délégation !',
+      message: delegation + ' votera à votre place.',
+      type: 'info'
+    })
+    return response
+  })
 )
 
 export const createCategory = category => api.post('api/categories', category).then(
-  response => store.dispatch('refreshCategories').then(() => response)
+  response => {
+    store.dispatch('notify', {
+      title: 'Bien joué !',
+      message: 'Votre catégorie est en ligne !',
+      type: 'success'
+    })
+    return store.dispatch('refreshCategories').then(() => response)
+  }
 )
