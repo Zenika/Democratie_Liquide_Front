@@ -102,7 +102,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([]),
+    ...mapActions(['notify']),
 
     addProposal () {
       // add new object in propositions array
@@ -140,12 +140,21 @@ export default {
       }
 
       // send to backend
-      createSubject(formattedSubject).then(response => {
-        goToSubject(response.subjectId)
-      }, error => {
-        console.log('ERROR', error)
-        this.posting = false
-      })
+      createSubject(formattedSubject).then(
+        response => {
+          this.posting = false
+          this.notify({
+            title: 'Bien joué !',
+            message: 'Votre sujet est en ligne !',
+            type: 'success'
+          })
+          goToSubject(response.subjectId)
+        },
+
+        () => {
+          this.posting = false
+        }
+      )
     }
   },
 

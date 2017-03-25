@@ -11,6 +11,8 @@
       </modal>
     </transition>
 
+    <notification-center></notification-center>
+
   </div>
 </template>
 
@@ -18,6 +20,7 @@
 import { mapActions } from 'vuex'
 import SubjectList from '@/containers/SubjectList'
 import FilterLine from '@/containers/FilterLine'
+import NotificationCenter from '@/containers/NotificationCenter'
 import Modal from '@/components/Modal'
 import { goHome } from '@/config/router'
 
@@ -49,6 +52,7 @@ export default {
   components: {
     SubjectList,
     FilterLine,
+    NotificationCenter,
     Modal
   }
 }
@@ -62,7 +66,7 @@ export default {
 }
 
 .zoom-enter-active, .zoom-leave-active {
-  transition: all 250ms
+  transition: all 250ms;
 }
 
 .zoom-enter-to, .zoom-leave {

@@ -71,3 +71,26 @@ export function loginWithGoogle ({dispatch}) {
     .then(() => dispatch('refreshCollaborator'))
     .then(() => goHome())
 }
+
+export function showNotification ({commit}, notification) {
+  return commit(types.SHOW_NOTIFICATION, notification)
+}
+
+export function hideNotification ({commit}, notification) {
+  return commit(types.HIDE_NOTIFICATION, notification)
+}
+
+export function keepNotification ({commit}, notification) {
+  clearTimeout(notification.timeout)
+}
+
+export function hideNotificationAfterDelay ({dispatch}, notification) {
+  return new Promise((resolve, reject) => {
+    notification.timeout = setTimeout(resolve, 3000)
+  }).then(() => dispatch('hideNotification', notification))
+}
+
+export function notify ({dispatch}, notification) {
+  return dispatch('showNotification', notification)
+    .then(() => dispatch('hideNotificationAfterDelay', notification))
+}

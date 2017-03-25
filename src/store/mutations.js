@@ -1,4 +1,5 @@
 import * as types from './types'
+import Vue from 'vue'
 
 export const initialState = {
   // list of all available subjects
@@ -20,7 +21,10 @@ export const initialState = {
   currentSubject: {},
 
   // last fetched category
-  currentCategory: {}
+  currentCategory: {},
+
+  // the currently displayed notifications
+  notifications: []
 }
 
 export default {
@@ -71,6 +75,24 @@ export default {
 
   [types.REMOVE_FILTER] (state) {
     state.filter = {}
+  },
+
+  [types.SHOW_NOTIFICATION] (state, notification) {
+    notification.visible = true
+    state.notifications = [
+      ...state.notifications,
+      notification
+    ]
+  },
+
+  [types.HIDE_NOTIFICATION] (state, notification) {
+    let index = state.notifications.indexOf(notification)
+    if (index !== -1) {
+      Vue.set(state.notifications, index, {
+        ...state.notifications[index],
+        visible: false
+      })
+    }
   }
 
 }

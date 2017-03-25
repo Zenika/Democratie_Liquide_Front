@@ -45,3 +45,5 @@ export const filteredSubjects = (state, getters) => getters.subjects.filter(subj
 
 export const joinedChannels = (state, getters) => getters.channels.filter(channel => !!channel.collaborators.find(collaborator => collaborator.email === state.collaborator.email))
 export const unjoinedChannels = (state, getters) => getters.channels.filter(channel => !channel.collaborators.find(collaborator => collaborator.email === state.collaborator.email))
+
+export const notifications = state => state.notifications
