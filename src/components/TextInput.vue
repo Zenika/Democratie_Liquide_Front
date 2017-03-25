@@ -1,6 +1,13 @@
 <template>
   <div class="text-input">
-    <component name="text-input" :is="textarea ? 'textarea' : 'input'" class="simple" :class="{ input: !!value }" :value="value" @input="$emit('input', $event.target.value)"></component>
+    <component name="text-input"
+      :is="textarea ? 'textarea' : 'input'"
+      class="simple"
+      :class="{ input: !!value }"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+      ref="text-input"
+    />
     <label for="text-input" class="placeholder">{{ placeholder }}</label>
   </div>
 </template>
@@ -14,6 +21,10 @@ export default {
     placeholder: String,
     textarea: Boolean,
     value: String
+  },
+
+  beforeUpdate () {
+    this.$refs['text-input'].value = this.value
   }
 }
 </script>
@@ -47,7 +58,6 @@ input, textarea {
       font-size: 13px;
       opacity: 1;
       color: lightgray;
-      // font-weight: normal;
       text-shadow: 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white, -2px -2px 0 white, 2px 0px 0 white, -2px 0px 0 white, 0 2px 0 white, 0 -2px 0 white;
     }
   }
