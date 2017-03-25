@@ -1,7 +1,7 @@
 <template>
   <div class="category-creation">
-    <input class="simple title" placeholder="Titre" v-model="category.title"/>
-    <textarea class="simple description" placeholder="Description" v-model="category.description"/>
+    <text-input class="simple title" placeholder="Titre" v-model="category.title"/>
+    <text-input textarea class="simple description" placeholder="Description" v-model="category.description"/>
     <div class="footer">
       <span class="actions">
         <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
@@ -14,6 +14,7 @@
 <script>
 import { createCategory } from '@/api/category-api'
 import { goHome } from '@/config/router'
+import TextInput from '@/components/TextInput'
 
 export default {
   name: 'category-creation',
@@ -44,7 +45,9 @@ export default {
     this.init()
   },
 
-  components: {}
+  components: {
+    TextInput
+  }
 }
 </script>
 
@@ -58,10 +61,8 @@ export default {
     overflow: hidden;
     padding: 5px;
   }
-  input, textarea {
+  .text-input {
     min-height: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
   }
 

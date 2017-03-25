@@ -13,7 +13,7 @@
       Aucun délégataire
     </span>
 
-    <input placeholder="Filtre" v-model="filter"/>
+    <text-input placeholder="Filtre" v-model="filter"/>
     <ul>
       <li v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
@@ -31,6 +31,7 @@ import { collaborators } from '@/config/constants'
 import { mapGetters } from 'vuex'
 import { delegateSubject, removeSubjectDelegation, replaceSubjectDelegation } from '@/api/subject-api'
 import { delegateCategory, removeCategoryDelegation, replaceCategoryDelegation } from '@/api/category-api'
+import TextInput from '@/components/TextInput'
 
 export default {
   name: 'delegation-view',
@@ -101,6 +102,10 @@ export default {
       }
       return promise.then(() => (this.fetching = false), () => (this.fetching = false))
     }
+  },
+
+  components: {
+    TextInput
   }
 }
 </script>
@@ -146,13 +151,8 @@ export default {
     }
   }
 
-  input {
-    border-radius: 100px;
+  .text-input {
     margin: 5px;
-    padding: 5px 10px;
-    outline: none;
-    border: 1px solid lightgray;
-    box-shadow: inset 0 1px 0 lightgray;
     &:active, &:focus {
       border-color: map-get($reds, 'light');
     }

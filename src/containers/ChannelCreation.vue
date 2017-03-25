@@ -1,7 +1,7 @@
 <template>
   <div class="channel-creation">
-    <input class="simple title" placeholder="Titre" v-model="channel.title"/>
-    <textarea class="simple description" placeholder="Description" v-model="channel.description"/>
+    <text-input class="simple title" placeholder="Titre" v-model="channel.title"/>
+    <text-input textarea class="simple description" placeholder="Description" v-model="channel.description"/>
     <div class="footer">
       <span class="actions">
         <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
@@ -14,6 +14,7 @@
 <script>
 import { createChannel } from '@/api/channel-api'
 import { goHome } from '@/config/router'
+import TextInput from '@/components/TextInput'
 
 export default {
   name: 'channel-creation',
@@ -43,7 +44,9 @@ export default {
     this.init()
   },
 
-  components: {}
+  components: {
+    TextInput
+  }
 }
 </script>
 
@@ -57,10 +60,9 @@ export default {
     overflow: hidden;
     padding: 5px;
   }
-  input, textarea {
+
+  .text-input {
     min-height: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
   }
 

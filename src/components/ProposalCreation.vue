@@ -2,8 +2,8 @@
   <div class="proposal-creation">
     <div class="index">{{ index + 1 }}</div>
     <div class="content">
-      <input class="simple title" placeholder="Titre" v-model="proposal.title"/>
-      <textarea class="simple description" placeholder="Description" v-model="proposal.description"/>
+      <text-input class="simple title" placeholder="Titre" v-model="proposal.title"/>
+      <text-input textarea class="simple description" placeholder="Description" v-model="proposal.description"/>
     </div>
     <button v-if="canRemove" @click="$emit('remove')" class="remove simple"><i class="fa fa-minus" aria-hidden="true"></i></button>
     <div class="void" v-else/>
@@ -12,6 +12,8 @@
 
 <script>
 
+import TextInput from '@/components/TextInput'
+
 export default {
   name: 'proposal-creation',
 
@@ -19,6 +21,10 @@ export default {
     proposal: Object,
     index: Number,
     canRemove: Boolean
+  },
+
+  components: {
+    TextInput
   }
 }
 </script>
@@ -33,9 +39,9 @@ export default {
     justify-content: space-around;
   }
 
-  input, textarea {
+  .text-input {
     &:not(:first-child) {
-      margin: 5px 0;
+      margin: 10px 0;
     }
   }
 

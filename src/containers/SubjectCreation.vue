@@ -1,7 +1,7 @@
 <template>
   <div class="subject-creation">
-    <input class="simple title" placeholder="Titre" v-model="subject.title"/>
-    <textarea class="simple description" placeholder="Description" v-model="subject.description"/>
+    <text-input class="simple title" placeholder="Titre" v-model="subject.title"/>
+    <text-input textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
     <div class="line">
 
@@ -73,6 +73,7 @@ import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import { createSubject } from '@/api/subject-api'
 import { goToSubject } from '@/config/router'
+import TextInput from '@/components/TextInput'
 
 const daysToDate = days => {
   let deadLine = new Date()
@@ -105,7 +106,7 @@ export default {
   methods: {
     addProposal () {
       // add new object in propositions array
-      this.subject.propositions.push({})
+      this.subject.propositions.push({ title: '', description: '' })
       // scroll to bottom after adding new proposal
       setTimeout(() => { this.$refs.proposals.scrollTop = this.$refs.proposals.scrollHeight }, 0)
     },
@@ -119,7 +120,7 @@ export default {
         title: '',
         description: '',
         maxPoints: 10,
-        propositions: [{}, {}],
+        propositions: [{ title: '', description: '' }, { title: '', description: '' }],
         deadLine: 3,
         channel: this.filter.channel,
         category: this.filter.category
@@ -159,7 +160,9 @@ export default {
   components: {
     ProposalCreation,
     Dropdown,
-    DropdownElement
+    DropdownElement,
+    TextInput
+
   }
 }
 </script>
@@ -175,13 +178,12 @@ export default {
     padding: 5px;
   }
 
-  input, textarea {
+  .text-input {
     min-height: 15px;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
   }
-
 
   .title {
     font-weight: bold;
@@ -193,7 +195,6 @@ export default {
     font-size: 1em;
     flex-shrink: 0;
   }
-
 
   .line {
     display: block;
@@ -224,8 +225,7 @@ export default {
 
   .proposals {
     border-radius: 5px;
-    padding: 0 10px 5px 10px;
-    margin-top: 10px;
+    padding: 10px 10px 5px 10px;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
