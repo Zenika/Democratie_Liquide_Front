@@ -30,10 +30,12 @@ export const quitChannel = channelId => api.get(`api/channels/${channelId}/quit`
 
 export const createChannel = channel => api.post('api/channels', channel).then(
   (response) => store.dispatch('refreshChannels')
-    .then(() => store.dispatch('notify', {
-      title: 'Bien joué !',
-      message: 'Votre channel est en ligne !',
-      type: 'success'
-    }))
-    .then(() => response)
+    .then(() => {
+      store.dispatch('notify', {
+        title: 'Bien joué !',
+        message: 'Votre channel est en ligne !',
+        type: 'success'
+      })
+      return response
+    })
 )
