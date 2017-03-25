@@ -162,7 +162,7 @@ export default {
   }
 
   .content {
-    margin-left: 15px;
+    margin: 0 15px;
   }
 
 </style>
