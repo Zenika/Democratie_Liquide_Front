@@ -4,7 +4,8 @@
     <textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
     <div class="line">
-        Comportera
+
+        Vote en
         <dropdown maxHeight="200px" :title="subject.maxPoints | pluralize('point')">
           <dropdown-element v-for="i in 100"
             :key="i"
@@ -12,7 +13,7 @@
             @click.native="subject.maxPoints = i"
           >{{ i | pluralize('point') }}</dropdown-element>
         </dropdown>
-        se cloturera dans
+        et cloture dans
         <dropdown maxHeight="200px" :title="subject.deadLine || 'une infinité de' | pluralize('jour')">
           <dropdown-element :selected="subject.deadLine === null" @click.native="subject.deadLine = null">
             une infinité de jours
@@ -24,7 +25,9 @@
           >{{ i | pluralize('jour') }}</dropdown-element>
         </dropdown>
 
-        sera posté dans la catégorie
+        <br>
+
+        Catégorie :
         <dropdown :title="subject.category && subject.category.title">
           <dropdown-element v-for="category in categories"
             :key="category.uuid"
@@ -33,7 +36,7 @@
           >{{ category.title }}</dropdown-element>
         </dropdown>
 
-        et dans le channel
+        Channel :
         <dropdown :title="subject.channel && subject.channel.title">
           <dropdown-element v-for="channel in joinedChannels"
             :key="channel.uuid"
@@ -41,8 +44,6 @@
             @click.native="subject.channel = channel"
           >{{ channel.title }}</dropdown-element>
         </dropdown>
-
-        avec les propositions suivantes :
     </div>
 
     <div class="proposals" ref="proposals">
@@ -170,9 +171,10 @@ export default {
   .subject-creation {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    // overflow: hidden;
     padding: 5px;
   }
+
   input, textarea {
     min-height: 15px;
     margin-left: 10px;

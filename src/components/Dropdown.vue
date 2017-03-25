@@ -92,6 +92,7 @@ export default {
   transition: all 200ms ease;
 
   .wrapper {
+    border-radius: 4px;
     overflow-y: auto;
     max-height: 500px;
   }

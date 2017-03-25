@@ -35,8 +35,8 @@ export default {
 <style lang="scss" scoped>
 
 .modal-container {
-  overflow-x: hidden;
-  overflow-y: auto;
+  // overflow-x: hidden;
+  // overflow-y: auto;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -67,14 +67,16 @@ export default {
     box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.25);
     max-height: 90vh;
     max-width: 90vw;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 
       .header {
         display: flex;
         justify-content: center;
+        flex-shrink: 0;
 
         .title {
           text-shadow: 0px 1px 0px white;
@@ -105,7 +107,7 @@ export default {
 
     .modal-content {
       position: relative;
-      overflow: hidden;
+      // overflow: hidden;
       display: flex;
       flex-direction: column;
       padding-bottom: 5px;
