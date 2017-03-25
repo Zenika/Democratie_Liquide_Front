@@ -23,6 +23,12 @@ export default {
     value: String
   },
 
+  methods: {
+    focus () {
+      this.$refs['text-input'].focus()
+    }
+  },
+
   beforeUpdate () {
     this.$refs['text-input'].value = this.value
   }

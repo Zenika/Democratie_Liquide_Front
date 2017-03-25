@@ -1,6 +1,6 @@
 <template>
   <div class="channel-creation">
-    <text-input class="simple title" placeholder="Titre" v-model="channel.title"/>
+    <text-input class="simple title" placeholder="Titre" v-model="channel.title" ref="title"/>
     <text-input textarea class="simple description" placeholder="Description" v-model="channel.description"/>
     <div class="footer">
       <span class="actions">
@@ -42,6 +42,10 @@ export default {
 
   created () {
     this.init()
+  },
+
+  mounted () {
+    this.$refs.title.focus()
   },
 
   components: {

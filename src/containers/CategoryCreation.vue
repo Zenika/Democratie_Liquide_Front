@@ -1,6 +1,6 @@
 <template>
   <div class="category-creation">
-    <text-input class="simple title" placeholder="Titre" v-model="category.title"/>
+    <text-input class="simple title" placeholder="Titre" v-model="category.title" ref="title"/>
     <text-input textarea class="simple description" placeholder="Description" v-model="category.description"/>
     <div class="footer">
       <span class="actions">
@@ -43,6 +43,10 @@ export default {
 
   created () {
     this.init()
+  },
+
+  mounted () {
+    this.$refs.title.focus()
   },
 
   components: {

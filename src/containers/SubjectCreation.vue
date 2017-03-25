@@ -1,6 +1,6 @@
 <template>
   <div class="subject-creation">
-    <text-input class="simple title" placeholder="Titre" v-model="subject.title"/>
+    <text-input ref="title" class="simple title" placeholder="Titre" v-model="subject.title"/>
     <text-input textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
     <div class="line">
@@ -155,6 +155,10 @@ export default {
 
   created () {
     this.reinit()
+  },
+
+  mounted () {
+    this.$refs.title.focus()
   },
 
   components: {

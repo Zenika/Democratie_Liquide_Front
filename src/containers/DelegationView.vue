@@ -13,7 +13,7 @@
       Aucun délégataire
     </span>
 
-    <text-input placeholder="Filtre" v-model="filter"/>
+    <text-input placeholder="Filtre" v-model="filter" ref="filter"/>
     <ul>
       <li v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
@@ -102,6 +102,10 @@ export default {
       }
       return promise.then(() => (this.fetching = false), () => (this.fetching = false))
     }
+  },
+
+  mounted () {
+    this.$refs.filter.focus()
   },
 
   components: {
