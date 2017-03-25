@@ -3,7 +3,7 @@
     <div class="message">Voulez vous vraiment supprimer le sujet "{{ currentSubject.title }}" ? </div>
     <div class="buttons">
       <router-link tag="button" to="/" class="small">Non</router-link>
-      <button class="small" @click="confirm">Oui</button>
+      <button class="small" @click="!deleting && confirm()">Oui</button>
     </div>
   </div>
 </template>
@@ -16,6 +16,12 @@ import { goHome } from '@/config/router'
 export default {
   name: 'subject-deletion',
 
+  data () {
+    return {
+      deleting: false
+    }
+  },
+
   computed: {
     ...mapGetters(['currentSubject'])
   },
@@ -23,7 +29,8 @@ export default {
   methods: {
 
     confirm () {
-      deleteSubject(this.currentSubject.uuid).then(goHome)
+      this.deleting = true
+      deleteSubject(this.currentSubject.uuid).then(goHome, () => (this.deleting = false))
     }
   }
 }

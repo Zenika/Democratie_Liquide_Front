@@ -5,7 +5,7 @@
     <div class="footer">
       <span class="actions">
         <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-        <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        <button @click="!posting && send()" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
       </span>
     </div>
   </div>
@@ -20,7 +20,8 @@ export default {
 
   data () {
     return {
-      category: {}
+      category: {},
+      posting: false
     }
   },
 
@@ -34,7 +35,8 @@ export default {
     },
 
     send () {
-      createCategory(this.category).then(goHome)
+      this.posting = true
+      createCategory(this.category).then(goHome, () => (this.posting = false))
     }
   },
 

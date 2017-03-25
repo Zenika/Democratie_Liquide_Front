@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import ProposalCreation from '@/components/ProposalCreation'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
@@ -102,8 +102,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['notify']),
-
     addProposal () {
       // add new object in propositions array
       this.subject.propositions.push({})
@@ -143,11 +141,6 @@ export default {
       createSubject(formattedSubject).then(
         response => {
           this.posting = false
-          this.notify({
-            title: 'Bien joué !',
-            message: 'Votre sujet est en ligne !',
-            type: 'success'
-          })
           goToSubject(response.subjectId)
         },
 

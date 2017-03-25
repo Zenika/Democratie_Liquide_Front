@@ -5,7 +5,7 @@
     <div class="footer">
       <span class="actions">
         <button @click="init" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-        <button @click="send" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        <button @click="!posting && send()" title= "Envoyer" class="small refresh"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
       </span>
     </div>
   </div>
@@ -20,12 +20,12 @@ export default {
 
   data () {
     return {
-      channel: {}
+      channel: {},
+      posting: false
     }
   },
 
   methods: {
-
     init () {
       this.channel = {
         title: '',
@@ -34,7 +34,8 @@ export default {
     },
 
     send () {
-      createChannel(this.channel).then(goHome)
+      this.posting = true
+      createChannel(this.channel).then(goHome, () => (this.posting = false))
     }
   },
 

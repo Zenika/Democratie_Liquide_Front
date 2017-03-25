@@ -99,7 +99,7 @@ export default {
       } else {
         promise = this.delegate(collaborator)
       }
-      return promise.then(() => { this.fetching = false })
+      return promise.then(() => (this.fetching = false), () => (this.fetching = false))
     }
   }
 }
