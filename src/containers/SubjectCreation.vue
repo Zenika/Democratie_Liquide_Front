@@ -72,7 +72,7 @@ import ProposalCreation from '@/components/ProposalCreation'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import { createSubject } from '@/api/subject-api'
-import { goToSubject } from '@/config/router'
+import { goToSubject, goHome } from '@/config/router'
 import TextInput from '@/components/TextInput'
 
 const daysToDate = days => {
@@ -143,6 +143,11 @@ export default {
       createSubject(formattedSubject).then(
         response => {
           this.posting = false
+
+          // hide subject creation modal
+          goHome()
+
+          // show subject view modal
           goToSubject(response.subjectId)
         },
 

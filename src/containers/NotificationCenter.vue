@@ -1,6 +1,6 @@
 <template>
   <div class="notification-center">
-    <transition-group name="zoom">
+    <transition-group name="zoom-out">
       <div v-for="(notification, index) in notifications"
         v-if="notification.visible"
         @click="hideNotification(notification)"
@@ -43,15 +43,7 @@ export default {
 <style lang="scss" scoped>
 
   @import '../assets/style';
-
-.zoom-enter, .zoom-leave-to {
-  opacity: 0 !important;
-  transform: scale(0.75,0.75) !important;
-}
-
-.zoom-enter-active, .zoom-leave-active {
-  transition: all 250ms linear !important;
-}
+  @import '../assets/transitions';
 
   .notification-center {
     overflow-x: hidden;

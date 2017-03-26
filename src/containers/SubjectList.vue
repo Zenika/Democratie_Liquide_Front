@@ -2,13 +2,15 @@
   <div class="subject-list">
 
     <template v-for="subject in subjects" v-show="filteredSubjects.length">
+      <transition name="shrink-Y">
       <keep-alive>
         <subject-line class="subject-line" v-if="globalCheck(subject)"
           :subject="subject"
           :key="subject.uuid"
           @removeSubject="removeSubject(subject)"
-      />
+        />
       </keep-alive>
+      </transition>
     </template>
     <div class="empty" v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</div>
 
@@ -55,14 +57,15 @@ export default {
   }
 
   .subject-line {
-    transition: all 100ms linear;
+    transition: border-left 100ms linear, background-color 100ms linear;
     border-left: 0px solid map-get($reds, 'medium');
 
+
     &:nth-child(2n) {
-      background: rgba(0,0,0,0.05);
+      background-color: rgba(0,0,0,0.05);
     }
     &:hover {
-      background: map-get($reds, 'lightest');
+      background-color: map-get($reds, 'lightest');
       color: map-get($reds, 'medium');
       border-left-width: 5px;
     }

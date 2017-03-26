@@ -5,7 +5,7 @@
     <subject-list></subject-list>
     <router-link tag="button" to="/subject/create" class="simple create" title="Créer un sujet"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
 
-    <transition name="zoom">
+    <transition name="zoom-in">
       <modal v-if="modal && modal.component" :title="modal.title" @close="closeModal">
         <component :is="modal.component" v-bind="modal.props"/>
       </modal>
@@ -60,18 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.zoom-enter, .zoom-leave-to {
-  opacity: 0;
-  transform: scale(1.1);
-}
-
-.zoom-enter-active, .zoom-leave-active {
-  transition: all 250ms;
-}
-
-.zoom-enter-to, .zoom-leave {
-  opacity: 1;
-}
+@import '../assets/transitions';
 
 .home {
   display: flex;
