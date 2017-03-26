@@ -1,6 +1,10 @@
 <template>
     <div class="login">
-        <button v-if="methods.GOOGLE_AUTH" class="small" title="Login with Google" @click="loginWithGoogle()"><i class="fa fa-google" aria-hidden="true"></i></button>
+        <span class="logo">
+          <img src="../assets/logo.png"/>
+          ZDemocracy
+        </span>
+        <button v-if="methods.GOOGLE_AUTH" class="small" title="Login with Google" @click="loginWithGoogle()"></button>
         <div v-else class="form" label-width="120px">
             <text-input placeholder="Email" v-model="form.email"></text-input>
             <text-input placeholder="Password" v-model="form.password"></text-input>
@@ -48,6 +52,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding: 10px;
+
+
+    img {
+      padding-bottom: 5px;
+      height: 25px;
+      width: 25px;
+      margin-right: 10px;
+    }
+  }
 
   .login {
     display: flex;

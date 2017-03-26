@@ -69,10 +69,14 @@ button {
       background: white;
       border: 1px solid lightgray;
       border-radius: 200px;
+      padding: 3px 10px;
 
       &::before {
         content: attr(title);
-        padding-right: 5px;
+      }
+
+      & > * {
+        padding-left: 5px;
       }
 
       &:hover, &:focus {

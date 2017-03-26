@@ -2,7 +2,7 @@
   <div class="home">
 
     <div class="header">
-      <span>
+      <span class="logo">
         <img src="../assets/logo.png"/>
         ZDemocracy
       </span>
@@ -80,10 +80,17 @@ export default {
   border-bottom: 1px solid lightgray;
   background-color: rgba(0,0,0,0.05);
   flex-shrink: 0;
-  img {
-    height: 25px;
-    width: 25px;
-    margin-right: 10px;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    img {
+      margin-top: -2px;
+      height: 25px;
+      width: 25px;
+      margin-right: 10px;
+    }
   }
 }
 
