@@ -65,10 +65,8 @@ export default {
     min-height: 100px;
     z-index: 20;
     box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.25);
-    max-height: 90vh;
-    max-width: 90vw;
-    // overflow-y: hidden;
-    // overflow-x: hidden;
+    max-height: 90%;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;

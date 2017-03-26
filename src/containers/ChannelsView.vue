@@ -60,8 +60,16 @@ export default {
 
   @import '../assets/style';
 
-  .channel-list:not(:first-child) {
-    margin-top: 25px;
+  .channels-view {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .channel-list {
+    &:not(:first-child) {
+      margin-top: 25px;
+    }
   }
 
   .label {

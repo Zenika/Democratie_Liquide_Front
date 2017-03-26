@@ -20,13 +20,13 @@
     <dropdown :title="filter.category.title">
         <dropdown-element v-for="category in categories" :selected="category === filter.category" :key="category.uuid" @click.native="filterCategory(category)">
           <span class="label">{{ category.title }}</span>
-          <router-link :to="'/category/delegate/' + category.uuid" tag="button" v-if="category.uuid" class="small delegate" title="Déléguer"><i class="fa fa-users"/></router-link>
+          <button @click.stop="delegate(category)" v-if="category.uuid" class="small delegate" title="Déléguer"><i class="fa fa-users"/></button>
         </dropdown-element>
         <dropdown-element>
           <router-link to="/category/create" tag="button" class="simple" title="Créer une catégorie"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
         </dropdown-element>
     </dropdown>
-    <button @click="removeFilter" title= "Réinitialiser" class="small refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+    <span @click="removeFilter" title= "Réinitialiser" class="refresh fa fa-times" aria-hidden="true"></span>
   </div>
 </template>
 
@@ -35,6 +35,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Dropdown from '@/components/Dropdown'
 import DropdownElement from '@/components/DropdownElement'
 import { subjectTypes } from '@/config/constants'
+import router from '@/config/router'
 
 export default {
   name: 'filter-line',
@@ -57,7 +58,11 @@ export default {
       'filterChannel',
       'filterCategory',
       'removeFilter'
-    ])
+    ]),
+
+    delegate (category) {
+      router.push('/category/delegate/' + category.uuid)
+    }
   },
 
   components: {
@@ -73,11 +78,22 @@ export default {
 
   .filter-line {
     text-align: center;
-    padding: 15px 60px;
+    padding: 10px 60px;
     background: #fcfcfc;
     line-height: 2em;
     border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #eee;
+  }
+
+  .refresh {
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 200ms ease;
+    opacity: 1;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
   .label {

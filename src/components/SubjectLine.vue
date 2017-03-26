@@ -67,5 +67,9 @@ export default {
     cursor: pointer;
   }
 
+  .tag, button {
+      margin-left: 5px;
+  }
+
 
 </style>
