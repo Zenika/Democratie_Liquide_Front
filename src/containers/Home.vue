@@ -6,7 +6,10 @@
         <img src="../assets/logo.png"/>
         ZDemocracy
       </span>
-      <button title="Logout" class="small" @click="logout"></button>
+      <span class="actions">
+        <button title="Rafraichir" class="small" @click="refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        <button title="Logout" class="small" @click="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+      </span>
     </div>
 
     <filter-line></filter-line>
@@ -40,10 +43,7 @@ export default {
   },
 
   created () {
-    this.refreshSubjects()
-    this.refreshCategories()
-    this.refreshChannels()
-    this.refreshCollaborator()
+    this.refresh()
   },
   methods: {
     ...mapActions([
@@ -53,6 +53,14 @@ export default {
       'refreshChannels',
       'logout'
     ]),
+
+    refresh () {
+      this.refreshCollaborator().then(() => {
+        this.refreshSubjects()
+        this.refreshCategories()
+        this.refreshChannels()
+      })
+    },
 
     closeModal () {
       goHome()
