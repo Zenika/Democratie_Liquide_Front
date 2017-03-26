@@ -1,11 +1,7 @@
-# Include your project-specific ignores in this file
-# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
-
-lib
-!tools/lib
-node_modules
-ncp-debug.log
-npm-debug.log
-.divshot-cache
-build/
+.DS_Store
+node_modules/
 dist/
+npm-debug.log
+yarn-error.log
+test/unit/coverage
+*.lock
