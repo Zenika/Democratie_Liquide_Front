@@ -17,13 +17,13 @@ api.interceptors.response.use(
     // console.log('ERROR', error)
     if (error.response.status === 403) {
       goToLogin()
+    } else {
+      store.dispatch('notify', {
+        title: error.response.statusText,
+        message: error.response.data.message,
+        type: 'error'
+      })
     }
-
-    store.dispatch('notify', {
-      title: error.response.statusText,
-      message: error.response.data.message,
-      type: 'error'
-    })
 
     return Promise.reject(error)
   }
