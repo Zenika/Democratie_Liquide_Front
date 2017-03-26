@@ -10,3 +10,5 @@ export const authenticate = (form) => {
 export const authenticateWithGoogle = () => {
   return api.post('signin/google')
 }
+
+export const getAuthMethods = () => api.get('signin/methods')

@@ -1,6 +1,14 @@
 <template>
   <div class="home">
 
+    <div class="header">
+      <span>
+        <img src="../assets/logo.png"/>
+        ZDemocracy
+      </span>
+      <button title="Logout" class="small" @click="logout"></button>
+    </div>
+
     <filter-line></filter-line>
     <subject-list></subject-list>
     <router-link tag="button" to="/subject/create" class="simple create" title="Créer un sujet"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
@@ -42,7 +50,8 @@ export default {
       'refreshCollaborator',
       'refreshSubjects',
       'refreshCategories',
-      'refreshChannels'
+      'refreshChannels',
+      'logout'
     ]),
 
     closeModal () {
@@ -62,6 +71,22 @@ export default {
 
 @import '../assets/transitions';
 
+.header {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+  background-color: rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  img {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+  }
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -70,7 +95,7 @@ export default {
   overflow: hidden;
 
   .filter-line {
-    margin: 25px 0 10px 0;
+    margin: 0px 0 10px 0;
   }
 }
 

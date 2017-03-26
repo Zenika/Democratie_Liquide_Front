@@ -3,7 +3,7 @@ import { getSubjects, getSubject } from '@/api/subject-api'
 import { getChannels } from '@/api/channel-api'
 import { getCategory, getCategories } from '@/api/category-api'
 import { authenticate, authenticateWithGoogle } from '@/api/auth-api'
-import { goHome } from '@/config/router'
+import { goHome, goToLogin } from '@/config/router'
 import * as types from './types'
 
 export function refreshCollaborator ({commit}) {
@@ -70,6 +70,11 @@ export function loginWithGoogle ({dispatch}) {
   return authenticateWithGoogle()
     .then(() => dispatch('refreshCollaborator'))
     .then(() => goHome())
+}
+
+export function logout ({dispatch}) {
+  return dispatch('refreshCollaborator')
+    .then(() => goToLogin())
 }
 
 export function showNotification ({commit}, notification) {
