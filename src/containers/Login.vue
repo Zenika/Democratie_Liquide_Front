@@ -4,7 +4,9 @@
           <img src="../assets/logo.png"/>
           ZDemocracy
         </span>
-        <button v-if="methods.GOOGLE_AUTH" class="small" title="Login with Google" @click="loginWithGoogle()"></button>
+        <form method="POST" action="/signin/google" v-if="methods.GOOGLE_AUTH">
+          <button type="submit" class="small" title="Login with Google"></button>
+        </form>
         <div v-else class="form" label-width="120px">
             <text-input placeholder="Email" v-model="form.email"></text-input>
             <text-input placeholder="Password" v-model="form.password"></text-input>
