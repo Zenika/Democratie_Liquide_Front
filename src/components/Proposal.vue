@@ -3,7 +3,7 @@
 
     <gauge
       class="line"
-      v-if="!isDelegated"
+      v-if="!isDelegated || !isVote"
       :mouseEnabled="mouseEnabled"
       :maxPoints="maxPoints"
       :currentPoints="proposal.points"
