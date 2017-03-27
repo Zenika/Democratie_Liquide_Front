@@ -1,7 +1,7 @@
 <template>
   <div class="subject-creation">
 
-    <div class="form">
+    <div class="form" ref="form">
       <text-input ref="title" class="simple title" placeholder="Titre" v-model="subject.title"/>
       <text-input textarea class="simple description" placeholder="Description" v-model="subject.description"/>
 
@@ -48,7 +48,7 @@
           </dropdown>
       </div>
 
-      <div class="proposals" ref="proposals">
+      <div class="proposals">
         <proposal-creation v-for="(proposal, index) in subject.propositions"
           :key="'proposal-' + index"
           :proposal="proposal"
@@ -111,7 +111,7 @@ export default {
       // add new object in propositions array
       this.subject.propositions.push({ title: '', description: '' })
       // scroll to bottom after adding new proposal
-      setTimeout(() => { this.$refs.proposals.scrollTop = this.$refs.proposals.scrollHeight }, 0)
+      setTimeout(() => { this.$refs.form.scrollTop = this.$refs.form.scrollHeight }, 0)
     },
 
     removeProposal (index) {
