@@ -1,4 +1,4 @@
-import { getCollaborator } from '@/api/collaborator-api'
+import { getCollaborator, getCollaborators } from '@/api/collaborator-api'
 import { getSubjects, getSubject } from '@/api/subject-api'
 import { getChannels } from '@/api/channel-api'
 import { getCategory, getCategories } from '@/api/category-api'
@@ -9,6 +9,11 @@ import * as types from './types'
 export function refreshCollaborator ({commit}) {
   return getCollaborator()
     .then(({data}) => commit(types.REFRESH_COLLABORATOR, data))
+}
+
+export function refreshCollaborators ({commit}) {
+  return getCollaborators()
+    .then(({data}) => commit(types.REFRESH_COLLABORATORS, data))
 }
 
 export function refreshSubjects ({commit}) {

@@ -48,6 +48,7 @@ export default {
   methods: {
     ...mapActions([
       'refreshCollaborator',
+      'refreshCollaborators',
       'refreshSubjects',
       'refreshCategories',
       'refreshChannels',
@@ -55,11 +56,11 @@ export default {
     ]),
 
     refresh () {
-      this.refreshCollaborator().then(() => {
-        this.refreshSubjects()
-        this.refreshCategories()
-        this.refreshChannels()
-      })
+      this.refreshCollaborator()
+      this.refreshCollaborators()
+      this.refreshSubjects()
+      this.refreshCategories()
+      this.refreshChannels()
     },
 
     closeModal () {
