@@ -13,7 +13,7 @@
       Aucun délégataire
     </span>
 
-    <text-input placeholder="Filtre" v-model="filter" ref="filter"/>
+    <text-input placeholder="Filtre" v-model="collaboratorFilter" ref="collaboratorFilter"/>
     <ul>
       <li v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { collaborators } from '@/config/constants'
 import { mapGetters } from 'vuex'
 import { delegateSubject, removeSubjectDelegation, replaceSubjectDelegation } from '@/api/subject-api'
 import { delegateCategory, removeCategoryDelegation, replaceCategoryDelegation } from '@/api/category-api'
@@ -43,7 +42,7 @@ export default {
 
   data () {
     return {
-      filter: '',
+      collaboratorFilter: '',
       fetching: false
     }
   },
@@ -51,8 +50,10 @@ export default {
   computed: {
     ...mapGetters([
       'collaborator',
+      'collaborators',
       'currentSubject',
-      'currentCategory'
+      'currentCategory',
+      'filter'
     ]),
 
     data () {
@@ -60,7 +61,10 @@ export default {
     },
 
     sorted () {
-      return collaborators.sort().filter(collaborator => collaborator.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1 && collaborator !== this.collaborator.email)
+      return (this.filter.channel.collaborators || this.collaborators)
+        .map(collaborator => collaborator.email)
+        .sort()
+        .filter(collaborator => collaborator.toLowerCase().indexOf(this.collaboratorFilter.toLowerCase()) !== -1 && collaborator !== this.collaborator.email)
     },
 
     currentDelegation () {
@@ -105,7 +109,7 @@ export default {
   },
 
   mounted () {
-    this.$refs.filter.focus()
+    this.$refs.collaboratorFilter.focus()
   },
 
   components: {

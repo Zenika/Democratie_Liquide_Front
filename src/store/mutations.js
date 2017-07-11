@@ -32,6 +32,10 @@ export default {
     state.collaborator = collaborator
   },
 
+  [types.REFRESH_COLLABORATORS] (state, collaborators) {
+    state.collaborators = collaborators
+  },
+
   [types.REFRESH_SUBJECTS] (state, subjects) {
     state.subjects = subjects
   },
