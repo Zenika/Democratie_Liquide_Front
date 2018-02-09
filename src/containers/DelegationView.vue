@@ -1,7 +1,7 @@
 <template>
   <div class="delegation-view">
 
-    <router-link v-if="data" class="title" :to="'/subject/view/' + data.uuid">
+    <router-link v-if="data" class="title" :to="isCategory ? '' : '/subject/view/' + data.uuid">
       {{ data.title }}
     </router-link>
 
@@ -15,7 +15,8 @@
 
     <text-input placeholder="Filtre" v-model="collaboratorFilter" ref="collaboratorFilter"/>
     <ul>
-      <li v-for="collaborator in sorted"
+      <li
+        v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
         @click="!fetching && select(collaborator)"
         :key="collaborator"
@@ -62,7 +63,7 @@ export default {
     },
 
     sorted () {
-      return (this.filter.channel.collaborators || this.collaborators)
+      return (this.filter.channel.collaborators || this.collaborators || [])
         .map(collaborator => collaborator.email)
         .sort()
         .filter(collaborator => collaborator.toLowerCase().indexOf(this.collaboratorFilter.toLowerCase()) !== -1 && collaborator !== this.collaborator.email)
@@ -73,15 +74,21 @@ export default {
     },
 
     delegate () {
-      return this.isCategory ? collaborator => delegateCategory(this.currentCategory.uuid, collaborator) : collaborator => delegateSubject(this.currentSubject.uuid, collaborator)
+      return this.isCategory
+        ? collaborator => delegateCategory(this.currentCategory.uuid, collaborator)
+        : collaborator => delegateSubject(this.currentSubject.uuid, collaborator)
     },
 
     removeDelegation () {
-      return this.isCategory ? () => removeCategoryDelegation(this.currentCategory.uuid) : () => removeSubjectDelegation(this.currentSubject.uuid)
+      return this.isCategory
+        ? () => removeCategoryDelegation(this.currentCategory.uuid)
+        : () => removeSubjectDelegation(this.currentSubject.uuid)
     },
 
     replaceDelegation () {
-      return this.isCategory ? collaborator => replaceCategoryDelegation(this.currentCategory.uuid, collaborator) : collaborator => replaceSubjectDelegation(this.currentSubject.uuid, collaborator)
+      return this.isCategory
+      ? collaborator => replaceCategoryDelegation(this.currentCategory.uuid, collaborator)
+      : collaborator => replaceSubjectDelegation(this.currentSubject.uuid, collaborator)
     }
   },
 
@@ -110,7 +117,7 @@ export default {
   },
 
   mounted () {
-    this.$refs.collaboratorFilter.focus()
+    this.$refs.collaboratorFilter && this.$refs.collaboratorFilter.focus()
   },
 
   components: {
