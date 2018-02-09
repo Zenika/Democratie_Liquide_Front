@@ -1,7 +1,7 @@
 <template>
   <div class="delegation-view">
 
-    <router-link v-if="data" class="title" to="">
+    <router-link v-if="data" class="title" :to="'/subject/view/' + data.uuid">
       {{ data.title }}
     </router-link>
 
