@@ -47,7 +47,7 @@ export default {
 
   methods: {
     getPointsFromMousePosition (e) {
-      return Math.round(e.layerX / e.currentTarget.clientWidth * this.maxPoints)
+      return Math.round((e.clientX - this.$el.getBoundingClientRect().x) / e.currentTarget.clientWidth * this.maxPoints)
     },
 
     onClick (e) {
