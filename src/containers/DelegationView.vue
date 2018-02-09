@@ -124,7 +124,7 @@ export default {
   @import '../assets/style';
 
   .delegation-view {
-    // overflow: hidden;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     margin-bottom: 5px;
