@@ -1,15 +1,15 @@
 <template>
   <div class="gauge"
-    @click="mouseEnabled && onClick($event)"
-    @mousemove.stop="mouseEnabled && onMove($event)"
-    @mouseleave.stop="mouseEnabled && onLeave($event)"
+    @click="!disabled && onClick($event)"
+    @mousemove.stop="!disabled && onMove($event)"
+    @mouseleave.stop="!disabled && onLeave($event)"
     :class="{
       selected: currentPoints > 0,
-      active: mouseEnabled
+      active: !disabled
     }"
   >
     <div class="line-hover"
-      v-if="mouseEnabled"
+      v-if="!disabled"
       :style="{ transform: 'scaleX(' + hoverPoints / maxPoints + ')' }"
     />
 
@@ -17,7 +17,7 @@
       :style="{ transform: 'scaleX(' + currentPoints / maxPoints + ')' }"
     />
 
-    <span v-if="showPoints" class="points">{{ mouseIsOver && mouseEnabled ? hoverPoints : currentPoints }}</span>
+    <span v-if="showPoints" class="points">{{ mouseIsOver && !disabled ? hoverPoints : currentPoints }}</span>
 
     <span class="content">
       <slot></slot>
@@ -31,7 +31,10 @@ export default {
   name: 'gauge',
 
   props: {
-    mouseEnabled: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     showPoints: Boolean,
     maxPoints: Number,
     remainingPoints: Number,

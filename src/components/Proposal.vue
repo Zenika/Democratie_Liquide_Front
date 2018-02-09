@@ -4,7 +4,7 @@
     <gauge
       class="line"
       v-if="!isDelegated || !isVote"
-      :mouseEnabled="mouseEnabled"
+      :disabled="disabled"
       :maxPoints="maxPoints"
       :currentPoints="proposal.points"
       :remainingPoints="remainingPoints"
@@ -47,8 +47,8 @@ export default {
       return this.maxPoints - this.totalPoints + this.proposal.points
     },
 
-    mouseEnabled () {
-      return this.isVote && !this.isDelegated
+    disabled () {
+      return !this.isVote || this.isDelegated
     }
   },
 
