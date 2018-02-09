@@ -56,7 +56,7 @@
           :canRemove="subject.propositions.length > 2"
           @remove="removeProposal(index)"
         />
-        <button @click="addProposal"class="new-proposal simple"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button @click="addProposal" class="new-proposal simple"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
 
