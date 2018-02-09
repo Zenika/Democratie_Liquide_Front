@@ -17,7 +17,7 @@
     <router-link tag="button" to="/subject/create" class="simple create" title="Créer un sujet"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
 
     <transition name="zoom-in">
-      <modal v-if="modal && modal.component" :title="modal.title" @close="closeModal">
+      <modal :key="modal.title" v-if="modal && modal.component" :title="modal.title" @close="closeModal">
         <component :is="modal.component" v-bind="modal.props"/>
       </modal>
     </transition>
