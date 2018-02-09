@@ -1,9 +1,9 @@
 <template>
   <div class="delegation-view">
 
-    <span v-if="data" class="title">
+    <router-link v-if="data" class="title" to="">
       {{ data.title }}
-    </span>
+    </router-link>
 
     <span v-if="currentDelegation" class="subtitle">
       Délégation attribuée à
@@ -18,6 +18,7 @@
       <li v-for="collaborator in sorted"
         :class="{ selected: isSelected(collaborator)}"
         @click="!fetching && select(collaborator)"
+        :key="collaborator"
       >
         {{ collaborator | mailToName }}
         <i v-if="isSelected(collaborator)" class="fa fa-user" aria-hidden="true"></i>
