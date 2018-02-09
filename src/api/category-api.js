@@ -1,5 +1,6 @@
 import api from '@/config/api'
 import store from '@/store/index'
+import Vue from 'vue'
 
 export const getCategories = () => api.get('api/categories')
 
@@ -12,7 +13,7 @@ export const delegateCategory = (categoryId, delegation) => api.put('api/powers/
   ]).then(() => {
     store.dispatch('notify', {
       title: 'Nouvelle délégation !',
-      message: delegation + ' votera à votre place.',
+      message: Vue.filter('mailToName')(delegation) + ' votera à votre place.',
       type: 'info'
     })
     return response
@@ -41,7 +42,7 @@ export const replaceCategoryDelegation = (categoryId, delegation) => api.delete(
   ]).then(() => {
     store.dispatch('notify', {
       title: 'Nouvelle délégation !',
-      message: delegation + ' votera à votre place.',
+      message: Vue.filter('mailToName')(delegation) + ' votera à votre place.',
       type: 'info'
     })
     return response
