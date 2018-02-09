@@ -2,7 +2,13 @@
     <div class="subject-view">
       <div class="subject" v-if="Object.keys(subject).length">
         <div class="header">
-          <div class="title">{{ subject.title }}</div>
+          <div class="title">
+            {{ subject.title }}
+            <span class="actions">
+              <router-link tag="button" :to="'/subject/delete/' + subject.uuid" class="small" title="Supprimer" v-if="subject.isMine && !subject.voteCount"><i class="fa fa-times"/></router-link>
+              <router-link tag="button" :to="'/subject/delegate/' + subject.uuid" class="small" title="Déléguer" v-if="!subject.isVoted && !subject.isClosed"><i class="fa fa-users"/></router-link>
+            </span>
+          </div>
           <div class="description">{{ subject.description }}</div>
           <div class="remaining-points"
             :class="{ green: (subject.maxPoints === totalPoints) || !isVote }"
@@ -15,6 +21,7 @@
               :style="{ transform: 'scaleX(' + (subject.maxPoints - totalPoints) / subject.maxPoints + ')' }"
             />
           </div>
+
 
         </div>
         <div class="proposals" ref="proposals">
@@ -135,6 +142,8 @@ export default {
 
       .title {
         font-weight: bold;
+        display: flex;
+        align-items: center;
         padding-right: 10px;
         font-size: 1.5em;
       }
@@ -175,14 +184,14 @@ export default {
 
     .footer {
       margin-top: 10px;
+      padding-top: 10px;
       border-top: 1px solid lightgrey;
     }
 
     .actions {
       display: flex;
       justify-content: flex-end;
-      margin-top: 10px;
-
+      float: right;
       button {
         margin-left: 10px;
       }
