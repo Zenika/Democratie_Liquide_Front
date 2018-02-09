@@ -2,17 +2,21 @@
   <div class="subject-list">
 
     <template v-for="subject in subjects" v-show="filteredSubjects.length">
-      <transition name="shrink-Y">
-      <keep-alive>
-        <subject-line class="subject-line" v-if="globalCheck(subject)"
-          :subject="subject"
-          :key="subject.uuid"
-          @removeSubject="removeSubject(subject)"
-        />
-      </keep-alive>
+      <transition name="shrink-Y" :key="subject.uuid">
+        <keep-alive>
+          <subject-line
+            v-if="globalCheck(subject)"
+            class="subject-line"
+            :subject="subject"
+            :key="subject.uuid"
+            @removeSubject="removeSubject(subject)"
+          />
+        </keep-alive>
       </transition>
     </template>
-    <div class="empty" v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</div>
+    <transition name="shrink-Y">
+      <div class="empty" v-show="!filteredSubjects.length">{{ filter.subjectType.empty }}</div>
+    </transition>
 
   </div>
 </template>
