@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 import TextInput from '@/components/TextInput'
 
 export default {
@@ -30,56 +29,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.proposal-creation {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: space-around;
+}
 
-  .proposal-creation {
-    display: flex;
-    position: relative;
-    align-items: center;
-    flex-shrink: 0;
-    justify-content: space-around;
+.text-input {
+  &:not(:first-child) {
+    margin: 10px 0;
   }
+}
 
-  .text-input {
-    &:not(:first-child) {
-      margin: 10px 0;
-    }
-  }
+.index {
+  text-shadow: 0 1px 0 white;
+  position: relative;
+  font-weight: bold;
+  font-size: 2em;
+  color: grey;
+  padding-right: 20px;
+  display: flex;
+  justify-content: center;
+  width: 30px;
+}
 
-  .index {
-    text-shadow: 0 1px 0 white;
-    position: relative;
-    font-weight: bold;
-    font-size: 2em;
-    color: grey;
-    padding-right: 20px;
-    display: flex;
-    justify-content: center;
-    width: 30px;
-  }
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
+.title {
+  font-weight: bold;
+  font-size: 1em;
+}
+.description {
+  font-size: 0.7em;
+}
 
-  .title {
-    font-weight: bold;
-    font-size: 1em;
-  }
-  .description {
-    font-size: 0.7em;
-  }
+.remove {
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+}
 
-  .remove {
-    width: 30px;
-    height: 30px;
-    margin-left: 20px;
-  }
-
-  .void {
-    width: 40px;
-    height: 40px;
-    margin-left: 10px;
-  }
+.void {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+}
 </style>

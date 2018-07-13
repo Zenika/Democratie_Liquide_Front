@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 import Gauge from '@/components/Gauge'
 
 export default {
@@ -42,18 +41,17 @@ export default {
   },
 
   computed: {
-
-    remainingPoints () {
+    remainingPoints() {
       return this.maxPoints - this.totalPoints + this.proposal.points
     },
 
-    disabled () {
+    disabled() {
       return !this.isVote || this.isDelegated
     }
   },
 
   methods: {
-    changeValue (value) {
+    changeValue(value) {
       this.proposal.points = value
     }
   },
@@ -65,28 +63,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../assets/style';
+@import '../assets/style';
 
-  .line {
-    margin: 10px 0px;
-    border-radius: 15px;
+.line {
+  margin: 10px 0px;
+  border-radius: 15px;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &.padded {
-      padding: 5px;
-    }
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  .title {
-    font-weight: bold;
-    font-size: 1em;
+  &.padded {
+    padding: 5px;
   }
+}
 
-  .description {
-    font-size: 0.8em;
-  }
+.title {
+  font-weight: bold;
+  font-size: 1em;
+}
 
+.description {
+  font-size: 0.8em;
+}
 </style>

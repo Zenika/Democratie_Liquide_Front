@@ -19,7 +19,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'subject-line',
 
@@ -30,7 +29,7 @@ export default {
   },
 
   computed: {
-    remainingHours () {
+    remainingHours() {
       if (!this.subject.deadLine) return
       let deadline = new Date(this.subject.deadLine)
       let now = new Date()
@@ -40,7 +39,7 @@ export default {
   },
 
   filters: {
-    remainingHoursLabel (value, hourLabel, dayLabel, endLabel) {
+    remainingHoursLabel(value, hourLabel, dayLabel, endLabel) {
       let label = hourLabel
       if (value > 24) {
         value = Math.floor(value / 24)
@@ -48,28 +47,34 @@ export default {
       } else if (value <= 0) {
         return endLabel
       }
-      return value + ' ' + (value <= 1 ? label : label.split(' ').map(word => word + 's').join(' '))
+      return (
+        value +
+        ' ' +
+        (value <= 1
+          ? label
+          : label
+              .split(' ')
+              .map(word => word + 's')
+              .join(' '))
+      )
     }
   }
-
 }
 </script>
 
 <style lang="scss">
+@import '../assets/style';
 
-  @import '../assets/style';
+.subject-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  cursor: pointer;
+}
 
-  .subject-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 10px;
-    cursor: pointer;
-  }
-
-  .tag, button {
-      margin-left: 5px;
-  }
-
-
+.tag,
+button {
+  margin-left: 5px;
+}
 </style>

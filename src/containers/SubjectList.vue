@@ -29,12 +29,7 @@ export default {
   name: 'subject-list',
 
   computed: {
-    ...mapGetters([
-      'subjects',
-      'filteredSubjects',
-      'globalCheck',
-      'filter'
-    ])
+    ...mapGetters(['subjects', 'filteredSubjects', 'globalCheck', 'filter'])
   },
 
   components: {
@@ -44,34 +39,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
+@import '../assets/transitions';
 
-  @import '../assets/style';
-  @import '../assets/transitions';
+.subject-list {
+  text-align: center;
+  overflow-y: auto;
+}
 
-  .subject-list {
-    text-align: center;
-    overflow-y: auto;
+.empty {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: lightgray;
+}
+
+.subject-line {
+  transition: border-left 100ms linear, background-color 100ms linear;
+  border-left: 0px solid map-get($reds, 'medium');
+
+  &:nth-child(2n) {
+    background-color: rgba(0, 0, 0, 0.05);
   }
-
-  .empty {
-    padding: 20px;
-    font-weight: bold;
-    font-size: 1.5em;
-    color: lightgray;
+  &:hover {
+    background-color: map-get($reds, 'lightest');
+    color: map-get($reds, 'medium');
+    border-left-width: 5px;
   }
-
-  .subject-line {
-    transition: border-left 100ms linear, background-color 100ms linear;
-    border-left: 0px solid map-get($reds, 'medium');
-
-
-    &:nth-child(2n) {
-      background-color: rgba(0,0,0,0.05);
-    }
-    &:hover {
-      background-color: map-get($reds, 'lightest');
-      color: map-get($reds, 'medium');
-      border-left-width: 5px;
-    }
-  }
+}
 </style>

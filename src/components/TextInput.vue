@@ -13,7 +13,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'text-input',
 
@@ -24,19 +23,18 @@ export default {
   },
 
   methods: {
-    focus () {
+    focus() {
       this.$refs['text-input'].focus()
     }
   },
 
-  beforeUpdate () {
+  beforeUpdate() {
     this.$refs['text-input'].value = this.value
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .text-input {
   position: relative;
   display: flex;
@@ -55,19 +53,21 @@ label {
   pointer-events: none;
 }
 
-input, textarea {
+input,
+textarea {
   padding: 10px;
   font-size: 1em;
-  &:focus, &:active, &.input {
+  &:focus,
+  &:active,
+  &.input {
     & ~ label {
       transform: translate(-8px, -18px);
       font-size: 13px;
       opacity: 1;
       color: lightgray;
-      text-shadow: 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white, -2px -2px 0 white, 2px 0px 0 white, -2px 0px 0 white, 0 2px 0 white, 0 -2px 0 white;
+      text-shadow: 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white, -2px -2px 0 white,
+        2px 0px 0 white, -2px 0px 0 white, 0 2px 0 white, 0 -2px 0 white;
     }
   }
 }
-
-
 </style>

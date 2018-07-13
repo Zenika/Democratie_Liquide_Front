@@ -16,7 +16,7 @@ import { goHome } from '@/config/router'
 export default {
   name: 'subject-deletion',
 
-  data () {
+  data() {
     return {
       deleting: false
     }
@@ -27,8 +27,7 @@ export default {
   },
 
   methods: {
-
-    confirm () {
+    confirm() {
       this.deleting = true
       deleteSubject(this.currentSubject.uuid).then(goHome, () => (this.deleting = false))
     }
@@ -37,27 +36,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
 
-  @import '../assets/style';
+.subject-deletion {
+  display: flex;
+  flex-direction: column;
+}
 
-  .subject-deletion {
-    display: flex;
-    flex-direction: column;
+.message {
+  padding: 10px 20px;
+}
+
+.buttons {
+  display: flex;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  button {
+    flex-grow: 1;
+    height: 30px;
+    margin: 0 10px;
   }
-
-  .message {
-    padding: 10px 20px;
-  }
-
-  .buttons {
-    display: flex;
-    padding: 0 10px;
-    margin-bottom: 10px;
-    button {
-      flex-grow: 1;
-      height: 30px;
-      margin: 0 10px;
-    }
-  }
-
+}
 </style>

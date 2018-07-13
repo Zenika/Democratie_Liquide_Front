@@ -25,7 +25,7 @@ import { getAuthMethods } from '@/api/auth-api'
 export default {
   name: 'login',
 
-  data () {
+  data() {
     return {
       methods: {},
       form: {
@@ -39,8 +39,8 @@ export default {
     ...mapActions(['login', 'loginWithGoogle'])
   },
 
-  beforeRouteEnter (to, from, next) {
-    getAuthMethods().then(({data}) => {
+  beforeRouteEnter(to, from, next) {
+    getAuthMethods().then(({ data }) => {
       next(vm => (vm.methods = data))
     })
   },
@@ -50,55 +50,51 @@ export default {
     TextInput
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  padding: 10px;
 
-  .logo {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    padding: 10px;
-
-
-    img {
-      padding-bottom: 5px;
-      height: 25px;
-      width: 25px;
-      margin-right: 10px;
-    }
+  img {
+    padding-bottom: 5px;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
   }
+}
 
-  .login {
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: lightgray;
+
+  .form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    background: lightgray;
-
-    .form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .small {
-      margin-top: 10px;
-      padding: 5px 20px;
-      font-size: 1.25em;
-      color: grey;
-      &:active {
-        color: white
-      }
-      // height: 30px;
-    }
   }
 
-  .text-input {
-    margin: 5px;
-    font-size: 1em
+  .small {
+    margin-top: 10px;
+    padding: 5px 20px;
+    font-size: 1.25em;
+    color: grey;
+    &:active {
+      color: white;
+    }
+    // height: 30px;
   }
+}
 
+.text-input {
+  margin: 5px;
+  font-size: 1em;
+}
 </style>

@@ -19,7 +19,7 @@ import TextInput from '@/components/TextInput'
 export default {
   name: 'category-creation',
 
-  data () {
+  data() {
     return {
       category: {},
       posting: false
@@ -27,25 +27,24 @@ export default {
   },
 
   methods: {
-
-    init () {
+    init() {
       this.category = {
         title: '',
         description: ''
       }
     },
 
-    send () {
+    send() {
       this.posting = true
       createCategory(this.category).then(goHome, () => (this.posting = false))
     }
   },
 
-  created () {
+  created() {
     this.init()
   },
 
-  mounted () {
+  mounted() {
     this.$refs.title.focus()
   },
 
@@ -56,44 +55,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
 
-  @import '../assets/style';
+.category-creation {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 5px;
+}
+.text-input {
+  min-height: 15px;
+  margin-bottom: 10px;
+}
 
-  .category-creation {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding: 5px;
+.title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.description {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+
+.footer {
+  margin-top: 10px;
+  border-top: 1px solid lightgrey;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+
+  button {
+    margin-left: 10px;
   }
-  .text-input {
-    min-height: 15px;
-    margin-bottom: 10px;
-  }
-
-
-  .title {
-    font-weight: bold;
-    font-size: 1.5em;
-  }
-
-  .description {
-    font-size: 1em;
-    margin-bottom: 0;
-  }
-
-  .footer {
-    margin-top: 10px;
-    border-top: 1px solid lightgrey;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-
-    button {
-      margin-left: 10px;
-    }
-  }
-
+}
 </style>

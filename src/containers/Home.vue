@@ -42,7 +42,7 @@ export default {
     modal: Object
   },
 
-  created () {
+  created() {
     this.refresh()
   },
   methods: {
@@ -55,7 +55,7 @@ export default {
       'logout'
     ]),
 
-    refresh () {
+    refresh() {
       this.refreshCollaborator()
       this.refreshCollaborators()
       this.refreshSubjects()
@@ -63,7 +63,7 @@ export default {
       this.refreshChannels()
     },
 
-    closeModal () {
+    closeModal() {
       goHome()
     }
   },
@@ -77,7 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @import '../assets/transitions';
 
 .header {
@@ -87,7 +86,7 @@ export default {
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid lightgray;
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 
   .logo {
@@ -116,10 +115,10 @@ export default {
 }
 
 .create {
-    width: 96%;
-    height: 50px;
-    font-size: 2.5em;
-    margin: 20px 2%;
-    flex-shrink: 0;
-  }
+  width: 96%;
+  height: 50px;
+  font-size: 2.5em;
+  margin: 20px 2%;
+  flex-shrink: 0;
+}
 </style>

@@ -25,80 +25,69 @@ export default {
   name: 'notification-center',
 
   computed: {
-    ...mapGetters([
-      'notifications'
-    ])
+    ...mapGetters(['notifications'])
   },
 
   methods: {
-    ...mapActions([
-      'hideNotification',
-      'keepNotification',
-      'hideNotificationAfterDelay'
-    ])
+    ...mapActions(['hideNotification', 'keepNotification', 'hideNotificationAfterDelay'])
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
+@import '../assets/transitions';
 
-  @import '../assets/style';
-  @import '../assets/transitions';
+.notification-center {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  top: 5px;
+  right: 5px;
+  z-index: 25;
 
-  .notification-center {
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    top: 5px;
-    right: 5px;
-    z-index: 25;
+  .notification {
+    position: relative;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 300px;
+    opacity: 0.9;
+    color: white;
+    text-align: center;
+    transition: all 200ms ease;
+    cursor: pointer;
+    overflow: hidden;
 
-    .notification {
-      position: relative;
-      padding: 10px;
-      margin: 5px;
-      border-radius: 5px;
-      width: 300px;
-      opacity: 0.9;
-      color: white;
-      text-align: center;
-      transition: all 200ms ease;
-      cursor: pointer;
-      overflow: hidden;
+    &.error {
+      background: map-get($reds, 'medium');
+    }
+    &.info {
+      background: map-get($blues, 'medium');
+    }
+    &.success {
+      background: map-get($greens, 'medium');
+    }
 
-      &.error {
-        background: map-get($reds, 'medium');
-      }
-      &.info {
-        background: map-get($blues, 'medium');
-      }
-      &.success {
-        background: map-get($greens, 'medium');
-      }
+    &:hover {
+      opacity: 0.5;
+      transform: scale(0.95, 0.95);
+    }
 
+    .title {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
 
-      &:hover {
-        opacity: 0.5;
-        transform: scale(0.95,0.95);
-      }
-
-
-      .title {
-        font-size: 1.1em;
-        font-weight: bold;
-      }
-
-      .close {
-        position: absolute;
-        right: 5px;
-        top: 1px;
-      }
-
+    .close {
+      position: absolute;
+      right: 5px;
+      top: 1px;
     }
   }
-
+}
 </style>

@@ -41,26 +41,17 @@ export default {
   name: 'filter-line',
 
   computed: {
-    ...mapGetters([
-      'joinedChannels',
-      'categories',
-      'filter'
-    ]),
+    ...mapGetters(['joinedChannels', 'categories', 'filter']),
 
-    subjectTypes () {
+    subjectTypes() {
       return subjectTypes
     }
   },
 
   methods: {
-    ...mapActions([
-      'filterSubjectType',
-      'filterChannel',
-      'filterCategory',
-      'removeFilter'
-    ]),
+    ...mapActions(['filterSubjectType', 'filterChannel', 'filterCategory', 'removeFilter']),
 
-    delegate (category) {
+    delegate(category) {
       router.push('/category/delegate/' + category.uuid)
     }
   },
@@ -73,52 +64,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
 
-  @import '../assets/style';
+.filter-line {
+  text-align: center;
+  padding: 10px 60px;
+  background: #fcfcfc;
+  line-height: 2em;
+  border-top: 1px solid #eee;
+  border-bottom: 2px solid #eee;
+}
 
-  .filter-line {
-    text-align: center;
-    padding: 10px 60px;
-    background: #fcfcfc;
-    line-height: 2em;
-    border-top: 1px solid #eee;
-    border-bottom: 2px solid #eee;
+.refresh {
+  margin-left: 10px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  opacity: 1;
+
+  &:hover {
+    opacity: 0.5;
   }
+}
 
-  .refresh {
-    margin-left: 10px;
-    cursor: pointer;
-    transition: all 200ms ease;
-    opacity: 1;
+.label {
+  flex-grow: 1;
+}
 
-    &:hover {
-      opacity: 0.5;
-    }
+.delegate {
+  margin-left: 10px;
+}
+
+.small {
+  margin-left: 10px;
+}
+
+.simple {
+  width: 100%;
+  height: 30px;
+  min-width: 50px;
+  margin: 5px 0;
+  font-size: 1.1em;
+  padding-top: 5px;
+  &:not(:first-child) {
+    margin-left: 5px;
   }
-
-  .label {
-    flex-grow: 1;
-  }
-
-  .delegate {
-    margin-left:10px;
-  }
-
-  .small {
-    margin-left: 10px;
-  }
-
-  .simple {
-    width: 100%;
-    height: 30px;
-    min-width: 50px;
-    margin: 5px 0;
-    font-size: 1.1em;
-    padding-top: 5px;
-    &:not(:first-child) {
-      margin-left: 5px;
-    }
-  }
-
-
+}
 </style>

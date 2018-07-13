@@ -33,18 +33,15 @@ export default {
   name: 'channels-view',
 
   computed: {
-    ...mapGetters([
-      'joinedChannels',
-      'unjoinedChannels'
-    ])
+    ...mapGetters(['joinedChannels', 'unjoinedChannels'])
   },
 
   methods: {
-    join (channel) {
+    join(channel) {
       joinChannel(channel.uuid)
     },
 
-    quit (channel) {
+    quit(channel) {
       quitChannel(channel.uuid)
     }
   },
@@ -56,27 +53,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/style';
 
-  @import '../assets/style';
+.channels-view {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
 
-  .channels-view {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+.channel-list {
+  &:not(:first-child) {
+    margin-top: 25px;
   }
+}
 
-  .channel-list {
-    &:not(:first-child) {
-      margin-top: 25px;
-    }
-  }
-
-  .label {
-    font-weight: bold;
-    padding-bottom: 5px;
-    text-shadow: 0 1px 0 white;
-    border-bottom: solid 3px lightgrey;
-    text-align: center;
-  }
-
+.label {
+  font-weight: bold;
+  padding-bottom: 5px;
+  text-shadow: 0 1px 0 white;
+  border-bottom: solid 3px lightgrey;
+  text-align: center;
+}
 </style>

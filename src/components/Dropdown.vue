@@ -18,19 +18,19 @@ export default {
     maxHeight: String
   },
 
-  data () {
+  data() {
     return {
       opened: false
     }
   },
 
   methods: {
-    show () {
+    show() {
       this.opened = true
       setTimeout(() => document.addEventListener('click', this.hide), 0)
     },
 
-    hide () {
+    hide() {
       this.opened = false
       document.removeEventListener('click', this.hide)
     }
@@ -39,7 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @import '../assets/style';
 @import '../assets/transitions';
 
@@ -86,7 +85,7 @@ export default {
   border: 1px solid lightgray;
   background: white;
   z-index: 5;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
   transition: all 200ms ease;
@@ -123,9 +122,7 @@ export default {
   }
 }
 
-
 .opened {
-
   .title {
     border-bottom: solid 2px map-get($reds, 'medium');
   }
@@ -135,5 +132,4 @@ export default {
     visibility: visible;
   }
 }
-
 </style>

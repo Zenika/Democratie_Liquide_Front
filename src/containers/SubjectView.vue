@@ -56,39 +56,40 @@ import { cloneDeep } from 'lodash'
 export default {
   name: 'subject-view',
 
-  data () {
+  data() {
     return {
       subject: {}
     }
   },
 
   computed: {
-
     ...mapGetters(['currentSubject']),
 
-    totalPoints () {
+    totalPoints() {
       return this.subject.propositions.reduce((sum, proposal) => 0 + sum + proposal.points || 0, 0)
     },
 
-    isVote () {
+    isVote() {
       return !this.subject.isVoted && !this.subject.isClosed
     },
 
-    delegation () {
+    delegation() {
       return this.subject.givenDelegation
     }
   },
 
   methods: {
-    initialize () {
+    initialize() {
       this.subject = cloneDeep(this.currentSubject)
     },
 
-    reinitialize () {
-      this.subject.propositions.map(proposal => { proposal.points = 0 })
+    reinitialize() {
+      this.subject.propositions.map(proposal => {
+        proposal.points = 0
+      })
     },
 
-    send () {
+    send() {
       let choices = []
       this.subject.propositions.forEach(proposal => {
         choices.push({
@@ -106,7 +107,7 @@ export default {
     }
   },
 
-  created () {
+  created() {
     this.initialize()
   },
 
@@ -114,11 +115,9 @@ export default {
     Proposal
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-
 @import '../assets/style';
 
 .subject-view {
@@ -128,14 +127,12 @@ export default {
   overflow: hidden;
   height: 100%;
 
-
   .subject {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     padding: 5px;
     padding-top: 0;
-
 
     .header {
       border-bottom: 1px solid lightgrey;
@@ -147,7 +144,6 @@ export default {
         padding-right: 10px;
         font-size: 1.5em;
       }
-
     }
 
     .remaining-points {
@@ -167,7 +163,6 @@ export default {
       &.green {
         background-color: map-get($greens, 'medium');
       }
-
 
       .line {
         transform-origin: left;
@@ -212,11 +207,7 @@ export default {
           border-bottom: 1px solid lightgray;
         }
       }
-
     }
   }
-
 }
-
-
 </style>
