@@ -4,7 +4,7 @@
     <div class="header">
       <span class="logo">
         <img src="../assets/logo.png"/>
-        ZDemocracy
+        Agora
       </span>
       <span class="actions">
         <button title="Rafraichir" class="small" @click="refresh"><i class="fa fa-refresh" aria-hidden="true"></i></button>
