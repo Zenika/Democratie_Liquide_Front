@@ -2,7 +2,7 @@
     <div class="login">
         <span class="logo">
           <img src="../assets/logo.png"/>
-          ZDemocracy
+          Agora
         </span>
         <form method="POST" action="/signin/google" v-if="methods.GOOGLE_AUTH">
           <button type="submit" class="small" title="Login with Google"></button>

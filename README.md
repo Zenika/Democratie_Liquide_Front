@@ -1,4 +1,4 @@
-# democratie-liquide-vue
+# Agora
 
 > A Vue.js project
 
