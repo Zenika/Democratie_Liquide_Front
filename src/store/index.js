@@ -1,13 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { state, mutations, actions, getters } from './partials'
+import {
+  filter,
+  channel,
+  subject,
+  categorie,
+  collaborator,
+  notification
+} from './modules'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
-  mutations,
-  actions,
-  getters,
-  state
+  modules: {
+    filter,
+    channel,
+    subject,
+    categorie,
+    collaborator,
+    notification
+  }
 })
